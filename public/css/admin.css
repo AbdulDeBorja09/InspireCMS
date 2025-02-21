@@ -1,0 +1,273 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Poppins", sans-serif;
+    background-color: #f1f5f9;
+}
+
+/* SIDEBAR */
+.sidebar {
+    height: 100vh;
+    background: #112240;
+    color: white;
+    padding: 20px;
+    position: fixed;
+    width: 350px;
+    display: flex;
+    flex-direction: column;
+}
+
+.sidebar .logo {
+    text-align: center;
+    font-size: 20px;
+    margin-bottom: 20px;
+}
+
+.sidebar img {
+    width: 100%;
+    height: auto;
+}
+
+.nav-links {
+    flex-grow: 1;
+}
+
+.sidebar .nav-link {
+    color: #f1f5f9;
+    font-size: 20px;
+    padding: 10px 15px;
+    border-radius: 10px;
+    transition: all 0.3s ease-in-out;
+    /* Smooth animation */
+    display: flex;
+    align-items: center;
+}
+
+.sidebar .nav-link i {
+    margin-right: 10px;
+    transition: transform 0.3s ease-in-out;
+}
+
+.sidebar .nav-link:hover,
+.sidebar .nav-link.active {
+    background: #bc943b;
+    color: #112240;
+    transform: scale(1.05);
+    /* Slight zoom effect */
+}
+
+.sidebar .nav-link:hover i {
+    transform: rotate(10deg);
+    /* Slight rotation for icons */
+}
+
+.logout {
+    margin-top: auto;
+    background: none;
+    text-align: center;
+    font-size: 20px;
+    padding: 12px;
+    border-radius: 10px;
+    transition: all 0.3s ease-in-out;
+}
+
+/* SIDEBAR */
+
+/* CONTENTS */
+.content-container {
+    margin-left: 350px;
+    padding: 30px;
+    height: auto;
+    background-color: #e2e8f0;
+}
+
+.content-container h1 {
+    color: #064e3b;
+    font-weight: bold;
+}
+
+.content-container p {
+    color: #112240;
+    font-size: 18px;
+}
+
+.content.active {
+    display: block;
+}
+
+/* CONTENTS */
+
+/* FORMS */
+.form-container {
+    width: 100%;
+    height: auto;
+    background-color: #f1f5f9;
+    border-radius: 20px;
+    padding: 30px;
+}
+
+.form-container h4 {
+    color: #112240;
+    font-weight: bold;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 15px;
+    color: #112240;
+}
+
+form {
+    padding: 10px;
+}
+
+label {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+input,
+textarea,
+select {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+/* BUTTON FOR ALL */
+.btn-container {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.btn {
+    background-color: #064e3b;
+    color: #f1f5f9;
+    padding: 15px 20px;
+    border: none;
+    border-radius: 999px;
+    cursor: pointer;
+    font-size: 16px;
+    text-align: center;
+    margin-left: 0;
+}
+
+.btn:hover {
+    background-color: #268169;
+}
+
+/* BUTTON FOR ALL */
+
+/* IMAGE SELECT */
+input[type="file"] {
+    padding: 5px;
+}
+
+.image-preview {
+    width: 100%;
+    height: 300px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background: #eee;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    margin-bottom: 10px;
+}
+
+.image-preview img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* IMAGE SELECT */
+
+/* BENEFITS */
+.benefits-container {
+    display: flex;
+    gap: 30px;
+}
+
+/* BENEFITS */
+
+/* END OF FORMS */
+
+/* TABLES */
+.table-container {
+    width: 100%;
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+th,
+td {
+    border: 1px solid #ddd;
+    padding: 12px;
+    text-align: left;
+}
+
+th {
+    background-color: #064e3b;
+    color: white;
+}
+
+tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+td img {
+    width: 100px;
+    /* Adjust the image size */
+    height: auto;
+    display: block;
+    border-radius: 5px;
+}
+
+/* EDIT AND DELETE BUTTON FOR ALL */
+.edit-btn,
+.delete-btn {
+    padding: 10px 15px;
+    margin: 0 5px;
+    border: none;
+    cursor: pointer;
+    border-radius: 99px;
+}
+
+.edit-btn {
+    background-color: #4caf50;
+    /* Green */
+    color: white;
+}
+
+.delete-btn {
+    background-color: #f44336;
+    /* Red */
+    color: white;
+}
+
+.edit-btn:hover,
+.delete-btn:hover {
+    opacity: 0.8;
+}
+
+/* EDIT AND DELETE BUTTON FOR ALL */
+
+/* END OF TABLES */
+.alert {
+    position: fixed;
+    top: 20px;
+}

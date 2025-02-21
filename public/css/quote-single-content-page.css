@@ -1,0 +1,456 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Poppins", sans-serif;
+    background-color: #e2e8f0;
+}
+
+/* NAVBAR */
+.navbar {
+    /* background-color: rgba(0, 0, 0, 0.4);
+    border-bottom: 1px solid #64748b; */
+    box-shadow: none;
+    transition: background-color 0.4s ease-in-out;
+    padding: 50px 600px;
+}
+
+.navbar.scrolled {
+    border-bottom: 1px solid #64748b;
+    background-color: #122444;
+    opacity: 1;
+}
+
+.navbar-brand img {
+    width: 350px;
+    height: auto;
+}
+
+.navbar .nav-item .nav-link {
+    color: #f1f5f9;
+    font-weight: bold;
+}
+
+.container .nav-item .nav-link:hover {
+    color: #BC943B;
+}
+
+.custom-toggler {
+    border: none;
+    background: transparent;
+    outline: none;
+    padding: 5px;
+}
+
+/* Make the icon match nav-item colors */
+.custom-toggler i {
+    font-size: 1.8rem;
+    /* Adjust size if needed */
+    color: #f1f5f9;
+    /* Change to match your nav-link color */
+    transition: color 0.3s ease-in-out;
+}
+
+/* Change color on hover */
+.custom-toggler:hover i {
+    color: #ffb600;
+    /* Adjust hover color */
+}
+
+.custom-toggler:focus,
+.custom-toggler:active {
+    outline: none !important;
+    box-shadow: none !important;
+    border: none !important;
+}
+
+/* NAVBAR QUOTE BTN DESIGN */
+.quote-btn {
+    --color: #f1f5f9;
+    padding: 0.8em 1.2em;
+    border-radius: 999px;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    transition: .5s;
+    font-weight: bold;
+    border: 2px solid #BC943B;
+    color: var(--color);
+    z-index: 1;
+}
+
+.quote-btn::before,
+.quote-btn::after {
+    content: '';
+    display: block;
+    width: 50px;
+    height: 50px;
+    transform: translate(-50%, -50%);
+    position: absolute;
+    border-radius: 50%;
+    z-index: -1;
+    background-color: #BC943B;
+    transition: 0.8s ease;
+}
+
+.quote-btn::before {
+    top: -1em;
+    left: -1em;
+}
+
+.quote-btn::after {
+    left: calc(100% + 1em);
+    top: calc(100% + 1em);
+}
+
+.quote-btn:hover::before,
+.quote-btn:hover::after {
+    height: 410px;
+    width: 410px;
+}
+
+.quote-btn:hover {
+    color: #f1f5f9;
+}
+
+.quote-btn:active {
+    filter: brightness(1);
+}
+
+/* END OF QUOTE BTN DESIGN */
+/* END OF NAVBAR */
+
+/* HEADER */
+#image {
+    width: 100%;
+    height: auto;
+
+}
+
+.bg-image {
+    height: 35vh;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-image: url(/frontends/images/home/bg.png);
+}
+
+.image-overlay {
+    padding: 10rem;
+    width: 100%;
+    height: 35vh;
+    background-color: rgba(0, 62, 124, 0.8);
+}
+
+.image-text h1 {
+    text-align: left;
+    color: #f1f5f9;
+    opacity: 1;
+    font-size: 50px;
+}
+
+.image-text p {
+    color: #f1f5f9;
+    font-size: 18px;
+    font-weight: 300;
+    opacity: 1;
+}
+
+#general-tab-header {
+    width: 100%;
+    height: 45vh;
+    background-color: #003E7C;
+    position: relative;
+    padding-top: 100px;
+}
+
+.general-tab-header-box {
+    display: flex;
+    flex-direction: column;
+    padding-top: 150px;
+}
+
+.general-tab-header-box h1 {
+    font-size: 60px;
+    color: #f1f5f9;
+    font-weight: 600;
+    letter-spacing: 10px;
+}
+
+.general-tab-header-box p {
+    font-size: 18px;
+    color: #f1f5f9;
+}
+
+
+/* BACK BTN DESIGN */
+.back-btn {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font: 16px;
+
+    --color: #f1f5f9;
+    padding: 0.2em 1.2em;
+    border-radius: 999px;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    transition: .5s;
+    border: 2px solid #BC943B;
+    color: var(--color);
+    z-index: 1;
+}
+
+.back-btn i {
+    font: 16px;
+    transition: transform 0.3s ease;
+}
+
+.back-btn:hover i {
+    transform: translateX(-5px) rotate(360deg);
+}
+
+.back-btn::before,
+.back-btn::after {
+    content: '';
+    display: block;
+    width: 50px;
+    height: 50px;
+    transform: translate(-50%, -50%);
+    position: absolute;
+    border-radius: 50%;
+    z-index: -1;
+    background-color: #BC943B;
+    transition: 0.8s ease;
+}
+
+.back-btn::before {
+    top: -1em;
+    left: -1em;
+}
+
+.back-btn::after {
+    left: calc(100% + 1em);
+    top: calc(100% + 1em);
+}
+
+.back-btn:hover::before,
+.back-btn:hover::after {
+    height: 410px;
+    width: 410px;
+}
+
+.back-btn:hover {
+    color: #f1f5f9;
+}
+
+.back-btn:active {
+    filter: brightness(1);
+}
+
+/* END OF BACK BTN DESIGN */
+
+
+/* HEADER */
+
+/* CONTENTS */
+#contents {
+    width: 100%;
+    height: auto;
+}
+
+.content-image {
+    border-radius: 10px;
+    width: 100%;
+    height: 55vh;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    transition: opacity 0.5s ease-in-out;
+    object-fit: cover;
+}
+
+.thumb-image {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s;
+}
+
+.thumb-image:hover {
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.content-container {
+    padding: 40px 10px;
+    text-align: justify;
+}
+
+.content-container h1 {
+    color: #064e3b;
+}
+
+.content-container p {
+    color: #1C2636;
+}
+
+.options-card {
+    background: #f1f5f9;
+    border-radius: 20px;
+    padding: 30px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+select,
+input {
+    background: rgba(201, 201, 201, 0.2);
+    border: 2px solid transparent;
+    color: #122444;
+    padding: 12px;
+    width: 100%;
+    border-radius: 10px;
+    margin-top: 12px;
+    font-size: 16px;
+    text-align: center;
+    transition: all 0.3s ease;
+    font-weight: bold;
+}
+
+select:focus,
+input:focus {
+    outline: none;
+    box-shadow: 0px 0px 15px rgba(255, 255, 255, 0.4);
+    border: 2px solid #122444;
+}
+
+.total-price {
+    font-size: 24px;
+    font-weight: bold;
+    color: #064e3b;
+    margin-top: 15px;
+}
+
+.btn-quote {
+    background: #122444;
+    border: none;
+    padding: 12px;
+    border-radius: 10px;
+    font-size: 18px;
+    font-weight: bold;
+    color: #f1f5f9;
+    cursor: pointer;
+    width: 100%;
+    margin-top: 15px;
+    transition: transform 0.2s ease, background 0.3s ease;
+}
+
+.btn-quote:hover {
+    transform: scale(1.05);
+    background: #526d9c;
+}
+
+.pricing-card {
+    background: #f1f5f9;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.pricing-card ul li {
+    background: #f1f5f9;
+}
+
+.social-card {
+    background: #f1f5f9;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.follow-socials a {
+    display: inline-block;
+    width: 35px;
+    height: 35px;
+    border: 1px solid #1C2636;
+    color: #1C2636;
+    text-align: center;
+    line-height: 35px;
+    border-radius: 10px;
+    margin: 5px;
+    font-size: 20px;
+    transition: 0.3s;
+}
+
+.follow-socials a:hover {
+    background: #1C2636;
+    color: #f1f5f9;
+    transform: scale(1.1);
+}
+
+/* FOOTER */
+.footer {
+    background-color: #122444;
+    color: white;
+    padding: 40px 0;
+}
+
+.footer-box {
+    display: flex;
+    justify-content: center;
+}
+
+.footer-images {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.footer-images img {
+    width: 80%;
+}
+
+.footer a {
+    color: white;
+    text-decoration: none;
+}
+
+.footer a:hover {
+    text-decoration: none;
+}
+
+.social-icons a {
+    color: white;
+    font-size: 20px;
+    margin-right: 10px;
+}
+
+.quick-links {
+    width: 15%;
+}
+
+.quick-links ul {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.quick-links li a {
+    transition: color 0.3s ease-in-out, text-decoration 0.3s ease-in-out, transform 0.2s ease-in-out;
+}
+
+.quick-links li:hover {
+    transform: scale(1.05);
+}
+
+.divider {
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+    margin-top: 20px;
+}
+
+/* FOOTER */
