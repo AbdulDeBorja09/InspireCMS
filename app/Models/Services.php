@@ -15,6 +15,7 @@ class Services extends Model
         'image4',
         'name',
         'description',
+        'brief',
 
     ];
 

@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quotation</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .header img {
+            width: 200px;
+        }
+        .company-details {
+            text-align: right;
+        }
+        .line {
+            border-top: 2px solid black;
+            margin-top: 10px;
+        }
+        .quotation-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        .quotation-table th {
+            background-color: #d3d3d3; /* Light gray background */
+            color: black;
+            padding: 10px;
+            text-align: left;
+            border: 1px solid black;
+        }
+        .quotation-table td {
+            padding: 8px;
+            border: 1px solid #ddd;
+        }
+        .quotation-header {
+            background-color: #0056b3;
+            color: white;
+            font-size: 18px;
+            font-weight: bold;
+            text-align: center;
+            padding: 8px;
+        }
+        .terms-section {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+        .terms {
+            width: 60%;
+        }
+        .subtotal-box {
+            width: 35%;
+            border: 2px solid black;
+            padding: 10px;
+        }
+        .approval-section {
+            display: flex;
+            justify-content: space-around;
+            text-align: center;
+            margin-top: 40px;
+        }
+        .approval-section div {
+            width: 30%;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <img src="inspire-logo.png" alt="INSPIRE Sports Academy">
+        <div class="company-details">
+            <strong>NU SPORTS ACADEMY, INC.</strong><br>
+            NU Laguna, KM 53 Pan Philippine Highway<br>
+            Brgy. Milagrosa, Calamba City 4027<br>
+            NON-VAT: 009-697-538-000<br>
+            <strong>Email:</strong> jdperez@inspire-sportsacademy.com<br>
+            <strong>Phone:</strong> 0939-986-4897<br>
+            <strong>Website:</strong> www.inspiresportsacademy.ph
+        </div>
+    </div>
+
+    <div class="line"></div>
+
+    <p><strong>Bill To:</strong></p>
+
+    <table class="quotation-table">
+        <tr>
+            <td colspan="5" class="quotation-header">QUOTATION</td>
+        </tr>
+        <tr>
+            <th>FACILITIES</th>
+            <th>DESCRIPTION</th>
+            <th>HOURS/QTY</th>
+            <th>UNIT PRICE</th>
+            <th>AMOUNT</th>
+        </tr>
+        <tr>
+            <td>ISA Hoops Center (With Lights and No - Air Condition)</td>
+            <td>1 Basketball Court (Court #2)</td>
+            <td>2 Hours</td>
+            <td>₱2,400.00</td>
+            <td>₱4,800.00</td>
+        </tr>
+        <tr>
+            <td colspan="4" style="text-align: right;"><strong>Subtotal</strong></td>
+            <td><strong>₱4,800.00</strong></td>
+        </tr>
+    </table>
+
+    <p><em>* The first 150 spectators will be admitted free of charge.</em></p>
+    <p><em>** For any additional attendees beyond 150, there will be a 50 pesos per head admission fee.</em></p>
+
+    <div class="terms-section">
+        <div class="terms">
+            <h3>Terms & Conditions</h3>
+            <ol>
+                <li>The deposit is required to confirm the reservation. A reservation fee equivalent to 50% non-refundable of the rental rate shall be made by the event host upon reservation.</li>
+            <li>Accepted payment methods include credit/debit cards, bank transfers, and cash.</li>
+            <li>The other fifty percent (50%) balance payable (7) days after final billing.</li>
+            <li>Please make the check payable to <strong>NU SPORTS ACADEMY, INC.</strong> <br>
+                <strong>Bank Account Details:</strong><br>
+                Account number: 0509-1801-9654<br>
+                Account name: NU Sports Academy, Inc.<br>
+                Bank: BDO Unibank, Inc.
+            </li>
+            <li>All are subject to change based on actual usage and unforeseen expenses.</li>
+            <li>Kindly send proof of payment and account number for our reference. - <strong>jdperez@inspire-sportsacademy.com</strong></li>
+            <li>If the payment is not received by the due date, the outstanding amount will incur an interest charge of 3% per month. The interest charge will begin to increase starting on the day following the due date.</li>
+            <li>If the booking is canceled less than 7 days prior to the event date, 25% of the downpayment will be the cancellation fee.</li>
+            <li>If the booking is canceled within 24 hours prior to the event date, the cancellation fee would be 25% of the downpayment.</li>
+            <li>Re-booking/Reschedule is applicable as long as the customer notifies the administrator AT LEAST 7 DAYS prior to their initial reservation date.</li>
+            </ol>
+        </div>
+
+        <div class="subtotal-box">
+            <p><strong>Subtotal:</strong> ₱4,800.00</p>
+            <p><strong>Discount for Facilities (10%):</strong> ₱480.00</p>
+            <p><strong>Sales Tax:</strong> ₱ -</p>
+            <p><strong>Penalty:</strong> ₱ -</p>
+            <p><strong>Cancellation Fee:</strong> ₱ -</p>
+            <hr>
+            <p><strong>Total Amount:</strong> ₱4,320.00</p>
+            <p><strong>Amount Paid:</strong> ₱ -</p>
+            <p><strong>Balance Due:</strong> ₱ -</p>
+        </div>
+    </div>
+
+    <div class="approval-section">
+        <div>
+            <p><strong>Proposed by:</strong></p>
+            <p>JHANICA D. PEREZ</p>
+            <p>Sales Associate II</p>
+        </div>
+        <div>
+            <p><strong>Recommending Approval:</strong></p>
+            <p>JACQUELINE B. TE</p>
+            <p>Accounting Supervisor</p>
+            <p><strong>CONFORME:</strong></p>
+            <p>Name & Signature of Client Representative</p>
+            <p>Date:</p>
+        </div>
+        <div>
+            <p><strong>Approved by:</strong></p>
+            <p>BENJAMIN F. UICHICO</p>
+            <p>Managing Director</p>
+        </div>
+    </div>
+
+</body>
+</html>

@@ -10,5 +10,6 @@ class Teams extends Model
     protected $fillable = [
         'name',
         'image',
+        'position',
     ];
 }

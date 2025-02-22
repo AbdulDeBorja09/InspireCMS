@@ -11,7 +11,9 @@ use App\Models\Partners;
 use App\Models\Rate;
 use App\Models\Services;
 use App\Models\Teams;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
@@ -31,7 +33,7 @@ class HomeController extends Controller
     public function ShowHome()
     {
         $articles = Articles::all();
-        $services = Services::all();
+        $services = Services::where('type', 'facility')->get();
         return $this->ShowPage('home', 'home', compact('articles', 'services'));
     }
 
@@ -44,8 +46,9 @@ class HomeController extends Controller
     public function ShowArticleContent($id)
     {
         $article = Articles::findOrFail($id);
-        return view('user.singlearticle', compact('article'));
+        return $this->ShowPage('article content', 'singlearticle', compact('article'));
     }
+
 
     public function ShowFAQs()
     {
@@ -69,14 +72,19 @@ class HomeController extends Controller
     public function ShowAcademies()
     {
         $academies = Services::where('type', 'academies')->get();
-        return $this->ShowPage('academies', 'academies', compact('academies'));
+        return $this->ShowPage('academy', 'academies', compact('academies'));
     }
 
     public function ShowRate($id)
     {
         $service = Services::findOrFail($id);
         $rates = Rate::where('service_id', $id)->get();
-        return $this->ShowPage('singlepage', 'singlecontent', compact('service', 'rates'));
+        return $this->ShowPage('Content', 'singlecontent', compact('service', 'rates'));
+    }
+
+    public function ShowProfile()
+    {
+        return $this->ShowPage('profile', 'profile');
     }
 
     public function singleqoutation($id)
@@ -117,6 +125,46 @@ class HomeController extends Controller
 
             if ($create) {
                 return redirect()->back()->with('success', 'Question saved successfully!');
+            } else {
+                return redirect()->back()->with('error', 'Failed to save!');
+            }
+        } catch (\Throwable $e) {
+            return redirect()->back()->with(['error' => $e->getMessage()], 500);
+        }
+    }
+
+
+    public function EditProfile(Request $request)
+    {
+        $request->validate([
+            'fname' => 'required|string|max:255',
+            'lname' => 'required|string|max:255',
+        ]);
+        $user = User::where('id', Auth::user()->id)->first();
+        try {
+            $imagePath = $user->image; // Use existing image by default
+            if ($request->hasFile('image')) {
+                // Store the new image
+                $imagePath = $request->file('image')->store('Profiles', 'public');
+
+                // Delete old image if it exists
+                if ($user->image) {
+                    $oldFilePath = public_path('storage/' . $user->image);
+                    if (file_exists($oldFilePath)) {
+                        unlink($oldFilePath);
+                    }
+                }
+            }
+
+            $user->update([
+                'fname' => $request->fname,
+                'lname' => $request->lname,
+                'phone' => $request->phone,
+                'image' => $imagePath,
+            ]);
+
+            if ($user) {
+                return redirect()->back()->with('success', 'Profile Updated successfully!');
             } else {
                 return redirect()->back()->with('error', 'Failed to save!');
             }

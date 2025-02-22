@@ -8,8 +8,9 @@ class Section extends Model
 {
     protected $table = 'page_section';
     protected $fillable = ['name'];
+
     public function contents()
     {
-        return $this->hasMany(Contents::class);
+        return $this->hasMany(Contents::class, 'section_id');
     }
 }

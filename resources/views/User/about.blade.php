@@ -3,14 +3,13 @@
 
 <!-- HEADER -->
 <section id="image" class="position-relative text-white">
-    <div class="bg-image"
-        style=" background-image: url('/storage/{{ $contents['about-background']->value ?? '../images/home/bg.png'}}');">
+    <div class="bg-image" style=" background-image: url('/storage/{{ $contents['about-background']->value ?? ''}}');">
         <div class="image-overlay">
             <div class="container">
                 <div class="row justify-content-start image-text">
                     <div class="col-lg-12">
-                        <h1>{{ $contents['about-title']->value ?? 'About' }}</h1>
-                        <p>{{ $contents['about-tagline']->value ?? 'This is a template text' }}</p>
+                        <h1>{{ $contents['about-title']->value ?? '' }}</h1>
+                        <p>{{ $contents['about-tagline']->value ?? '' }}</p>
                         <a onclick="history.back()"><button class="btn shadow-none back-btn">
                                 <i class="bi bi-arrow-left"></i> Go Back
                             </button>
@@ -119,6 +118,7 @@
 
                     <img src="{{asset('../storage/' . $items->image)}}" alt="{{$items->name}}" />
                     <div class="caption">
+                        <h1>{{$items->name}}</h1>
                         <h1>{{$items->name}}</h1>
                     </div>
                 </div>

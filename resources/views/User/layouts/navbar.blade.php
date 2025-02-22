@@ -91,7 +91,7 @@
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
                         @auth
-                        <li><a class="dropdown-item" href="signin.html">Profile</a></li>
+                        <li><a class="dropdown-item" href="{{url('/Profile')}}">Profile</a></li>
                         <li>
                             <form action="{{ route('logout') }}" method="POST" style="display: inline;">
                                 @csrf
@@ -101,9 +101,8 @@
                         @else
                         <li><a class="dropdown-item" href="{{url('/login')}}">Log In</a></li>
                         <li>
-                            <a class="dropdown-item" href="signup.html">Create an Account</a>
+                            <a class="dropdown-item" href="{{url('/register')}}">Create an Account</a>
                         </li>
-
                         @endauth
 
                     </ul>

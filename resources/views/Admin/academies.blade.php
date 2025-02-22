@@ -6,101 +6,118 @@
     <p>Manage academy details.</p>
 
     <div class="form-container">
-        <!-- Header -->
-        <h4>Academy Header</h4>
-        <form action="{{route('admin.CreateOrUpdateContent')}}" method="POST" enctype="multipart/form-data">
+        <!-- Add Academies -->
+        <h4>Add Academies</h4>
+        <form action="{{route('admin.CreateService')}}" method="POST" enctype="multipart/form-data">
             @csrf
-            <input type="hidden" name="section" value="academies">
+            <input class="form-control " type="hidden" id="Academies-name" name="type" value="academies" />
             <div class="form-group">
-                <label for="academy-title">Title:</label>
-                <input type="text" id="academy-title" name="academy-title"
-                    value="{{ $contents['academy-title']->value ?? ''}}" placeholder="Input Here" required />
+                <label for="Academies-name">Name:</label>
+                <input class="form-control " type="text" id="Academies-name" name="name" placeholder="Input Here" />
             </div>
             <div class="form-group">
-                <label for="academy-tagline">Tagline:</label>
-                <input type="text" id="academy-tagline" name="academy-tagline"
-                    value="{{ $contents['academy-tagline']->value ?? ''}}" placeholder="Input Here" required />
+                <label for="Academies-brief">Brief Description.:</label>
+                <input class="form-control " type="text" id="Academies-brief" name="brief" placeholder="Input Here" />
             </div>
             <div class="form-group">
-                <label for="imageUpload">Background Image:</label>
-                <div class="image-preview" id="preview1">
-                    @if (!empty($contents['academy-background']->value))
-                    <img src="{{ asset('storage/' . $contents['academy-background']->value) }}" alt="Top-page-img">
-                    @else
-                    <span>No image selected</span>
-                    @endif
+                <label for="Academies-description">Course Description:</label>
+                <textarea class="form-control " type="text" id="Academies-description" name="description"
+                    placeholder="Input Here" rows="5"> </textarea>
+            </div>
+            {{-- <div class="form-group">
+                <label for="Academies-rate">Academies Rate:</label>
+                <input class="form-control" type="text" id="Academies-rate" name="Academies" placeholder="Input Here" />
+            </div> --}}
+            <div class="form-group">
+                <label for="image1">Image:</label>
+                <input class="form-control" name="image1" type="file" id="image1" accept="image/*" required />
+            </div>
+            <div class="form-group">
+                <label for="image2">Image:</label>
+                <input class="form-control" name="image2" type="file" id="image2" accept="image/*" required />
+            </div>
+            <div class="form-group">
+                <label for="image3">Image:</label>
+                <input class="form-control" name="image3" type="file" id="image3" accept="image/*" required />
+            </div>
+            <div class="form-group">
+                <label for="image4">Image:</label>
+                <input class="form-control" name="image4" type="file" id="image4" accept="image/*" required />
+            </div>
+            <div id="rates-container">
+                <div class="rate-row mb-3">
+                    <label for="rate-type">Course Type:</label>
+                    <input id="rate-type" type="text" name="rate_type[]" class="form-control mb-2"
+                        placeholder="Rate Type" required>
+                    <label for="rate">Course Rate:</label>
+                    <input id="rate" type="number" name="rate[]" class="form-control mb-2" placeholder="Rate"
+                        step="0.01" required>
+                    {{-- <label for="unit">Rate Unit:</label>
+
+                    <select id="unit" name="unit[]" class="form-control mb-2">
+                        <option value="Per Head">Per Head</option>
+                        <option value="Per Hour">Per Hour</option>
+                        <option value="Per Hour & Per Court">Per Hour & Per Court</option>
+                    </select> --}}
+                    {{-- <label for="unit">Hours:</label>
+                    <input type="number" id="hour" name="hour[]" class="form-control mb-2"
+                        placeholder="hour (e.g., 1,2,3)" value="1" required> --}}
+                    <label for="unit">Inclusions:</label>
+                    <textarea name="inclusions[]" id="inclusions" class="form-control mb-2" rows="5"
+                        placeholder="Inclusions (optional)"></textarea>
                 </div>
-                <input class="imageUpload" data-preview="preview1" type="file" id="imageUpload"
-                    name="academy-background" accept="image/*"
-                    value="{{ $contents['academy-background']->value ?? ''}}" />
+
             </div>
+            <button type="button" class="btn btn-secondary mb-3" id="add-rate">Add Another Rate</button>
+
             <div class="btn-container">
                 <button class="text-center btn" type="submit">
-                    Save Changes
+                    Add Academies
                 </button>
             </div>
         </form>
-        <!-- Header -->
-
-        <br />
-
-        <!-- Add Facility -->
-        <h4>Add Academy</h4>
-        <form>
-            <div class="form-group">
-                <label for="academy-name">Academy Name:</label>
-                <input type="text" id="academy-name" name="academy" placeholder="Input Here" />
-            </div>
-            <div class="form-group">
-                <label for="academy-description">Academy Description:</label>
-                <input type="text" id="academy-description" name="academy" placeholder="Input Here" />
-            </div>
-            <div class="form-group">
-                <label for="academy-rate">Academy Rate:</label>
-                <input type="text" id="academy-rate" name="academy" placeholder="Input Here" />
-            </div>
-            <div class="form-group">
-                <label for="imageUpload">Background Image:</label>
-                <div class="image-preview" id="imagePreview">
-                    <span>No image selected</span>
-                </div>
-                <input type="file" id="imageUpload" accept="image/*" />
-            </div>
-            <div class="btn-container">
-                <button class="text-center btn" type="submit">Add Academy</button>
-            </div>
-        </form>
-        <!-- Add Academy -->
+        <!-- Add Academies -->
 
         <br />
 
         <!-- Table -->
-        <h4>Academy Table</h4>
+        <h4>Academies Table</h4>
         <div class="table-container">
             <table>
                 <thead>
                     <tr>
-                        <th>Academy Image</th>
-                        <th>Academy Name</th>
-                        <th>Academy Description</th>
-                        <th>Academy Price</th>
-                        <th>Actions</th>
-                        <!-- New column for buttons -->
+                    <tr>
+                        <th class="text-center" style="width: 3%">#</th>
+                        <th>Name</th>
+                        <th>Brief Description</th>
+                        <th class="text-center">Status</th>
+                        <th class="text-center" style="width: 20%">Actions</th>
+                    </tr>
                     </tr>
                 </thead>
                 <tbody>
+                    @foreach($academies as $index => $item)
                     <tr>
-                        <td>
-                            <img src="images/facility/3.jpg" alt="Facility 1" />
+                        <td class="text-center">
+                            {{$index + 1}}
                         </td>
-                        <td>Basketball Academy</td>
-                        <td>Indoor full-court basketball facility with seating.</td>
-                        <td>$50 per hour</td>
-                        <td>
-                            <button class="edit-btn">Edit</button>
+                        <td>{{$item->name}}</td>
+                        <td>{{$item->brief}}</td>
+                        <td class="text-center">
+                            @if ($item->status == 1)
+                            <span class="badge badge-success" style="background-color: #064e3b">Available</span>
+                            @else
+                            <span class="badge badge-danger" style="background-color:red;">Unavailable</span>
+                            @endif
+
+                        </td>
+                        <td class="text-center">
+                            <a class="edit-btn" style="text-decoration:none"
+                                href="{{url('/Admin/edit/'.$item->id)}}">View</a>
                             <button class="delete-btn">Delete</button>
                         </td>
                     </tr>
+                    @endforeach
                 </tbody>
             </table>
         </div>
@@ -133,5 +150,44 @@
   });
 });
 
+</script>
+<script>
+    document.getElementById('add-rate').addEventListener('click', function() {
+        const container = document.getElementById('rates-container');
+        const rateRow = document.createElement('div');
+        rateRow.classList.add('rate-row', 'mb-3');
+        rateRow.innerHTML = `
+            <hr/>
+            <div>
+                <label for="rate-type">Rate Type:</label>
+                <input type="text" name="rate_type[]" class="form-control mb-2" placeholder="Rate Type" required>
+                
+                <label for="rate">Academies Rate:</label>
+                <input type="number" name="rate[]" class="form-control mb-2" placeholder="Rate" step="0.01" required>
+                
+                <label for="unit">Rate Unit:</label>
+                <select name="unit[]" class="form-control mb-2">
+                    <option value="Per Head">Per Head</option>
+                    <option value="Per Hour">Per Hour</option>
+                    <option value="Per Hour & Per Court">Per Hour & Per Court</option>
+                </select>
+                
+                <label for="hour">Hours:</label>
+                <input type="number" name="hour[]" class="form-control mb-2" placeholder="hour (e.g., 1,2,3)" value="1" required>
+                
+                <label for="inclusions">Inclusions:</label>
+                <textarea name="inclusions[]" class="form-control mb-2" rows="5" placeholder="Inclusions (optional)"></textarea>
+                
+                <button type="button" class="btn btn-danger remove-rate" style="background-color: #f44336;">Remove</button>
+            </div>
+        `;
+
+        container.appendChild(rateRow);
+
+        // Attach event listener to the newly added remove button
+        rateRow.querySelector('.remove-rate').addEventListener('click', function() {
+            rateRow.remove();
+        });
+    });
 </script>
 @endsection

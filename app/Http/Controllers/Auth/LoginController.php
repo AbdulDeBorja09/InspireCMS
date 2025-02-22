@@ -15,8 +15,14 @@ class LoginController extends Controller
      */
     public function showLoginForm()
     {
-        return view('user.auth.login'); // Ensure you have a Blade template at resources/views/auth/login.blade.php
+        return view('user.auth.login');
     }
+
+    public function showRegisterForm()
+    {
+        return view('User.auth.register');
+    }
+
 
     /**
      * Handle the login request.
@@ -31,19 +37,13 @@ class LoginController extends Controller
         if (Auth::attempt($request->only('email', 'password'))) {
             $user = Auth::user();
 
-            switch ($user->user_type) {
-                case 'admin':
-                    return redirect()->route('admin.home');
-                default:
-                    return redirect()->route('user.home');
-            }
+            // Redirect to the intended URL if available, otherwise go to their home page
+            return redirect()->intended($user->user_type === 'admin' ? route('admin.home') : route('user.home'));
         }
 
-
-        return back()->withErrors([
-            'email' => 'The provided credentials do not match our records.',
-        ]);
+        return back()->withErrors(['email' => 'Invalid credentials.']);
     }
+
 
     public function register(Request $request)
     {

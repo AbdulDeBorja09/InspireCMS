@@ -2,14 +2,15 @@
 @section('content')
 <!-- HEADER -->
 <section id="image" class="position-relative text-white">
-    <div class="bg-image">
+    <div class="bg-image"
+        style=" background-image: url('/storage/{{ $contents['quotation-background']->value ?? ''}}');">
         <div class="image-overlay">
             <div class="container">
                 <div class="row justify-content-start image-text">
                     <div class="col-lg-12">
-                        <h1>Offered Services</h1>
-                        <p>This is a template text</p>
-                        <a href="index.html"><button class="btn shadow-none back-btn">
+                        <h1>{{ $contents['quotation-title']->value ?? '' }}</h1>
+                        <p>{{ $contents['quotation-tagline']->value ?? '' }}</p>
+                        <a onclick="history.back()"><button class="btn shadow-none back-btn">
                                 <i class="bi bi-arrow-left"></i> Go Back
                             </button>
                         </a>
@@ -20,6 +21,7 @@
     </div>
 </section>
 <!-- END OF HEADER -->
+
 
 <!-- CONTENTS -->
 <section id="contents">
@@ -61,18 +63,22 @@
             <div class="tab-pane fade show active" id="facilities" role="tabpanel">
                 <div class="row g-4">
                     @if(isset($facilities) && $facilities->isNotEmpty())
-                    @foreach ($facilities as $facility)
+                    @foreach ($facilities as $item)
                     <div class="col-lg-3 col-md-6 col-sm-12">
                         <div class="card">
-                            <img src="{{asset('../storage/'.$facility->image1)}}" class="card-img-top"
-                                alt="Facility 1" />
+                            <img src="{{asset('../storage/'.$item->image1)}}" class="card-img-top" alt="Facility 1" />
                             <div class="card-body">
-                                <h5 class="card-title">{{$facility->name}}</h5>
+                                <h5 class="card-title">{{$item->name}}</h5>
                                 <p class="card-text">
-                                    {{$facility->name}}
+                                    {{$item->brief}}
                                 </p>
-                                <a href="{{url('../service/'.$facility->id)}}" class="btn shadow-none btn-custom">View
+                                @if ($item->status === 1)
+                                <a href="{{url('../service/'.$item->id)}}" class="btn shadow-none btn-custom">View
                                     More</a>
+                                @else
+                                <a style="cursor: not-allowed; " class="btn shadow-none btn-custom">Unavailable</a>
+                                @endif
+
                             </div>
                         </div>
                     </div>
@@ -92,7 +98,7 @@
                             <div class="card-body">
                                 <h5 class="card-title">{{$item->name}}</h5>
                                 <p class="card-text">
-                                    A state-of-the-art gym with top-tier equipment.
+                                    {{$item->brief}}
                                 </p>
                                 <a href="{{url('../service/'.$item->id)}}" class="btn shadow-none btn-custom">View
                                     More</a>
@@ -115,7 +121,7 @@
                             <div class="card-body">
                                 <h5 class="card-title">{{$item->name}}</h5>
                                 <p class="card-text">
-                                    A state-of-the-art gym with top-tier equipment.
+                                    {{$item->brief}}
                                 </p>
                                 <a href="{{url('../service/'.$item->id)}}" class="btn shadow-none btn-custom">View
                                     More</a>

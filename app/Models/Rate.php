@@ -16,6 +16,7 @@ class Rate extends Model
         'rate_type',
         'rate',
         'unit',
+        'hour',
         'inclusions'
     ];
 

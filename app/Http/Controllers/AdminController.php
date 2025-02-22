@@ -13,6 +13,7 @@ use App\Models\Partners;
 use App\Models\Rate;
 use App\Models\Services;
 use App\Models\Teams;
+use App\Models\ContactUs;
 use Illuminate\Support\Facades\Log;
 
 class AdminController extends Controller
@@ -42,7 +43,6 @@ class AdminController extends Controller
         return $this->ShowPage('articles', 'articles', compact('articles'));
     }
 
-
     public function ShowFAQs()
     {
         $categories = FaqsCategory::all();
@@ -69,11 +69,30 @@ class AdminController extends Controller
         return $this->ShowPage('academies', 'academies', compact('academies'));
     }
 
-    public function ShowRate($id)
+
+    public function ShowMembership()
+    {
+        $membership = Services::where('type', 'membership')->get();
+        return $this->ShowPage('membership', 'membership', compact('membership'));
+    }
+
+    public function ShowContactus()
+    {
+        $messages = ContactUs::all();
+        return $this->ShowPage('contactus', 'contactus', compact('messages'));
+    }
+
+    public function ShowEditService($id)
     {
         $service = Services::findOrFail($id);
         $rates = Rate::where('service_id', $id)->get();
-        return $this->ShowPage('singlepage', 'singlecontent', compact('service', 'rates'));
+        return $this->ShowPage('editpage', 'editpage', compact('service', 'rates'));
+    }
+
+    public function ShowHeader()
+    {
+        $contents = Contents::pluck('value', 'key');
+        return view('admin.header', compact('contents'));
     }
 
     public function quotationpage()
@@ -83,8 +102,6 @@ class AdminController extends Controller
         $membership = Services::where('type', 'membership')->get();
         return $this->ShowPage('quotation', 'quotation', compact('facilities', 'academies', 'membership'));
     }
-
-
 
     public function CreateOrUpdateContent(Request $request)
     {
@@ -179,6 +196,7 @@ class AdminController extends Controller
             // store in database
             Teams::create([
                 'name' => $request->name,
+                'position' => $request->position,
                 'image' => $imagePath,
             ]);
 
@@ -329,8 +347,6 @@ class AdminController extends Controller
             'image' => 'nullable|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
         ]);
 
-        // Log the request data
-        Log::info($request->all());
 
         // Find the article by ID
         $article = Articles::findOrFail($request->id);
@@ -375,7 +391,6 @@ class AdminController extends Controller
         }
     }
 
-
     public function CreateService(Request $request)
     {
 
@@ -396,6 +411,7 @@ class AdminController extends Controller
                 'image3' => $imagePaths['image3'],
                 'image4' => $imagePaths['image4'],
                 'name' => $request->name,
+                'brief' => $request->brief,
                 'description' => $request->description,
 
             ]);
@@ -406,6 +422,7 @@ class AdminController extends Controller
                     'rate' => $request->rate[$index],
                     'unit' => $request->unit[$index] ?? null,
                     'inclusions' => $request->inclusions[$index] ?? null,
+                    'hour' => $request->hour[$index] ?? null,
                 ]);
             }
             return redirect()->back()->with('success', 'Question Edited successfully!');
@@ -413,6 +430,7 @@ class AdminController extends Controller
             return redirect()->back()->with(['error' => $e->getMessage()], 500);
         }
     }
+
     public function DelereArticle(Request $request)
     {
         // Find the data
@@ -421,6 +439,151 @@ class AdminController extends Controller
 
             // Delete from database
             $article->delete();
+
+            // Redirect back with message if success or not
+            return redirect()->back()->with('success', 'Question Deleted successfully!');
+        } catch (\Throwable $e) {
+            return redirect()->back()->with(['error' => $e->getMessage()], 500);
+        }
+    }
+
+    public function editpartner(Request $request)
+    {
+        // Find the article by ID
+        $partner = Partners::findOrFail($request->id);
+
+        try {
+            $imagePath = $partner->image; // Use existing image by default
+            if ($request->hasFile('image')) {
+                // Store the new image
+                $imagePath = $request->file('image')->store('partners', 'public');
+
+                // Delete old image if it exists
+                if ($partner->image) {
+                    $oldFilePath = public_path('storage/' . $partner->image);
+                    if (file_exists($oldFilePath)) {
+                        unlink($oldFilePath);
+                    }
+                }
+            }
+
+            // Update the article with new data
+            $partner->update([
+                'name' => $request->partnername,
+                'image' => $imagePath,
+            ]);
+
+            return redirect()->back()->with('success', 'Article updated successfully!');
+        } catch (\Throwable $e) {
+            return redirect()->back()->with('error', 'Failed to update the article: ' . $e->getMessage());
+        }
+    }
+
+    public function deletepartner(Request $request)
+    {
+        // Find the data
+        $partner = Partners::findOrFail($request->id);
+        try {
+
+            // Delete the image if it exists
+            if ($partner->image) {
+                $oldFilePath = public_path('storage/' . $partner->image);
+                if (file_exists($oldFilePath)) {
+                    unlink($oldFilePath);
+                }
+            }
+
+            // Delete from database
+            $partner->delete();
+
+            // Redirect back with message if success or not
+            return redirect()->back()->with('success', 'Question Deleted successfully!');
+        } catch (\Throwable $e) {
+            return redirect()->back()->with(['error' => $e->getMessage()], 500);
+        }
+    }
+
+    public function editeam(Request $request)
+    {
+        // Find the article by ID
+        $team = Teams::findOrFail($request->id);
+
+        try {
+            $imagePath = $team->image; // Use existing image by default
+            if ($request->hasFile('image')) {
+                // Store the new image
+                $imagePath = $request->file('image')->store('teams', 'public');
+
+                // Delete old image if it exists
+                if ($team->image) {
+                    $oldFilePath = public_path('storage/' . $team->image);
+                    if (file_exists($oldFilePath)) {
+                        unlink($oldFilePath);
+                    }
+                }
+            }
+
+            // Update the article with new data
+            $team->update([
+                'name' => $request->name,
+                'position' => $request->position,
+                'image' => $imagePath,
+            ]);
+
+            return redirect()->back()->with('success', 'Article updated successfully!');
+        } catch (\Throwable $e) {
+            return redirect()->back()->with('error', 'Failed to update the article: ' . $e->getMessage());
+        }
+    }
+
+    public function deleteteam(Request $request)
+    {
+        // Find the data
+        $team = Teams::findOrFail($request->id);
+        try {
+
+            // Delete the image if it exists
+            if ($team->image) {
+                $oldFilePath = public_path('storage/' . $team->image);
+                if (file_exists($oldFilePath)) {
+                    unlink($oldFilePath);
+                }
+            }
+
+            // Delete from database
+            $team->delete();
+
+            // Redirect back with message if success or not
+            return redirect()->back()->with('success', 'Question Deleted successfully!');
+        } catch (\Throwable $e) {
+            return redirect()->back()->with(['error' => $e->getMessage()], 500);
+        }
+    }
+
+    public function DeletRate(Request $request)
+    {
+        // Find the data
+        $rate = Rate::findOrFail($request->id);
+        try {
+
+            // Delete from database
+            $rate->delete();
+
+            // Redirect back with message if success or not
+            return redirect()->back()->with('success', 'Question Deleted successfully!');
+        } catch (\Throwable $e) {
+            return redirect()->back()->with(['error' => $e->getMessage()], 500);
+        }
+    }
+
+    public function DeleteService(Request $request)
+    {
+        // Find the data
+        $service = Services::findOrFail($request->id);
+        try {
+
+            // Delete from database
+            $service->delete();
 
             // Redirect back with message if success or not
             return redirect()->back()->with('success', 'Question Deleted successfully!');

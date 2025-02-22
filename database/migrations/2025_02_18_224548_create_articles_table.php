@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('date');
             $table->string('image');
             $table->string('description');
-            $table->boolean('redirect_url')->nullable();
+            $table->string('redirect_url')->nullable();
             $table->string('url1')->nullable();
             $table->string('url2')->nullable();
             $table->string('url3')->nullable();

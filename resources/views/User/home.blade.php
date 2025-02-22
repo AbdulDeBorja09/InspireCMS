@@ -37,7 +37,8 @@
     <div class="facility-container">
         <div class="swiper">
             <div class="swiper-wrapper">
-                @foreach($services as $item)
+
+                @foreach($services->concat($services) as $item)
                 <div class="swiper-slide">
                     <img src="{{asset('../storage/'. $item->image1)}}" />
                     <div class="facility-title">{{$item->name}}</div>
@@ -81,12 +82,7 @@
                             </ul>
                         </div>
                         @endforeach
-                        @else
-                        {{-- If no benefits are stored, display 4 empty input fields --}}
-                        @for($i = 0; $i
-                        < 4; $i++) <input type="text" id="academy-benefits" name="academy-benefits[]"
-                            placeholder="Input Here" />
-                        @endfor
+
                         @endif
 
 

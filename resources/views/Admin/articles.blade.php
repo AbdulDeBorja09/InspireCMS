@@ -7,44 +7,6 @@
     <p>Manage articles details.</p>
 
     <div class="form-container">
-        <!-- Header -->
-        <h4>Articles Header</h4>
-        <form action="{{route('admin.CreateOrUpdateContent')}}" method="POST" enctype="multipart/form-data">
-            @csrf
-            <input type="hidden" name="section" value="articles">
-            <div class="form-group">
-                <label for="articles-title">Title:</label>
-                <input type="text" id="articles-title" name="articles-title"
-                    value="{{ $contents['articles-title']->value ?? ''}}" placeholder="Input Here" required />
-            </div>
-            <div class="form-group">
-                <label for="articles-tagline">Tagline:</label>
-                <input type="text" id="articles-tagline" name="articles-tagline"
-                    value="{{ $contents['articles-tagline']->value ?? ''}}" placeholder="Input Here" required />
-            </div>
-            <div class="form-group">
-                <label for="imageUpload">Background Image:</label>
-                <div class="image-preview" id="preview1">
-                    @if (!empty($contents['articles-background']->value))
-                    <img src="{{ asset('storage/' . $contents['articles-background']->value) }}" alt="Top-page-img">
-                    @else
-                    <span>No image selected</span>
-                    @endif
-                </div>
-                <input class="imageUpload" data-preview="preview1" type="file" id="imageUpload"
-                    name="articles-background" accept="image/*"
-                    value="{{ $contents['articles-background']->value ?? ''}}" />
-            </div>
-            <div class="btn-container">
-                <button class="text-center btn" type="submit">
-                    Save Changes
-                </button>
-            </div>
-        </form>
-        <!-- Header -->
-
-        <br />
-
         <!-- Add articles -->
         <h4>Add articles</h4>
         <form action="{{route('admin.CreateArticle')}}" method="POST" enctype="multipart/form-data">

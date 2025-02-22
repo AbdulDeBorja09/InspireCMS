@@ -4,13 +4,13 @@
 <!-- HEADER -->
 <section id="image" class="position-relative text-white">
     <div class="bg-image"
-        style=" background-image: url('/storage/{{ $contents['articles-background']->value ?? '../images/home/bg.png'}}');">
+        style=" background-image: url('/storage/{{ $contents['articles-background']->value ?? ''}}');">
         <div class="image-overlay">
             <div class="container">
                 <div class="row justify-content-start image-text">
                     <div class="col-lg-12">
-                        <h1>{{ $contents['articles-title']->value ?? 'Articles' }}</h1>
-                        <p>{{ $contents['articles-tagline']->value ?? 'This is a template text' }}</p>
+                        <h1>{{ $contents['articles-title']->value ?? '' }}</h1>
+                        <p>{{ $contents['articles-tagline']->value ?? '' }}</p>
                         <a onclick="history.back()"><button class="btn shadow-none back-btn">
                                 <i class="bi bi-arrow-left"></i> Go Back
                             </button>

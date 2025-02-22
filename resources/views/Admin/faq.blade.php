@@ -7,43 +7,6 @@
     <p>Manage FAQ details.</p>
 
     <div class="form-container">
-        <!-- Header -->
-        <h4>FAQ Header</h4>
-        <form action="{{route('admin.CreateOrUpdateContent')}}" method="POST" enctype="multipart/form-data">
-            @csrf
-            <input type="hidden" name="section" value="faq">
-            <div class="form-group">
-                <label for="faq-title">Title:</label>
-                <input type="text" id="faq-title" name="faq-title" value="{{ $contents['faq-title']->value ?? ''}}"
-                    placeholder="Input Here" required />
-            </div>
-            <div class="form-group">
-                <label for="faq-tagline">Tagline:</label>
-                <input type="text" id="faq-tagline" name="faq-tagline"
-                    value="{{ $contents['faq-tagline']->value ?? ''}}" placeholder="Input Here" required />
-            </div>
-            <div class="form-group">
-                <label for="imageUpload">Background Image:</label>
-                <div class="image-preview" id="preview1">
-                    @if (!empty($contents['faq-background']->value))
-                    <img src="{{ asset('storage/' . $contents['faq-background']->value) }}" alt="Top-page-img">
-                    @else
-                    <span>No image selected</span>
-                    @endif
-                </div>
-                <input class="imageUpload" data-preview="preview1" type="file" id="imageUpload" name="faq-background"
-                    accept="image/*" value="{{ $contents['faq-background']->value ?? ''}}" />
-            </div>
-            <div class="btn-container">
-                <button class="text-center btn" type="submit">
-                    Save Changes
-                </button>
-            </div>
-        </form>
-        <!-- Header -->
-
-        <br />
-
         <!-- Add faq -->
         <h4>Add FAQ Category</h4>
         <form action="{{route('admin.CreateFaqCategory')}}" method="POST">
@@ -80,7 +43,7 @@
                 <input type="text" id="faq-name" name="answer" placeholder="Input Here" required />
             </div>
             <div class="btn-container">
-                <button class="text-center btn" type="submit">Add Category</button>
+                <button class="text-center btn" type="submit">Add Question</button>
             </div>
         </form>
 

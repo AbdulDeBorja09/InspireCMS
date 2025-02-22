@@ -40,7 +40,7 @@
 <body class="font-sans antialiased">
     <div class="min-h-screen bg-gray-100">
         @include('admin.layouts.sidebar')
-
+        @include('components.loader')
         <main class="content-container">
             @yield('content')
         </main>

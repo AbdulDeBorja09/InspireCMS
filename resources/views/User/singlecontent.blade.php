@@ -2,17 +2,17 @@
 @section('content')
 <!-- HEADER -->
 <section id="image" class="position-relative text-white">
-    <div class="bg-image">
+    <div class="bg-image" style=" background-image: url('/storage/{{ $contents['Content-background']->value ?? ''}}');">
         <div class="image-overlay">
             <div class="container">
                 <div class="row justify-content-start image-text">
                     <div class="col-lg-12">
-                        <h1>Name of the Content</h1>
-                        <p>This is a template text</p>
-                        <button onclick="window.history.back()" class="btn shadow-none back-btn">
-                            <i class="bi bi-arrow-left"></i>
-                            Go Back
-                        </button>
+                        <h1>{{ $contents['Content-title']->value ?? '' }}</h1>
+                        <p>{{ $contents['Content-tagline']->value ?? '' }}</p>
+                        <a onclick="history.back()"><button class="btn shadow-none back-btn">
+                                <i class="bi bi-arrow-left"></i> Go Back
+                            </button>
+                        </a>
                     </div>
                 </div>
             </div>

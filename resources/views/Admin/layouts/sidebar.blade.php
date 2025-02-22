@@ -17,9 +17,11 @@
         </a>
 
         <!-- Contact Tab -->
-        <a class="nav-link" href="#" onclick="showTab(event, 'contact')">
+        <a class="nav-link {{ Route::currentRouteName() == 'admin.ShowContactus' ? 'active' : '' }}"
+            href="{{route('admin.ShowContactus')}}">
             <i class="bi bi-person-circle"></i> Contacts
         </a>
+
 
         <h6 class="text-center">---------Website Settings---------</h6>
 
@@ -27,6 +29,12 @@
         <a class="nav-link {{ Route::currentRouteName() == 'admin.home' ? 'active' : '' }}"
             href="{{route('admin.home')}}">
             <i class="bi bi-house-door"></i> Home
+        </a>
+
+        <!-- Header -->
+        <a class="nav-link {{ Route::currentRouteName() == 'admin.header' ? 'active' : '' }}"
+            href="{{route('admin.header')}}">
+            <i class="bi bi-house-door"></i> Headers
         </a>
 
         <!-- Facilities Tab -->
@@ -39,6 +47,12 @@
         <a class="nav-link {{ Route::currentRouteName() == 'admin.academies' ? 'active' : '' }}"
             href="{{route('admin.academies')}}">
             <i class="bi bi-people"></i> Academies
+        </a>
+
+        <!-- Membership Tab -->
+        <a class="nav-link {{ Route::currentRouteName() == 'admin.Membership' ? 'active' : '' }}"
+            href="{{route('admin.Membership')}}">
+            <i class="bi bi-people"></i> Membership
         </a>
 
         <!-- Articles Tab -->
@@ -69,9 +83,13 @@
     </div>
 
     <!-- LOGOUT -->
-    <a class="nav-link logout {{}}" href="login.html">
-        <i class="bi bi-box-arrow-right"></i> Logout
-    </a>
+
+    <form class="logout" action="{{ route('logout') }}" method="POST" style="display: inline;" id="logout-form">
+        @csrf
+        <a type="submit" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
+            class="nav-link  "><i class="bi bi-box-arrow-right"></i> Logout</a>
+    </form>
+
 </div>
 {{-- <script>
     function showTab(event, tabId) {
