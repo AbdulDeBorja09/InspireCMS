@@ -1,5 +1,6 @@
 @extends('user.layouts.app')
 @section('content')
+
 <!-- HEADER -->
 <section id="image" class="position-relative text-white">
     <div class="bg-image"
@@ -73,7 +74,7 @@
                                     {{$item->brief}}
                                 </p>
                                 @if ($item->status === 1)
-                                <a href="{{url('../service/'.$item->id)}}" class="btn shadow-none btn-custom">View
+                                <a href="{{url('../Quotation/'.$item->id)}}" class="btn shadow-none btn-custom">View
                                     More</a>
                                 @else
                                 <a style="cursor: not-allowed; " class="btn shadow-none btn-custom">Unavailable</a>
@@ -100,7 +101,7 @@
                                 <p class="card-text">
                                     {{$item->brief}}
                                 </p>
-                                <a href="{{url('../service/'.$item->id)}}" class="btn shadow-none btn-custom">View
+                                <a href="{{url('../Quotation/'.$item->id)}}" class="btn shadow-none btn-custom">View
                                     More</a>
                             </div>
                         </div>
@@ -123,7 +124,7 @@
                                 <p class="card-text">
                                     {{$item->brief}}
                                 </p>
-                                <a href="{{url('../service/'.$item->id)}}" class="btn shadow-none btn-custom">View
+                                <a href="{{url('../Quotation/'.$item->id)}}" class="btn shadow-none btn-custom">View
                                     More</a>
                             </div>
                         </div>
@@ -131,9 +132,8 @@
                     @endforeach
                     @endif
                 </div>
-            </div>
 
-            <!-- Cart -->
+            </div>
         </div>
     </div>
 </section>

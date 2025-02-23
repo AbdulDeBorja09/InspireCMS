@@ -108,7 +108,7 @@
                     </ul>
                 </li>
 
-                <a href="{{url('/Qoutation')}}" class="btn shadow-none quote-btn" type="button">
+                <a href="{{url('/Quotation')}}" class="btn shadow-none quote-btn" type="button">
                     Request a Quote
                 </a>
             </ul>

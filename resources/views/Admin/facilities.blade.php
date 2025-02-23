@@ -11,7 +11,7 @@
         <h4>Add Facility</h4>
         <form action="{{route('admin.CreateService')}}" method="POST" enctype="multipart/form-data">
             @csrf
-            <input class="form-control " type="hidden" id="facility-name" name="type" value="facility" />
+            <input class="form-control " type="hidden" id="facility-name" name="type" value="Facility" />
             <div class="form-group">
                 <label for="facility-name"> Name:</label>
                 <input class="form-control " type="text" id="facility-name" name="name" placeholder="Input Here" />
@@ -147,18 +147,6 @@
     </div>
 </div>
 <script>
-    function confirmDelete(SeriveId) {
-            // Set the FAQ ID in the hidden input field
-        document.getElementById('deleteservice').value = SeriveId;
-
-        // Show the delete confirmation modal
-        let modal = new bootstrap.Modal(document.getElementById('deleteService'));
-        modal.show();
-
-    }
-</script>
-<!-- Image Select Script-->
-<script>
     document.querySelectorAll(".imageUpload").forEach((imageUpload) => {
   imageUpload.addEventListener("change", function () {
     const file = this.files[0];
@@ -184,6 +172,19 @@
 });
 
 </script>
+<script>
+    function confirmDelete(SeriveId) {
+            // Set the FAQ ID in the hidden input field
+        document.getElementById('deleteservice').value = SeriveId;
+
+        // Show the delete confirmation modal
+        let modal = new bootstrap.Modal(document.getElementById('deleteService'));
+        modal.show();
+
+    }
+</script>
+<!-- Image Select Script-->
+
 <script>
     document.getElementById('add-rate').addEventListener('click', function() {
         const container = document.getElementById('rates-container');

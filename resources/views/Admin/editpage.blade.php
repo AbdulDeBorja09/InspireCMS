@@ -2,23 +2,25 @@
 @section('content')
 @include('Admin.components.alert')
 <!-- Facilities Content -->
-<div class="content" id="facilities">
-    <h1>Manage Services</h1>
-    <p>Edit Service details.</p>
+<div class="content">
+    <h1>Manage {{$service->type}}</h1>
+    <p>Edit {{$service->type}} details.</p>
 
     <div class="form-container">
+
         <!-- Add Facility -->
         <h4>Edit Details</h4>
-        <form action="{{route('admin.CreateService')}}" method="POST" enctype="multipart/form-data">
+        <form action="{{route('admin.EditService')}}" method="POST" enctype="multipart/form-data">
             @csrf
-            <input class="form-control " type="hidden" id="facility-name" name="type" value="facility" />
+            @method('PUT')
+            <input class="form-control " type="hidden" id="facility-name" name="id" value="{{$service->id}}" />
             <div class="form-group">
                 <label for="facility-name"> Name:</label>
                 <input class="form-control " type="text" id="facility-name" value="{{$service->name}}" name="name"
                     placeholder="Input Here" required />
             </div>
             <div class="form-group">
-                <label for="facility-brief">Brief Description.:</label>
+                <label for="facility-brief">Brief Description:</label>
                 <input class="form-control " type="text" id="facility-brief" name="brief" value="{{$service->brief}}"
                     placeholder="Input Here" required />
             </div>
@@ -76,7 +78,7 @@
                 <div class="col-md-12 col-lg-6">
                     <div class="form-group">
                         <label for="imageUpload">Image 4:</label>
-                        <div class="image-preview" id="preview3">
+                        <div class="image-preview" id="preview4">
                             @if (!empty($service->image4))
                             <img src="{{ asset('storage/' . $service->image4) }}" alt="academy-img">
                             @else
@@ -89,33 +91,6 @@
                     </div>
                 </div>
             </div>
-
-
-            {{-- <div id="rates-container">
-                <div class="rate-row mb-3">
-                    <label for="rate-type">Rate Type:</label>
-                    <input id="rate-type" type="text" name="rate_type[]" class="form-control mb-2"
-                        placeholder="Rate Type" required>
-                    <label for="rate">Facility Rate:</label>
-                    <input id="rate" type="number" name="rate[]" class="form-control mb-2" placeholder="Rate"
-                        step="0.01" required>
-                    <label for="unit">Rate Unit:</label>
-
-                    <select id="unit" name="unit[]" class="form-control mb-2">
-                        <option value="Per Head">Per Head</option>
-                        <option value="Per Hour">Per Hour</option>
-                        <option value="Per Hour & Per Court">Per Hour & Per Court</option>
-                    </select>
-                    <label for="unit">Hours:</label>
-                    <input type="number" id="hour" name="hour[]" class="form-control mb-2"
-                        placeholder="hour (e.g., 1,2,3)" value="1" required>
-                    <label for="unit">Inclusions:</label>
-                    <textarea name="inclusions[]" id="inclusions" class="form-control mb-2" rows="5"
-                        placeholder="Inclusions (optional)"></textarea>
-                </div>
-
-            </div> --}}
-
 
             <div class="btn-container">
                 <button class="text-center btn" type="submit">
@@ -130,7 +105,8 @@
         <!-- Table -->
         <h4>{{$service->name}} Rates</h4>
         <div class="btn-container">
-            <button type="button" class="btn btn-secondary mb-3" id="add-rate">Add Another Rate</button>
+            <button type="button" class="btn btn-secondary mb-3" onclick="addNewRate({{$service->id}})">Add Another
+                Rate</button>
         </div>
         <div class="table-container">
             <table>
@@ -139,7 +115,7 @@
                         <th class="text-center" style="width: 3%">#</th>
                         <th>Rate Type</th>
                         <th>Rate</th>
-                        @if ($service->type === 'facility')
+                        @if ($service->type === 'Facility')
                         <th class="text-center">Unit</th>
                         <th class="text-center">Hours</th>
                         @endif
@@ -155,7 +131,7 @@
                         </td>
                         <td>{{$item->rate_type}}</td>
                         <td>{{$item->rate}}</td>
-                        @if ($service->type === 'facility')
+                        @if ($service->type === 'Facility')
                         <td class="text-center">
                             {{$item->unit}}
 
@@ -164,7 +140,13 @@
                         @endif
                         <td>{{$item->inclusions}}</td>
                         <td class="text-center">
-                            <a class="edit-btn" style="text-decoration:none">Edit</a>
+                            @if ($service->type === 'Facility')
+                            <button class="edit-btn" style="text-decoration:none"
+                                onclick="EditRateFull({{$item}})">Edit</button>
+                            @else
+                            <button class="edit-btn" style="text-decoration:none"
+                                onclick="EditRate({{$item}})">Edit</button>
+                            @endif
                             <button class="delete-btn" onclick="confirmDelete({{$item->id}})">Delete</button>
                         </td>
                     </tr>
@@ -173,8 +155,116 @@
             </table>
         </div>
         <!-- Table -->
+
     </div>
 </div>
+
+
+<div class="modal fade" id="EditRate" tabindex="-1" aria-labelledby="EditRateLabel" aria-hidden="true">
+    <div class="modal-dialog ">
+        <form id="editFAQForm" method="POST" action="{{ route('admin.EditRate') }}">
+            @csrf
+            @method('PUT')
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="EditRateLabel">Edit {{$service->name}} Rate</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" name="id" id="editserviceid">
+                    <div class="mb-3">
+                        <label for="editrate-type">Rate Type:</label>
+                        <input id="editrate-type" type="text" name="rate_type" class="form-control mb-2"
+                            placeholder="Rate Type" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="editrate-rate">Rate:</label>
+                        <input id="editrate-rate" type="number" name="rate" class="form-control mb-2" placeholder="Rate"
+                            required>
+                    </div>
+                    @if ($service->type === 'Facility')
+                    <div class="mb-3">
+                        <label for="editrate-unit">Unit:</label>
+                        <select id="editrate-unit" name="unit" class="form-control mb-2">
+                            <option value="Per Head">Per Head</option>
+                            <option value="Per Hour">Per Hour</option>
+                            <option value="Per Hour & Per Court">Per Hour & Per Court</option>
+                            <option value="Per Hour & Per Court">Per Hour & Half Court</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="editrate-hour">Hour/s:</label>
+                        <input id="editrate-hour" type="number" name="hour" class="form-control mb-2" placeholder="Rate"
+                            required value="1">
+                    </div>
+                    @endif
+                    <div class="mb-3">
+                        <label for="rate-inclusions" class="form-label">Inclusions</label>
+                        <textarea class="form-control" id="editrate-inclusions" name="inclusions" rows="3"></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="modal fade" id="newRate" tabindex="-1" aria-labelledby="NewRateLabel" aria-hidden="true">
+    <div class="modal-dialog ">
+        <form id="editFAQForm" method="POST" action="{{ route('admin.NewRate') }}">
+            @csrf
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="NewRateLabel">Add New Rate</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" name="id" id="serviceid">
+                    <div class="mb-3">
+                        <label for="rate-type">Rate Type:</label>
+                        <input id="rate-type" type="text" name="rate_type" class="form-control mb-2"
+                            placeholder="Rate Type" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="rate-rate">Rate:</label>
+                        <input id="rate-rate" type="number" name="rate" class="form-control mb-2" placeholder="Rate"
+                            required>
+                    </div>
+                    @if ($service->type === 'Facility')
+                    <div class="mb-3">
+                        <label for="rate-rate">Unit:</label>
+                        <select id="unit" name="unit" class="form-control mb-2">
+                            <option value="Per Head">Per Head</option>
+                            <option value="Per Hour">Per Hour</option>
+                            <option value="Per Hour & Per Court">Per Hour & Per Court</option>
+                            <option value="Per Hour & Per Court">Per Hour & Half Court</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="rate-hour">Hour/s:</label>
+                        <input id="rate-hour" type="number" name="hour" class="form-control mb-2" placeholder="Rate"
+                            required value="1">
+                    </div>
+                    @endif
+                    <div class="mb-3">
+                        <label for="rate-inclusions" class="form-label">Inclusions</label>
+                        <textarea class="form-control" id="rate-inclusions" name="inclusions" rows="3"></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
 <div class="modal fade" id="deleteRate" tabindex="-1" aria-labelledby="deleteRateLabel" aria-hidden="true">
     <div class="modal-dialog">
         <form id="deleteFAQForm" method="POST" action="{{ route('admin.DeletRate') }}">
@@ -198,84 +288,69 @@
         </form>
     </div>
 </div>
+
 <script>
+    function EditRate(rate) {
+        document.getElementById('editserviceid').value = rate.id;
+        document.getElementById('editrate-type').value = rate.rate_type;
+        document.getElementById('editrate-rate').value = rate.rate;
+        document.getElementById('editrate-inclusions').value = rate.inclusions;
+
+        let modal = new bootstrap.Modal(document.getElementById('EditRate'));
+        modal.show();
+    }
+
+    function EditRateFull(rate) {
+        document.getElementById('editserviceid').value = rate.id;
+        document.getElementById('editrate-type').value = rate.rate_type;
+        document.getElementById('editrate-rate').value = rate.rate;
+        document.getElementById('editrate-unit').value = rate.unit;
+        document.getElementById('editrate-hour').value = rate.hour;
+        document.getElementById('editrate-inclusions').value = rate.inclusions;
+
+        let modal = new bootstrap.Modal(document.getElementById('EditRate'));
+        modal.show();
+    }
+
+    function addNewRate(RateID) {
+        document.getElementById('serviceid').value = RateID;
+      
+        let modal = new bootstrap.Modal(document.getElementById('newRate'));
+        modal.show();
+    }
+
     function confirmDelete(RateID) {
-            // Set the FAQ ID in the hidden input field
         document.getElementById('deletearticleID').value = RateID;
 
-        // Show the delete confirmation modal
         let modal = new bootstrap.Modal(document.getElementById('deleteRate'));
         modal.show();
-
     }
 </script>
 
 <!-- Image Select Script-->
 <script>
-    document.querySelectorAll(".imageUpload").forEach((imageUpload) => {
-  imageUpload.addEventListener("change", function () {
+document.querySelectorAll(".imageUpload").forEach((imageUpload) => {
+    imageUpload.addEventListener("change", function () {
     const file = this.files[0];
     const previewId = this.getAttribute("data-preview");
     const imagePreview = document.getElementById(previewId);
+        if (!imagePreview) {
+            console.error(`Preview container with ID "${previewId}" not found.`);
+            return;
+        }
 
-    // Check if the preview container exists
-    if (!imagePreview) {
-      console.error(`Preview container with ID "${previewId}" not found.`);
-      return;
-    }
-
-    if (file) {
-
-      const reader = new FileReader();
-      reader.onload = function (event) {
-        imagePreview.innerHTML = `<img src="${event.target.result}" alt="Preview Image">`;
-      };
-      reader.readAsDataURL(file);
-    } else {
-      imagePreview.innerHTML = `<span>No image selected</span>`;
-    }
-  });
-});
-
-</script>
-<script>
-    document.getElementById('add-rate').addEventListener('click', function() {
-        const container = document.getElementById('rates-container');
-        const rateRow = document.createElement('div');
-        rateRow.classList.add('rate-row', 'mb-3');
-        rateRow.innerHTML = `
-            <hr/>
-            <div>
-                <label for="rate-type">Rate Type:</label>
-                <input type="text" name="rate_type[]" class="form-control mb-2" placeholder="Rate Type" required>
-                
-                <label for="rate">Facility Rate:</label>
-                <input type="number" name="rate[]" class="form-control mb-2" placeholder="Rate" step="0.01" required>
-                
-                <label for="unit">Rate Unit:</label>
-                <select name="unit[]" class="form-control mb-2">
-                    <option value="Per Head">Per Head</option>
-                    <option value="Per Hour">Per Hour</option>
-                    <option value="Per Hour & Per Court">Per Hour & Per Court</option>
-                </select>
-                
-                <label for="hour">Hours:</label>
-                <input type="number" name="hour[]" class="form-control mb-2" placeholder="hour (e.g., 1,2,3)" value="1" required>
-                
-                <label for="inclusions">Inclusions:</label>
-                <textarea name="inclusions[]" class="form-control mb-2" rows="5" placeholder="Inclusions (optional)"></textarea>
-                
-                <button type="button" class="btn btn-danger remove-rate" style="background-color: #f44336;">Remove</button>
-            </div>
-        `;
-
-        container.appendChild(rateRow);
-
-        // Attach event listener to the newly added remove button
-        rateRow.querySelector('.remove-rate').addEventListener('click', function() {
-            rateRow.remove();
-        });
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function (event) {
+                imagePreview.innerHTML = `<img src="${event.target.result}" alt="Preview Image">`;
+            };
+            reader.readAsDataURL(file);
+        } else {
+            imagePreview.innerHTML = `<span>No image selected</span>`;
+        }
     });
+});
 </script>
+
 
 @endsection

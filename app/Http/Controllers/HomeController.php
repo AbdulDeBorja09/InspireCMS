@@ -14,6 +14,10 @@ use App\Models\Teams;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Session;
+use Carbon\Carbon;
+use Illuminate\Support\Str;
 
 class HomeController extends Controller
 {
@@ -27,13 +31,13 @@ class HomeController extends Controller
         $data = array_merge(['contents' => $contents], $additionalData);
 
         // display view with data  
-        return view("user.$viewName", $data);
+        return view("User.$viewName", $data);
     }
 
     public function ShowHome()
     {
         $articles = Articles::all();
-        $services = Services::where('type', 'facility')->get();
+        $services = Services::where('type', 'Facility')->get();
         return $this->ShowPage('home', 'home', compact('articles', 'services'));
     }
 
@@ -65,13 +69,13 @@ class HomeController extends Controller
 
     public function ShowFacilities()
     {
-        $facilities = Services::where('type', 'facility')->get();
+        $facilities = Services::where('type', 'Facility')->get();
         return $this->ShowPage('facilities', 'facilities', compact('facilities'));
     }
 
     public function ShowAcademies()
     {
-        $academies = Services::where('type', 'academies')->get();
+        $academies = Services::where('type', 'Academy')->get();
         return $this->ShowPage('academy', 'academies', compact('academies'));
     }
 
@@ -87,19 +91,25 @@ class HomeController extends Controller
         return $this->ShowPage('profile', 'profile');
     }
 
-    public function singleqoutation($id)
+    public function singlequotation($id)
     {
-        $facilities = Services::findOrFail($id);
+        $service = Services::findOrFail($id);
         $rates = Rate::where('service_id', $id)->get();
-        return $this->ShowPage('singlepage', 'qoutepage', compact('facilities', 'rates'));
+        return $this->ShowPage('Content', 'quotepage', compact('service', 'rates'));
     }
 
+    public function QuotationPDF()
+    {
+        // $service = Services::findOrFail($id);
+        // $rates = Rate::where('service_id', $id)->get();
+        return $this->ShowPage('Content', 'viewpdf');
+    }
 
     public function quotationpage()
     {
-        $facilities = Services::where('type', 'facility')->get();
-        $academies = Services::where('type', 'academies')->get();
-        $membership = Services::where('type', 'membership')->get();
+        $facilities = Services::where('type', 'Facility')->get();
+        $academies = Services::where('type', 'Academy')->get();
+        $membership = Services::where('type', 'Membership')->get();
         return $this->ShowPage('quotation', 'quotation', compact('facilities', 'academies', 'membership'));
     }
 
@@ -171,5 +181,103 @@ class HomeController extends Controller
         } catch (\Throwable $e) {
             return redirect()->back()->with(['error' => $e->getMessage()], 500);
         }
+    }
+
+
+
+    public function ChangePassword(Request $request)
+    {
+        $request->validate([
+            'old_password' => 'required|string|max:255',
+            'new_password' => 'required|string|max:255',
+            'confirm_password' => 'required|string',
+        ]);
+
+        $user = Auth::user();
+        if (!Hash::check($request->old_password, $user->password)) {
+            return redirect()->back()->with('error', 'Old Password Does Not Match!');
+        } else {
+            if ($request->new_password === $request->confirm_password) {
+                try {
+                    $user = User::where('id', Auth::user()->id)->update([
+                        'password' => Hash::make($request->new_password),
+                    ]);
+                    if ($user) {
+                        return redirect()->back()->with('success', 'Profile Updated successfully!');
+                    } else {
+                        return redirect()->back()->with('error', 'Failed to save!');
+                    }
+                } catch (\Throwable $e) {
+                    return redirect()->back()->with(['error' => $e->getMessage()], 500);
+                }
+            } else {
+                return redirect()->back()->with('error', 'Password Not Match!');
+            }
+        }
+    }
+
+    public function CreateQuotation(Request $request)
+    {
+
+        $service = Services::with('rates')->where('id', $request->service_id)->first();
+        $rates = Rate::where('id', $request->rate_type)->first();
+
+        // Initialize total price and total hours
+        $totalPrice = 0;
+        $IndvRate = 0;
+        $totalHours = null;
+
+        // If the service has rates and you are looking for 'individual' rate
+        if ($service && $service->rates->isNotEmpty()) {
+            // Find the rate that matches 'individual' rate_type
+            $rate = $service->rates->firstWhere(function ($rate) {
+                return Str::contains(strtolower($rate->rate_type), 'individual');
+            });
+
+            if ($rate) {
+                // If there is a rate and guests are provided, calculate total price
+                if ($request->guests) {
+                    $totalPrice = $rate->rate * $request->guests;
+                    $IndvRate = $rate->rate;
+                }
+            }
+        }
+
+        // If start and end dates are provided, calculate total hours
+        if ($request->start_date && $request->end_date) {
+            $startTime = Carbon::parse($request->start_date);
+            $endTime = Carbon::parse($request->end_date);
+
+            // Ensure the start time is always earlier than the end time
+            if ($endTime->lt($startTime)) {
+                // Swap start and end times if necessary
+                $temp = $startTime;
+                $startTime = $endTime;
+                $endTime = $temp;
+            }
+
+            // Calculate the difference in hours
+            $totalHours = ceil($startTime->diffInHours($endTime));
+        }
+
+        // Prepare quotation data
+        $quotationData = [
+            'service_type' => $request->service_type,
+            'service_name' => $request->service_name,
+            'rate_type' => $rates->rate_type,
+            'rate' => $rates->rate ?? 0,
+            'hours' => $totalHours,
+            'qty' => $request->qty,
+            'guest' => $request->guests,
+            'total_price' => $totalPrice,
+            'individual' => $totalPrice,
+            'individual_base' => $IndvRate,
+        ];
+
+        // Store the quotation data in session
+        Session::put('quotation_data', $quotationData);
+
+        // Pass data to the view
+        return $this->ShowPage('Payment', 'viewpdf', compact('quotationData'));
     }
 }

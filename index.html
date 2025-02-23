@@ -5,35 +5,35 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Quotation</title>
         <style>
-            .pdf-table {
+            body {
                 font-family: Arial, sans-serif;
                 margin: 20px;
                 width: 8.5in;
                 height: 11in;
             }
-            .pdf-table .header {
+            .header {
                 display: flex;
                 justify-content: space-between;
                 align-items: center;
                 margin-bottom: 5px;
             }
-            .pdf-table .header img {
+            .header img {
                 width: 180px;
             }
-            .pdf-table .company-details {
+            .company-details {
                 text-align: right;
                 font-size: 12px;
             }
-            .pdf-table .info {
+            .info {
                 display: flex;
                 justify-content: space-between;
                 margin-top: 10px;
                 font-size: 12px;
             }
-            .pdf-table .info-left {
+            .info-left {
                 width: 50%;
             }
-            .pdf-table .info-right {
+            .info-right {
                 width: 50%;
                 padding-left: 50px;
                 .info p {
@@ -47,28 +47,28 @@
                     border-bottom: 1px solid black;
                 }
             }
-            .pdf-table .line {
+            .line {
                 border-top: 2px solid black;
                 margin-top: 5px;
             }
-            .pdf-table .quotation-table {
+            .quotation-table {
                 width: 100%;
                 border-collapse: collapse;
                 margin-top: 10px;
                 font-size: 12px;
             }
-            .pdf-table .quotation-table th {
+            .quotation-table th {
                 background-color: #d3d3d3;
                 padding: 6px;
                 border: 1px solid black;
                 text-align: center;
             }
-            .pdf-table .quotation-table td {
+            .quotation-table td {
                 padding: 5px;
                 border: 1px solid black;
                 text-align: center;
             }
-            .pdf-table .quotation-header {
+            .quotation-header {
                 background-color: #0056b3;
                 color: white;
                 font-size: 14px;
@@ -76,34 +76,34 @@
                 text-align: center;
                 padding: 6px;
             }
-            .pdf-table .terms-section {
+            .terms-section {
                 display: flex;
                 justify-content: space-between;
                 margin-top: 10px;
             }
-            .pdf-table .terms {
+            .terms {
                 width: 60%;
                 font-size: 11px;
             }
-            .pdf-table .subtotal-box {
+            .subtotal-box {
                 width: 35%;
                 border: 1px solid black;
                 padding: 6px;
                 font-size: 12px;
             }
-            .pdf-table .approval-section {
+            .approval-section {
                 display: flex;
                 justify-content: space-around;
                 text-align: center;
                 margin-top: 20px;
                 font-size: 12px;
             }
-            .pdf-table .approval-section div {
+            .approval-section div {
                 width: 30%;
             }
         </style>
     </head>
-    <section class="pdf-table">
+    <body>
         <div class="header">
             <img src="inspire-logo.png" alt="INSPIRE Sports Academy" />
             <div class="company-details">
@@ -121,10 +121,10 @@
 
         <div class="info">
             <div class="info-left">
-                <p><strong>Bill to:</strong>Abdul</p>
-                <p><strong>Address & TIN No.:</strong> asdasdasd</p>
-                <p><strong>Event Date & Title:</strong> asdasd</p>
-                <p><strong>Event Time:</strong> asdasdasd</p>
+                <p><strong>Bill to:</strong></p>
+                <p><strong>Address & TIN No.:</strong></p>
+                <p><strong>Event Date & Title:</strong></p>
+                <p><strong>Event Time:</strong></p>
             </div>
             <div class="info-right">
                 <p><strong>Quotation No.:</strong></p>
@@ -249,5 +249,5 @@
                 <p>Managing Director</p>
             </div>
         </div>
-    </section>
+    </body>
 </html>

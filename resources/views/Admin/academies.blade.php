@@ -10,7 +10,7 @@
         <h4>Add Academies</h4>
         <form action="{{route('admin.CreateService')}}" method="POST" enctype="multipart/form-data">
             @csrf
-            <input class="form-control " type="hidden" id="Academies-name" name="type" value="academies" />
+            <input class="form-control " type="hidden" id="Academies-name" name="type" value="Academy" />
             <div class="form-group">
                 <label for="Academies-name">Name:</label>
                 <input class="form-control " type="text" id="Academies-name" name="name" placeholder="Input Here" />
@@ -127,7 +127,7 @@
 <!-- Image Select Script-->
 <script>
     document.querySelectorAll(".imageUpload").forEach((imageUpload) => {
-  imageUpload.addEventListener("change", function () {
+    imageUpload.addEventListener("change", function () {
     const file = this.files[0];
     const previewId = this.getAttribute("data-preview");
     const imagePreview = document.getElementById(previewId);

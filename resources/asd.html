@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Simple Calendar with Drawing</title>
+        <script src="https://cdn.jsdelivr.net/npm/preact@10.23.2/dist/preact.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/preact@10.23.2/hooks/dist/hooks.umd.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@preact/signals-core@1.8.0/dist/signals-core.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@preact/signals@1.3.0/dist/signals.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/preact@10.23.2/jsx-runtime/dist/jsxRuntime.umd.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/preact@10.23.2/compat/dist/compat.umd.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@schedule-x/calendar@2.2.0/dist/core.umd.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@schedule-x/drag-and-drop@2.2.0/dist/core.umd.js"></script>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+            }
+            .calendar {
+                display: grid;
+                grid-template-columns: repeat(7, 1fr);
+                gap: 5px;
+            }
+            .day {
+                padding: 20px;
+                border: 1px solid #ccc;
+                text-align: center;
+                cursor: pointer;
+                position: relative;
+            }
+            .event {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                background: rgba(0, 0, 255, 0.2);
+                padding: 5px;
+                font-size: 12px;
+                border-radius: 5px;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Simple Calendar</h1>
+        <div class="calendar" id="calendar"></div>
+
+        <script>
+            import {
+                createCalendar,
+                viewWeek,
+                viewMonthGrid,
+                viewDay,
+            } from "@schedule-x/calendar";
+            import { createDrawPlugin } from "@sx-premium/draw";
+            const drawPlugin = createDrawPlugin({
+                onFinishDrawing: (event) => {
+                    // do something, like saving the event to the server
+                },
+
+                // (Optional) configure the intervals, in minutes, at which a time grid-event can be drawn. Valid values: 15, 30, 60
+                snapDuration: 30,
+            });
+
+            const calendar = createCalendar({
+                callbacks: {
+                    onMouseDownDateTime(dateTime, mouseDownEvent) {
+                        drawPlugin.drawTimeGridEvent(dateTime, mouseDownEvent, {
+                            title: "Unknown event",
+                        });
+                    },
+
+                    onMouseDownMonthGridDate(date, _mouseDownEvent) {
+                        console.log(_mouseDownEvent);
+                        drawPlugin.drawMonthGridEvent(date, {
+                            title: "Unknown event",
+                        });
+                    },
+
+                    onMouseDownDateGridDate(date, mouseDownEvent) {
+                        drawPlugin.drawDateGridEvent(date, mouseDownEvent, {
+                            title: "Unknown event",
+                        });
+                    },
+                },
+                views: [viewMonthGrid, viewWeek, viewDay],
+                plugins: [drawPlugin],
+            });
+        </script>
+    </body>
+</html>

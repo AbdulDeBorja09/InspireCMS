@@ -15,6 +15,7 @@ use App\Models\Services;
 use App\Models\Teams;
 use App\Models\ContactUs;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 
 class AdminController extends Controller
 {
@@ -59,13 +60,13 @@ class AdminController extends Controller
 
     public function ShowFacilities()
     {
-        $facilities = Services::where('type', 'facility')->get();
+        $facilities = Services::where('type', 'Facility')->get();
         return $this->ShowPage('facilities', 'facilities', compact('facilities'));
     }
 
     public function ShowAcademies()
     {
-        $academies = Services::where('type', 'academies')->get();
+        $academies = Services::where('type', 'Academy')->get();
         return $this->ShowPage('academies', 'academies', compact('academies'));
     }
 
@@ -587,6 +588,82 @@ class AdminController extends Controller
 
             // Redirect back with message if success or not
             return redirect()->back()->with('success', 'Question Deleted successfully!');
+        } catch (\Throwable $e) {
+            return redirect()->back()->with(['error' => $e->getMessage()], 500);
+        }
+    }
+
+
+    public function NewRate(Request $request)
+    {
+        try {
+            Rate::create([
+                'service_id' => $request->id,
+                'rate_type' => $request->rate_type,
+                'rate' => $request->rate,
+                'unit' => $request->unit,
+                'inclusions' => $request->inclusions,
+                'hour' => $request->hour,
+            ]);
+            return redirect()->back()->with('success', 'Rate Added successfully!');
+        } catch (\Throwable $e) {
+            return redirect()->back()->with(['error' => $e->getMessage()], 500);
+        }
+    }
+
+    public function EditService(Request $request)
+    {
+        $service = Services::findOrFail($request->id);
+
+
+        try {
+            $imagePaths = [];
+            for ($i = 1; $i <= 4; $i++) {
+                $imageKey = 'image' . $i;
+
+                if ($request->hasFile($imageKey)) {
+                    // Delete the old image if it exists
+                    if ($service->$imageKey) {
+                        Storage::disk('public')->delete($service->$imageKey);
+                    }
+                    // Store the new image
+                    $imagePaths[$imageKey] = $request->file($imageKey)->store('facilities', 'public');
+                } else {
+                    // Retain the old image if no new file is uploaded
+                    $imagePaths[$imageKey] = $service->$imageKey;
+                }
+            }
+
+            // Update the service record
+            $service->update([
+                'image1' => $imagePaths['image1'],
+                'image2' => $imagePaths['image2'],
+                'image3' => $imagePaths['image3'],
+                'image4' => $imagePaths['image4'],
+                'name' => $request->name,
+                'brief' => $request->brief,
+                'description' => $request->description,
+            ]);
+
+            return redirect()->back()->with('success', 'Rate Added successfully!');
+        } catch (\Throwable $e) {
+            return redirect()->back()->with(['error' => $e->getMessage()], 500);
+        }
+    }
+
+
+    public function EditRate(Request $request)
+    {
+        $rate = Rate::findOrFail($request->id);
+        try {
+            $rate->update([
+                'rate_type' => $request->rate_type,
+                'rate' => $request->rate,
+                'unit' => $request->unit,
+                'inclusions' => $request->inclusions,
+                'hour' => $request->hour,
+            ]);
+            return redirect()->back()->with('success', 'Rate Added successfully!');
         } catch (\Throwable $e) {
             return redirect()->back()->with(['error' => $e->getMessage()], 500);
         }

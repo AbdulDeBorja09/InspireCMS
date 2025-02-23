@@ -132,7 +132,6 @@
 
           setTimeout(() => {
             document.querySelector(".preloader").style.display = "none";
-            document.querySelector(".main-content").classList.add("show-page");
           }, 500); 
         });
       });

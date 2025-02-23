@@ -22,7 +22,7 @@
 </section>
 <!-- END OF HEADER -->
 
-<!-- USER SETTINGS -->
+
 <div class="container my-5 settings">
     <div class="sidebar" role="tablist">
         <!-- USER IMAGE -->
@@ -32,18 +32,16 @@
             @else
             <img src="{{asset('images/profile.webp')}}" alt="Profile Picture" class="profile-img" />
             @endif
-
-
             <div class="profile-info">
                 <p class="username">{{Auth::user()->fname}} {{Auth::user()->lname}}</p>
             </div>
         </div>
         <hr style="
-              border: 1px solid #64748b;
-              opacity: 1;
-              width: 100%;
-              margin: 25px 0;
-            " />
+          border: 1px solid #64748b;
+          opacity: 1;
+          width: 100%;
+          margin: 25px 0;
+        " />
 
         <!-- SIDEBAR TABS -->
         <a class="sidetabs active" href="" onclick="showTab(event, 'settings')">
@@ -66,39 +64,39 @@
             <h1>Account Settings</h1>
             <p>Manage your account information here.</p>
             <hr style="
-                border: 1px solid #64748b;
-                opacity: 1;
-                width: 100%;
-                margin: auto;
-              " />
+            border: 1px solid #64748b;
+            opacity: 1;
+            width: 100%;
+            margin: auto;
+          " />
 
-            <div class="form-container">
-                <!-- Top Page Section -->
-                <form action="{{route('EditProfile')}}" method="POST" enctype="multipart/form-data">
+            <!-- ACCOUNT -->
+            <div class="form-containers">
+                <form class="user-info form" action="{{route('EditProfile')}}" method="POST"
+                    enctype="multipart/form-data">
                     @csrf
-                    <div class="mt-3 names d-flex gap-2">
+                    <div class="mt-3 names d-flex justify-content-between">
                         <!-- First Name -->
-                        <div class="form-group">
+                        <div class="mb-3 form-group">
                             <label for="firstname">First Name</label>
                             <input type="text" id="firstname" name="fname" value="{{Auth::user()->fname}}"
                                 placeholder="Anthony" />
                         </div>
                         <!-- Last Name -->
-                        <div class="form-group">
+                        <div class="mb-3 form-group">
                             <label for="lastname">Last Name</label>
                             <input type="text" id="lastname" name="lname" value="{{Auth::user()->lname}}"
                                 placeholder="Jennings" />
                         </div>
                     </div>
-
                     <!-- Email -->
-                    <div class="form-group">
+                    <div class="mb-3 form-group">
                         <label for="email">Email</label>
                         <input type="text" id="email" name="email" value="{{Auth::user()->email}}" disabled
                             placeholder="anthonyjennings@gmail.com" />
                     </div>
                     <!-- Phone Number -->
-                    <div class="form-group">
+                    <div class="mb-3 form-group">
                         <label for="phone">Phone Number</label>
                         <input type="text" id="phone" name="phone" value="{{Auth::user()->phone}}"
                             placeholder="09123456789" />
@@ -118,10 +116,32 @@
                         <input type="file" id="imageUpload" name="image" accept="image/*" />
                     </div>
 
-                    <button class="mt-3 save-btn" type="submit">Save Changes</button>
+                    <div class="btn-container">
+                        <button class="save-btn" type="submit">Save Changes</button>
+                    </div>
                 </form>
 
-                <!-- About Section -->
+                <!-- Change Password -->
+                <form action="{{route('ChangePassword')}}" class="mt-3 change-password form" method="POST">
+                    @csrf
+                    @method('PUT')
+                    <div class="mb-3 form-group">
+                        <label for="password">Enter old password</label>
+                        <input type="password" id="password" name="old_password" placeholder="Enter old password" />
+                    </div>
+                    <div class="mb-3 form-group">
+                        <label for="password">Enter new password</label>
+                        <input type="password" id="password" name="new_password" placeholder="Enter new password" />
+                    </div>
+                    <div class="mb-3 form-group">
+                        <label for="password">Confirm password</label>
+                        <input type="password" id="password" name="confirm_password" placeholder="Confirm password" />
+                    </div>
+                    <div class="btn-container">
+                        <button class="save-btn" type="submit">Save Changes</button>
+                    </div>
+                </form>
+
             </div>
         </div>
 
@@ -130,41 +150,54 @@
             <h1>Notifications</h1>
             <p>View your notifications here.</p>
             <hr style="
-                border: 1px solid #64748b;
-                opacity: 1;
-                width: 100%;
-                margin: auto;
-              " />
+            border: 1px solid #64748b;
+            opacity: 1;
+            width: 100%;
+            margin: auto;
+          " />
+
             <!-- APPROVED -->
             <div class="mt-3 notif-container">
-                <div class="message-accept">
+                <div class="notif-header message-accept" onclick="toggleAccordion(this)">
                     <h3>Request Approved!</h3>
-                    <p>Your request for quotation has been approved.</p>
                 </div>
-                <button class="payment-btn shadow-none">Proceed to payment</button>
+                <div class="notif-content">
+                    <p>Your request for quotation has been approved.</p>
+                    <div class="btn-container">
+                        <button class="transac-btn">Proceed to payment</button>
+                    </div>
+                </div>
             </div>
+
             <!-- VERIFIED -->
             <div class="notif-container">
-                <div class="message-accept">
+                <div class="notif-header message-accept" onclick="toggleAccordion(this)">
                     <h3>Payment Verified Successfully!</h3>
+                </div>
+                <div class="notif-content">
                     <p>
                         Your payment has been verified and your schedule is now set.
                     </p>
+                    <div class="btn-container">
+                        <button class="transac-btn">Download Payment Receipt</button>
+                    </div>
                 </div>
-                <button class="payment-btn shadow-none">
-                    Download Payment Receipt
-                </button>
             </div>
+
             <!-- DENIED -->
             <div class="notif-container">
-                <div class="message-deny">
+                <div class="notif-header message-deny" onclick="toggleAccordion(this)">
                     <h3>Request Denied!</h3>
+                </div>
+                <div class="notif-content">
                     <p>
-                        Your request for quotation has been denied, due to same date
+                        Your request for quotation has been denied due to a same-date
                         conflict.
                     </p>
+                    <div class="btn-container">
+                        <button class="transac-btn">Request Again</button>
+                    </div>
                 </div>
-                <button class="payment-btn shadow-none">Request again</button>
             </div>
         </div>
 
@@ -173,11 +206,11 @@
             <h1>Transactions</h1>
             <p>View your history of transactions.</p>
             <hr style="
-                border: 1px solid #64748b;
-                opacity: 1;
-                width: 100%;
-                margin: auto;
-              " />
+            border: 1px solid #64748b;
+            opacity: 1;
+            width: 100%;
+            margin: auto;
+          " />
 
             <!-- TABLE -->
             <div class="table-container">
@@ -208,6 +241,7 @@
                             <th>Type</th>
                             <th>Amount</th>
                             <th>Status</th>
+                            <th>Action</th>
                         </tr>
                     </thead>
                     <tbody id="transaction-table">
@@ -217,6 +251,9 @@
                             <td>Payment</td>
                             <td>$150.00</td>
                             <td>Completed</td>
+                            <td>
+                                <button class="shadow-none view-btn">View More</button>
+                            </td>
                         </tr>
                         <tr data-type="quotation" data-status="pending" data-date="2025-02-16">
                             <td>2025-02-16 10:15</td>
@@ -224,6 +261,9 @@
                             <td>Quotation Request</td>
                             <td>$0.00</td>
                             <td>Pending</td>
+                            <td>
+                                <button class="shadow-none view-btn">View More</button>
+                            </td>
                         </tr>
                         <tr data-type="payment" data-status="completed" data-date="2025-02-17">
                             <td>2025-02-17 09:45</td>
@@ -231,6 +271,9 @@
                             <td>Payment</td>
                             <td>$200.00</td>
                             <td>Completed</td>
+                            <td>
+                                <button class="shadow-none view-btn">View More</button>
+                            </td>
                         </tr>
                         <tr data-type="quotation" data-status="approved" data-date="2025-02-18">
                             <td>2025-02-18 16:00</td>
@@ -238,11 +281,15 @@
                             <td>Quotation Request</td>
                             <td>$0.00</td>
                             <td>Approved</td>
+                            <td>
+                                <button class="shadow-none view-btn">View More</button>
+                            </td>
                         </tr>
                     </tbody>
                 </table>
             </div>
         </div>
+
     </div>
 </div>
 <!-- END OF USER SETTINGS -->
@@ -281,6 +328,15 @@
     });
 </script>
 
+
+<!-- Notifications -->
+<script>
+    function toggleAccordion(element) {
+      const content = element.nextElementSibling;
+      content.style.display =
+        content.style.display === "block" ? "none" : "block";
+    }
+</script>
 
 
 @endsection

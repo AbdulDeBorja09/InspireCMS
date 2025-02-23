@@ -11,7 +11,7 @@
         <h4>Add membership</h4>
         <form action="{{route('admin.CreateService')}}" method="POST" enctype="multipart/form-data">
             @csrf
-            <input class="form-control " type="hidden" id="membership-name" name="type" value="membership" />
+            <input class="form-control " type="hidden" id="membership-name" name="type" value="Membership" />
             <div class="form-group">
                 <label for="membership-name">Name:</label>
                 <input class="form-control " type="text" id="membership-name" name="name" placeholder="Input Here" />

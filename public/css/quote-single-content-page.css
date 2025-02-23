@@ -35,7 +35,7 @@ body {
 }
 
 .container .nav-item .nav-link:hover {
-    color: #BC943B;
+    color: #bc943b;
 }
 
 .custom-toggler {
@@ -75,16 +75,16 @@ body {
     position: relative;
     overflow: hidden;
     cursor: pointer;
-    transition: .5s;
+    transition: 0.5s;
     font-weight: bold;
-    border: 2px solid #BC943B;
+    border: 2px solid #bc943b;
     color: var(--color);
     z-index: 1;
 }
 
 .quote-btn::before,
 .quote-btn::after {
-    content: '';
+    content: "";
     display: block;
     width: 50px;
     height: 50px;
@@ -92,7 +92,7 @@ body {
     position: absolute;
     border-radius: 50%;
     z-index: -1;
-    background-color: #BC943B;
+    background-color: #bc943b;
     transition: 0.8s ease;
 }
 
@@ -127,7 +127,6 @@ body {
 #image {
     width: 100%;
     height: auto;
-
 }
 
 .bg-image {
@@ -162,7 +161,7 @@ body {
 #general-tab-header {
     width: 100%;
     height: 45vh;
-    background-color: #003E7C;
+    background-color: #003e7c;
     position: relative;
     padding-top: 100px;
 }
@@ -185,7 +184,6 @@ body {
     color: #f1f5f9;
 }
 
-
 /* BACK BTN DESIGN */
 .back-btn {
     display: flex;
@@ -199,8 +197,8 @@ body {
     position: relative;
     overflow: hidden;
     cursor: pointer;
-    transition: .5s;
-    border: 2px solid #BC943B;
+    transition: 0.5s;
+    border: 2px solid #bc943b;
     color: var(--color);
     z-index: 1;
 }
@@ -216,7 +214,7 @@ body {
 
 .back-btn::before,
 .back-btn::after {
-    content: '';
+    content: "";
     display: block;
     width: 50px;
     height: 50px;
@@ -224,7 +222,7 @@ body {
     position: absolute;
     border-radius: 50%;
     z-index: -1;
-    background-color: #BC943B;
+    background-color: #bc943b;
     transition: 0.8s ease;
 }
 
@@ -253,7 +251,6 @@ body {
 }
 
 /* END OF BACK BTN DESIGN */
-
 
 /* HEADER */
 
@@ -295,7 +292,7 @@ body {
 }
 
 .content-container p {
-    color: #1C2636;
+    color: #1c2636;
 }
 
 .options-card {
@@ -306,8 +303,8 @@ body {
     text-align: center;
 }
 
-select,
-input {
+.content-page select,
+.content-page input {
     background: rgba(201, 201, 201, 0.2);
     border: 2px solid transparent;
     color: #122444;
@@ -321,8 +318,8 @@ input {
     font-weight: bold;
 }
 
-select:focus,
-input:focus {
+.content-page select:focus,
+.content-page input:focus {
     outline: none;
     box-shadow: 0px 0px 15px rgba(255, 255, 255, 0.4);
     border: 2px solid #122444;
@@ -376,8 +373,8 @@ input:focus {
     display: inline-block;
     width: 35px;
     height: 35px;
-    border: 1px solid #1C2636;
-    color: #1C2636;
+    border: 1px solid #1c2636;
+    color: #1c2636;
     text-align: center;
     line-height: 35px;
     border-radius: 10px;
@@ -387,7 +384,7 @@ input:focus {
 }
 
 .follow-socials a:hover {
-    background: #1C2636;
+    background: #1c2636;
     color: #f1f5f9;
     transform: scale(1.1);
 }
@@ -441,7 +438,8 @@ input:focus {
 }
 
 .quick-links li a {
-    transition: color 0.3s ease-in-out, text-decoration 0.3s ease-in-out, transform 0.2s ease-in-out;
+    transition: color 0.3s ease-in-out, text-decoration 0.3s ease-in-out,
+        transform 0.2s ease-in-out;
 }
 
 .quick-links li:hover {
@@ -454,3 +452,138 @@ input:focus {
 }
 
 /* FOOTER */
+
+#contact {
+    width: 100%;
+    height: 60vh;
+}
+
+#contact .form-container {
+    padding: 40px;
+    text-align: center;
+}
+
+/* Titles */
+#contact .sub-title {
+    color: #064e3b;
+    font-size: 40px;
+    margin-bottom: 20px;
+}
+
+/* Form Styling */
+#contact form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+#contact .input-group,
+#contact .message-group {
+    display: flex;
+    gap: 15px;
+}
+
+#contact .input-group input {
+    flex: 1;
+}
+
+/* Input Fields */
+#contact input,
+#contact textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 16px;
+    transition: 0.3s;
+}
+
+#contact input:focus,
+#contact textarea:focus {
+    border-color: #122444;
+    outline: none;
+    box-shadow: 0 0 5px rgba(18, 38, 68, 0.3);
+}
+
+#contact .message-group {
+    display: flex;
+    width: 100%;
+}
+
+/* Textarea */
+#contact textarea {
+    flex: 1;
+    height: 120px;
+    resize: none;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 16px;
+    transition: 0.3s;
+}
+
+/* Button */
+#contact .submit-btn {
+    width: 200px;
+    background-color: transparent;
+    --color: #122444;
+    padding: 0.8em 1.7em;
+    border-radius: 999px;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    transition: 0.5s;
+    font-weight: 600;
+    font-size: 18px;
+    border: 1px solid;
+    color: var(--color);
+    z-index: 1;
+}
+
+#contact .submit-btn::before,
+#contact .submit-btn::after {
+    content: "";
+    display: block;
+    width: 50px;
+    height: 50px;
+    transform: translate(-50%, -50%);
+    position: absolute;
+    border-radius: 50%;
+    z-index: -1;
+    background-color: var(--color);
+    transition: 0.8s ease;
+}
+
+#contact .submit-btn::before {
+    top: -1em;
+    left: -1em;
+}
+
+#contact .submit-btn::after {
+    left: calc(100% + 1em);
+    top: calc(100% + 1em);
+}
+
+#contact .submit-btn:hover::before,
+#contact .submit-btn:hover::after {
+    height: 410px;
+    width: 410px;
+}
+
+#contact .submit-btn:hover {
+    color: #f1f5f9;
+}
+
+#contact .submit-btn:active {
+    filter: brightness(1);
+}
+
+#contact .contact-image {
+    position: absolute;
+    width: 100%;
+    height: auto;
+    z-index: -1;
+    object-fit: cover;
+    overflow: hidden;
+    padding: 0;
+}

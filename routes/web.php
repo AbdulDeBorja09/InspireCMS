@@ -24,15 +24,22 @@ Route::get('/Facilities', [HomeController::class, 'ShowFacilities']);
 Route::get('/Academies', [HomeController::class, 'ShowAcademies']);
 Route::get('/Faqs', [HomeController::class, 'ShowFAQs']);
 Route::get('/About', [HomeController::class, 'ShowAbout']);
-Route::get('/Qoutation', [HomeController::class, 'quotationpage'])->name('quotationpage');
-Route::get('/Qoutation/{id}', [HomeController::class, 'singleqoutation']);
+Route::get('/Quotation', [HomeController::class, 'quotationpage'])->name('quotationpage');
+Route::get('/Quotation/{id}', [HomeController::class, 'singlequotation']);
 Route::get('/service/{id}', [HomeController::class, 'ShowRate']);
+
 Route::post('/Contactus', [HomeController::class, 'contactus'])->name('contactus');
+
 
 Route::middleware(['auth', 'user.type:user'])->group(function () {
     Route::get('/Profile', [HomeController::class, 'ShowProfile']);
+    Route::get('/Quotations/view', [HomeController::class, 'QuotationPDF']);
 
+
+
+    Route::post('/Quotation/Create', [HomeController::class, 'CreateQuotation'])->name('CreateQuotation');
     Route::post('/Profile/Edit', [HomeController::class, 'EditProfile'])->name('EditProfile');
+    Route::put('/Profile/Password/Change', [HomeController::class, 'ChangePassword'])->name('ChangePassword');
 });
 
 
@@ -57,11 +64,17 @@ Route::middleware(['auth', 'user.type:admin'])->group(function () {
     Route::post('/Admin/Faqs/Category/Create', [AdminController::class, 'CreateFaqCategory'])->name('admin.CreateFaqCategory');
     Route::post('/Admin/Faqs/Question/Create', [AdminController::class, 'CreateFaqQuestions'])->name('admin.CreateFaqQuestions');
     Route::post('/Admin/Services/Create', [AdminController::class, 'CreateService'])->name('admin.CreateService');
+    Route::post('/Admin/Rate/Create', [AdminController::class, 'NewRate'])->name('admin.NewRate');
+
 
     Route::put('/Admin/Faqs/Update', [AdminController::class, 'EditFaqs'])->name('admin.editfaqs');
     Route::put('/Admin/Article/Update', [AdminController::class, 'editarticle'])->name('admin.editarticle');
     Route::put('/Admin/Partner/update', [AdminController::class, 'editpartner'])->name('admin.editpartner');
     Route::put('/Admin/Team/update', [AdminController::class, 'editeam'])->name('admin.editeam');
+    Route::put('/Admin/Service/update', [AdminController::class, 'EditService'])->name('admin.EditService');
+    Route::put('/Admin/Rate/update', [AdminController::class, 'EditRate'])->name('admin.EditRate');
+
+
 
     Route::delete('/Admin/Faqs/Question/Delete', [AdminController::class, 'deletefaqs'])->name('admin.deletefaqs');
     Route::delete('/Admin/Article/Delete', [AdminController::class, 'DelereArticle'])->name('admin.DelereArticle');

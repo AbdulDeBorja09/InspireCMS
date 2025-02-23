@@ -22,6 +22,6 @@ class Services extends Model
 
     public function rates()
     {
-        return $this->hasMany(Rate::class);
+        return $this->hasMany(Rate::class, 'service_id');
     }
 }

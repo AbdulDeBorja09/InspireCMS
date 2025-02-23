@@ -16,6 +16,7 @@
         @include('admin.components.headersection', ['section' => 'profile'])
         @include('admin.components.headersection', ['section' => 'Content'])
         @include('admin.components.headersection', ['section' => 'article_content'])
+        @include('admin.components.headersection', ['section' => 'Payment'])
     </div>
 
 </div>
