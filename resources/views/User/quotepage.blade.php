@@ -58,7 +58,11 @@
             </div>
 
             <div class="col-lg-4">
-
+                @php
+                $rates = $rates->sortByDesc(function($item) {
+                return Str::contains(strtolower($item->rate_type), 'individual') ? 1 : 0;
+                });
+                @endphp
 
                 <!-- Pricing -->
                 <div class="pricing-card mb-4">

@@ -192,28 +192,28 @@
         rateRow.classList.add('rate-row', 'mb-3');
         rateRow.innerHTML = `
             <hr/>
-            <div>
-                <label for="rate-type">Rate Type:</label>
-                <input type="text" name="rate_type[]" class="form-control mb-2" placeholder="Rate Type" required>
-                
-                <label for="rate">Facility Rate:</label>
-                <input type="number" name="rate[]" class="form-control mb-2" placeholder="Rate" step="0.01" required>
-                
-                <label for="unit">Rate Unit:</label>
-                <select name="unit[]" class="form-control mb-2">
-                    <option value="Per Head">Per Head</option>
-                    <option value="Per Hour">Per Hour</option>
-                    <option value="Per Hour & Per Court">Per Hour & Per Court</option>
-                </select>
-                
-                <label for="hour">Hours:</label>
-                <input type="number" name="hour[]" class="form-control mb-2" placeholder="hour (e.g., 1,2,3)" value="1" required>
-                
-                <label for="inclusions">Inclusions:</label>
-                <textarea name="inclusions[]" class="form-control mb-2" rows="5" placeholder="Inclusions (optional)"></textarea>
-                
-                <button type="button" class="btn btn-danger remove-rate" style="background-color: #f44336;">Remove</button>
-            </div>
+             <div class="rate-row mb-3">
+                    <label for="rate-type">Rate Type:</label>
+                    <input id="rate-type" type="text" name="rate_type[]" class="form-control mb-2"
+                        placeholder="Rate Type" required>
+                    <label for="rate">Facility Rate:</label>
+                    <input id="rate" type="number" name="rate[]" class="form-control mb-2" placeholder="Rate"
+                        step="0.01" required>
+                    <label for="unit">Rate Unit:</label>
+
+                    <select id="unit" name="unit[]" class="form-control mb-2">
+                        <option value="Per Head">Per Head</option>
+                        <option value="Per Hour">Per Hour</option>
+                        <option value="Per Hour & Per Court">Per Hour & Per Court</option>
+                    </select>
+                    <label for="unit">Hours:</label>
+                    <input type="number" id="hour" name="hour[]" class="form-control mb-2"
+                        placeholder="hour (e.g., 1,2,3)" value="1" required>
+                    <label for="unit">Inclusions:</label>
+                    <textarea name="inclusions[]" id="inclusions" class="form-control mb-2" rows="5"
+                        placeholder="Inclusions (optional)"></textarea>
+                </div>
+
         `;
 
         container.appendChild(rateRow);
