@@ -83,9 +83,9 @@
                 </div>
                 <!-- Options -->
                 <div class="options-card mb-4">
-                    <form action="{{route('CreateQuotation')}}" method="POST">
+                    <form action="{{route('CreateQuotation')}}" method="POST" onsubmit="return validateForm()">
                         @csrf
-                        <h4>Select Your Plan</h4>
+                        <h4>Request Quotation</h4>
                         <input type="hidden" name="service_id" value="{{$service->id}}">
                         <input type="hidden" name="service_type" value="{{$service->type}}">
                         <input type="hidden" name="service_name" value="{{$service->name}}">
@@ -109,10 +109,15 @@
                         <input type="hidden" id="datessssss" class="form-control" placeholder="Start Time"
                             style="height: 0px; padding:0; margin:0; background-color:#f1f5f9;" readonly>
                         <!-- Visible Inputs for Start and End -->
-                        <input type="text" id="start_time_display" class="form-control" name="start_date"
+                        <input type="text" id="start_date" class="form-control" name="date" placeholder="Start Date"
+                            readonly required>
+                        <input type="text" id="start_time" class="form-control" name="start_time"
                             placeholder="Start Time" readonly required>
-                        <input type="text" id="end_time_display" class="form-control" name="end_date"
-                            placeholder="End Time" readonly required>
+
+                        <input type="text" id="end_time" class="form-control" name="end_time" placeholder="End Time"
+                            readonly required>
+                        <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+                        <script src="{{asset('/js/calendar.js')}}"></script>
                         @else
                         <input type="number" name="qty" placeholder="Enter Qty." required />
                         @endif
@@ -124,25 +129,7 @@
                         </button>
                     </form>
                 </div>
-                <style>
-                    /* Style for highlighting blocked dates in red */
-                    .flatpickr-day.booked {
-                        background: #ff4d4d !important;
-                        /* Red background */
-                        color: white !important;
-                        border-radius: 5px;
-                    }
 
-                    /* Style for highlighting fully booked days in black */
-                    /* .flatpickr-day.fully-booked {
-                        background: rgb(221, 221, 221) !important;
-                        color: white !important;
-                        border-radius: 5px;
-                        cursor: not-allowed;
-                    } */
-                </style>
-                <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-                <script src="{{asset('/js/calendar.js')}}"></script>
                 <!-- Follow Our Socials -->
                 <div class="social-card">
                     <h5 class="fw-bold">Follow Our Socials</h5>

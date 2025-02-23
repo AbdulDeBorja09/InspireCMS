@@ -12,6 +12,7 @@ use App\Models\Rate;
 use App\Models\Services;
 use App\Models\Teams;
 use App\Models\User;
+use App\Models\Quotations;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -244,9 +245,9 @@ class HomeController extends Controller
         }
 
         // If start and end dates are provided, calculate total hours
-        if ($request->start_date && $request->end_date) {
-            $startTime = Carbon::parse($request->start_date);
-            $endTime = Carbon::parse($request->end_date);
+        if ($request->start_time && $request->end_time) {
+            $startTime = Carbon::parse($request->start_time);
+            $endTime = Carbon::parse($request->end_time);
 
             // Ensure the start time is always earlier than the end time
             if ($endTime->lt($startTime)) {
@@ -272,6 +273,8 @@ class HomeController extends Controller
             'total_price' => $totalPrice,
             'individual' => $totalPrice,
             'individual_base' => $IndvRate,
+            'date' => $request->date,
+
         ];
 
         // Store the quotation data in session
@@ -279,5 +282,61 @@ class HomeController extends Controller
 
         // Pass data to the view
         return $this->ShowPage('Payment', 'viewpdf', compact('quotationData'));
+    }
+
+
+
+    public function SubmitQuotation(Request $request)
+    {
+        // Define the validation rules
+        $request->validate([
+            'service_name' => 'required|string|max:255',
+            'rate_type' => 'required|string|max:255',
+            'rate' => 'required|numeric|min:0',
+            'hours' => 'nullable|numeric|min:0',
+            'qty' => 'nullable|numeric|min:0',
+            'total_price' => 'required|numeric|min:0',
+            'individual_base' => 'nullable|numeric|min:0',
+            'individual' => 'nullable|numeric|min:0',
+            'guest' => 'nullable|numeric|min:0',
+            'subtotal' => 'required|numeric|min:0',
+            'start_date' => 'required|date',
+            'end_date' => 'required|date',
+        ]);
+
+        // If validation passes, proceed to create the quotation
+        $quotationRef = 'QUO-' . now()->format('Ymd') . '-' . Str::upper(Str::random(4));
+        $quotationDataJson = json_encode([
+            'service_name' => $request->input('service_name'),
+            'rate_name' => $request->input('rate_type'),
+            'rate_value' => $request->input('rate'),
+            'total_hours' => $request->input('hours', 0),
+            'guest_qty' => $request->input('qty', 0),
+            'total_price' => $request->input('total_price'),
+            'individual_rate' => $request->input('individual_base', 0),
+            'individual_total' => $request->input('individual', 0),
+            'guest_count' => $request->input('guest', 0),
+            'subtotal' => $request->input('subtotal')
+        ]);
+
+        try {
+            // Attempt to create the quotation
+            $create =  Quotations::create([
+                'Quotation_ref' => $quotationRef,
+                'service_type' => $request->input('service_type'),
+                'items' => $quotationDataJson,
+                'start_date' => $request->input('start_date', 0),
+                'end_date' => $request->input('end_date', 0),
+            ]);
+
+            if ($create) {
+                return redirect()->back()->with('success', 'Quotation created successfully!');
+            } else {
+                return redirect()->back()->with('error', 'Failed to save!');
+            }
+        } catch (\Throwable $e) {
+            // Catch any exception and return the error message
+            return redirect()->back()->with(['error' => $e->getMessage()]);
+        }
     }
 }

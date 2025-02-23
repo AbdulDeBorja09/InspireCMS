@@ -24,6 +24,7 @@ return new class extends Migration
             $table->boolean('status')->default('1');
             $table->timestamps();
         });
+        
         Schema::create('service_rates', function (Blueprint $table) {
             $table->id();
             $table->foreignId('service_id')->constrained()->onDelete('cascade');

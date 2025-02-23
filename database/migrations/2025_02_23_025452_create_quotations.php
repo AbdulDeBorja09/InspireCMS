@@ -13,22 +13,20 @@ return new class extends Migration
     {
         Schema::create('quotations', function (Blueprint $table) {
             $table->id();
-            $table->string('Quotation_ref')->nullable();
+            $table->string('Quotation_ref');
             $table->string('billing_name')->nullable();
             $table->string('billing_address')->nullable();
-            $table->string('date_time');
-            $table->string('serive_type');
-            $table->string('serive_name');
-            $table->string('description');
-            $table->string('qty');
+            $table->string('service_type');
+            $table->longText('items');
+            $table->string('start_date');
+            $table->string('end_date');
             $table->decimal('tax', 10, 2)->nullable();
             $table->integer('discount')->nullable();
             $table->decimal('penalty', 10, 2)->nullable();
             $table->decimal('Cancellation', 10, 2)->nullable();
             $table->decimal('amount_paid', 10, 2)->nullable();
-            $table->decimal('balance', 10, 2)->nullable();
             $table->decimal('total', 10, 2)->nullable();
-            $table->boolean('status')->default('0');
+            $table->boolean('status')->default('1');
             $table->timestamps();
         });
     }

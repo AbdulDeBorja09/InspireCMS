@@ -38,6 +38,7 @@ Route::middleware(['auth', 'user.type:user'])->group(function () {
 
 
     Route::post('/Quotation/Create', [HomeController::class, 'CreateQuotation'])->name('CreateQuotation');
+    Route::post('/asdasdasdasd', [HomeController::class, 'SubmitQuotation'])->name('SubmitQuotation');
     Route::post('/Profile/Edit', [HomeController::class, 'EditProfile'])->name('EditProfile');
     Route::put('/Profile/Password/Change', [HomeController::class, 'ChangePassword'])->name('ChangePassword');
 });

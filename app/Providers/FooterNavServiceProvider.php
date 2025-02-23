@@ -27,12 +27,32 @@ class FooterNavServiceProvider extends ServiceProvider
         // Organize data
         $footerContacts = $layoutdata->where('type', 'contact');
         $footerLocations = $layoutdata->where('type', 'location');
-        $tiktok = $layoutdata->where('type', 'social_media')->where('key', 'tiktok')->first();
-        $instagram = $layoutdata->where('type', 'social_media')->where('key', 'instagram')->first();
-        $facebook = $layoutdata->where('type', 'social_media')->where('key', 'facebook')->first();
-        $footerLogo = $layoutdata->where('type', 'logo')->where('key', 'footer')->first();
-        $Navlogo = $layoutdata->where('type', 'logo')->where('key', 'nav')->first();
-        // Share data with all views
+        $tiktok = $layoutdata->where('type', 'social_media')
+            ->where('key', 'tiktok')
+            ->sortByDesc('created_at')
+            ->first();
+
+        $instagram = $layoutdata->where('type', 'social_media')
+            ->where('key', 'instagram')
+            ->sortByDesc('created_at')
+            ->first();
+
+        $facebook = $layoutdata->where('type', 'social_media')
+            ->where('key', 'facebook')
+            ->sortByDesc('created_at')
+            ->first();
+
+        $footerLogo = $layoutdata->where('type', 'logo')
+            ->where('key', 'footer')
+            ->sortByDesc('created_at')
+            ->first();
+
+        $Navlogo = $layoutdata->where('type', 'logo')
+            ->where('key', 'nav')
+            ->sortByDesc('created_at')
+            ->first();
+       
+            
         View::share([
             'footerContacts' => $footerContacts,
             'footerLocations' => $footerLocations,

@@ -79,38 +79,39 @@
             <input type="hidden" name="section" value="home">
             <div class="form-group">
                 <label for="academy-title">Title:</label>
-                <input type="text" id="academy-title" name="academy-title"
-                    value="{{ $contents['academy-title']->value ?? ''}}" placeholder="Input Here" required />
+                <input type="text" id="academy-title" name="academies-title"
+                    value="{{ $contents['academies-title']->value ?? ''}}" placeholder="Input Here" required />
             </div>
             <div class="form-group">
                 <label for="academy-headline">Headline:</label>
-                <input type="text" id="academy-headline" name="academy-headline"
-                    value="{{ $contents['academy-headline']->value ?? ''}}" placeholder="Input Here" required />
+                <input type="text" id="academy-headline" name="academies-headline"
+                    value="{{ $contents['academies-headline']->value ?? ''}}" placeholder="Input Here" required />
             </div>
             <div class="form-group">
                 <label for="academy-tagline">Tagline:</label>
-                <input type="text" id="academy-tagline" name="academy-tagline"
-                    value="{{ $contents['academy-tagline']->value ?? ''}}" placeholder="Input Here" required />
+                <input type="text" id="academy-tagline" name="academies-tagline"
+                    value="{{ $contents['academies-tagline']->value ?? ''}}" placeholder="Input Here" required />
             </div>
             <div class="form-group">
-                <label for="academy-benefits">Benefits:</label>
-                <div class="benefits-container">
+                <label for="academy-academies">Benefits:</label>
+                <div class="academies-container">
                     @php
                     // Decode the JSON value if it exists, otherwise set it as an empty array
-                    $benefits = isset($contents['academy-benefits']) ? json_decode($contents['academy-benefits']->value,
+                    $benefits = isset($contents['academies-benefits']) ?
+                    json_decode($contents['academies-benefits']->value,
                     true) : [];
                     @endphp
 
                     {{-- Loop through existing benefits or show empty inputs --}}
                     @if(!empty($benefits))
                     @foreach($benefits as $benefit)
-                    <input type="text" id="academy-benefits" name="academy-benefits[]" value="{{ $benefit }}"
+                    <input type="text" id="academies-benefits" name="academies-benefits[]" value="{{ $benefit }}"
                         placeholder="Input Here" required />
                     @endforeach
                     @else
                     {{-- If no benefits are stored, display 4 empty input fields --}}
                     @for($i = 0; $i
-                    < 4; $i++) <input type="text" id="academy-benefits" name="academy-benefits[]"
+                    < 4; $i++) <input type="text" id="academies-benefits" name="academies-benefits[]"
                         placeholder="Input Here" required />
                     @endfor
                     @endif
@@ -119,14 +120,14 @@
             <div class="form-group">
                 <label for="imageUpload">Background Image:</label>
                 <div class="image-preview" id="preview2">
-                    @if (!empty($contents['academy-background']->value))
-                    <img src="{{ asset('storage/' . $contents['academy-background']->value) }}" alt="academy-img">
+                    @if (!empty($contents['academies-background']->value))
+                    <img src="{{ asset('storage/' . $contents['academies-background']->value) }}" alt="academy-img">
                     @else
                     <span>No image selected</span>
                     @endif
 
                 </div>
-                <input class="imageUpload" type="file" id="imageUpload" name="academy-background" accept="image/*"
+                <input class="imageUpload" type="file" id="imageUpload" name="academies-background" accept="image/*"
                     data-preview="preview2" />
             </div>
             <div class="btn-container">
