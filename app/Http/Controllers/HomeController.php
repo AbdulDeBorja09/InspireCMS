@@ -96,11 +96,27 @@ class HomeController extends Controller
         return $this->ShowPage('profile', 'profile', compact('items', 'notif'));
     }
 
+
     public function ShowPayment(Request $request)
     {
         $quotations = Quotations::where('id', $request->id)->where('user_id', Auth::user()->id)->first();
-        $data = json_decode($quotations->items, true);
-        return $this->ShowPage('payment', 'payment', compact('quotations', 'data'));
+        if ($quotations) {
+            $data = json_decode($quotations->items, true);
+            return $this->ShowPage('payment', 'payment', compact('quotations', 'data'));
+        } else {
+            return redirect()->back()->with('error', 'Cant Found!');
+        }
+    }
+
+    public function ShowConfirmation($id)
+    {
+        $quotation = Quotations::where('id', $id)->where('user_id', Auth::user()->id)->first();
+        $payment = payments::where('quotation_id', $id)->first();
+        if ($quotation->status != 4) {
+            return redirect()->route('user.home');
+        } else {
+            return view('user.confirmation', compact('payment', 'quotation'));
+        }
     }
 
     public function singlequotation($id)
@@ -350,20 +366,22 @@ class HomeController extends Controller
                 'proof'  => $imagePath,
             ]);
 
+
             if ($payment) {
+                $quotationRef = 'PAY-' . now()->format('Ymd') . '-' . now()->format('h') . Str::upper(Str::random(4));
                 $quotation->update([
+                    'Quotation_ref' => $quotationRef,
                     'event_title' => $request->title,
                     'billing_name' => $request->fname . ' ' . $request->lname,
                     'billing_address' => $request->address,
                     'status' => 4,
                 ]);
 
-                return redirect()->back()->with('success', 'Payment saved successfully!');
+                return redirect()->route('ShowConfirmation', ['id' => $quotation->id])->with('success', 'Payment saved successfully!');
             } else {
                 return redirect()->back()->with('error', 'Failed to save!');
             }
         } catch (\Throwable $e) {
-            Log::error('Payment submission failed', ['error' => $e->getMessage()]);
             return redirect()->back()->with(['error' => $e->getMessage()], 500);
         }
     }

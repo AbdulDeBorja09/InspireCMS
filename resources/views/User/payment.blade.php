@@ -1,5 +1,6 @@
 @extends('user.layouts.app')
 @section('content')
+{{--
 <!-- HEADER -->
 <section id="image" class="position-relative text-white">
     <div class="bg-image" style=" background-image: url('/storage/{{ $contents['Payment-background']->value ?? ''}}');">
@@ -19,9 +20,9 @@
         </div>
     </div>
 </section>
-<!-- END OF HEADER -->
+<!-- END OF HEADER --> --}}
 <!-- PAYMENT -->
-<div class="container payment">
+<div class="container payment" style="margin-top: 150px">
     <div class="my-5 pdf-container">
         <div class="header">
             <div class="logo">

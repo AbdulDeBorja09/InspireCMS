@@ -2,11 +2,11 @@
 @section('content')
 @include('Admin.components.alert')
 <div class="content" id="request">
-    <h1>Requests</h1>
-    <p>Manage user requests here.</p>
+    <h1>Payments</h1>
+    <p>Manage user payments here.</p>
 
     <div class="form-container">
-        <h4 class="mb-3">Quotation Requests</h4>
+        <h4 class="mb-3">Payments</h4>
 
         <div class="mb-3 filter-container">
             <label for="dateFilter">Date & Time:</label>
@@ -15,10 +15,8 @@
             <label for="statusFilter">Status:</label>
             <select id="statusFilter" onchange="filterTable()">
                 <option value="">All</option>
-                <option value="New">New</option>
-                <option value="Pending">Pending</option>
-                <option value="Approved">Approved</option>
-                <option value="Rejected">Rejected</option>
+                <option value="Paid">Paid</option>
+                <option value="Completed">Completed</option>
             </select>
 
             <label for="refFilter">Reference No.:</label>
@@ -43,31 +41,16 @@
                     <td>{{ \Carbon\Carbon::parse($item->created_at)->format('Y-m-d H:i') }}</td>
                     <td>{{$item->Quotation_ref}}</td>
                     <td>₱ {{number_format($item->total)}}</td>
-                    @if ($item->status === 1)
-                    <td class="new">New</td>
+                    @if ($item->status === 4)
+                    <td class="new">Paid</td>
                     <td>
                         <button class="view-btn" onclick="ViewRequest({{$item}})">View</button>
-                        <button class="approve-btn" onclick="ApproveRequest({{$item}})">Approve</button>
-                        <button class="reject-btn" onclick="RejectRequest({{$item}})">Reject</button>
+                        <button class="approve-btn" onclick="ApproveRequest({{$item}})">Confirm</button>
                     </td>
-                    @elseif($item->status === 2)
-                    <td class="pending">Pending</td>
+                    @elseif($item->status === 5)
+                    <td class="pending">Confirm</td>
                     <td>
                         <button class="view-btn" onclick="ViewRequest({{$item}})">View</button>
-                        <button class="approve-btn" onclick="ApproveRequest({{$item}})">Approve</button>
-                        <button class="reject-btn" onclick="RejectRequest({{$item}})">Reject</button>
-                    </td>
-                    @elseif($item->status === 3)
-                    <td class="approved">Approved</td>
-                    <td>
-                        <button class="view-btn" onclick="ViewRequest({{$item}})">View</button>
-                        <button class="reject-btn">Cancel</button>
-                    </td>
-                    @else
-
-                    <td class="rejected">Rejected</td>
-                    <td>
-                        <button class="view-btn">View</button>
                     </td>
                     @endif
                 </tr>
@@ -128,7 +111,7 @@
                             </div>
                         </div>
                         <div class="col-lg-6 col-md-12">
-
+                            {{-- <img src="{{asset('../Storage/'. )}}" alt=""> --}}
                         </div>
                     </div>
 

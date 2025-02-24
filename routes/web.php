@@ -34,6 +34,7 @@ Route::middleware(['auth', 'user.type:user'])->group(function () {
     Route::get('/Profile', [HomeController::class, 'ShowProfile']);
     Route::get('/Quotations/view', [HomeController::class, 'QuotationPDF']);
     Route::get('/Payment/{id}', [HomeController::class, 'ShowPayment'])->name('ShowPayment');
+    Route::get('/Confirmation/{id}', [HomeController::class, 'ShowConfirmation'])->name('ShowConfirmation');
 
 
     Route::post('/Quotation/Create', [HomeController::class, 'CreateQuotation'])->name('CreateQuotation');

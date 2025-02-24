@@ -7,19 +7,20 @@
     <!-- SIDEBAR TABS -->
     <div class="sidebar-tabs" role="tablist">
         <!-- Dashboard Tab -->
-        <a class="nav-link  {{ Route::currentRouteName() == '' ? 'active' : '' }}" href="{{route('admin.dashboard')}}">
+        <a class="nav-link  {{ Route::currentRouteName() == 'admin.dashboard' ? 'active' : '' }}"
+            href="{{route('admin.dashboard')}}">
             <i class="bi bi-bar-chart-line-fill"></i> Dashboard
         </a>
 
         <!-- Request Tab -->
-        <a class="nav-link {{ Route::currentRouteName() == '' ? 'active' : '' }}"
+        <a class="nav-link {{ Route::currentRouteName() == 'admin.ShowRequests' ? 'active' : '' }}"
             href="{{route('admin.ShowRequests')}}">
             <i class="bi bi-quote"></i> Requests
         </a>
 
         <!-- Request Tab -->
-        <a class="nav-link {{ Route::currentRouteName() == '' ? 'active' : '' }}"
-            href="{{route('admin.ShowRequests')}}">
+        <a class="nav-link {{ Route::currentRouteName() == 'admin.ShowPayments' ? 'active' : '' }}"
+            href="{{route('admin.ShowPayments')}}">
             <i class="bi bi-quote"></i> Payments
         </a>
 

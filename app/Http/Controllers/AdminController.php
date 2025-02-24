@@ -134,11 +134,11 @@ class AdminController extends Controller
 
     public function ShowPayments()
     {
-        $items = Quotations::whereIn('status', [0, 1, 2, 3])
-            ->orderByRaw("CASE WHEN status = 1 THEN 0 ELSE 1 END")
+        $items = Quotations::whereIn('status', [4, 5])
+            ->orderByRaw("CASE WHEN status = 4 THEN 0  ELSE 1 END")
             ->get();
 
-        return $this->ShowPage('requests', 'requests', compact('items'));
+        return $this->ShowPage('payments', 'payments', compact('items'));
     }
 
 
@@ -286,16 +286,7 @@ class AdminController extends Controller
 
     public function CreateArticle(Request $request)
     {
-        // $request->validate([
-        //     'title' => 'required|string|max:255',
-        //     'author' => 'required|string|max:255',
-        //     'url1' => 'string|max:255',
-        //     'url2' => 'string|max:255',
-        //     'url3' => 'string|max:255',
-        //     'url4' => 'string|max:255',
-        //     'description' => 'string|max:255',
-        //     'image' =>  'mimes:jpeg,png,jpg,gif,svg,mp4,mkv,avi|max:10240',
-        // ]);
+
         try {
             $imagePath = null; // Default value if no image is uploaded
 
@@ -754,12 +745,17 @@ class AdminController extends Controller
             $Quotations->update([
                 'status' => 0,
             ]);
-            notifications::create([
-                'user_id'  => $Quotations->user_id,
-                'quotation_id' => $request->id,
-                'message'  => $request->reason,
-                'status'  => 'Rejected',
-            ]);
+            notifications::updateOrCreate(
+                [
+                    'quotation_id' => $request->id,
+                    'user_id'      => $Quotations->user_id,
+                ],
+                [
+                    'message' => $request->reason,
+                    'status'  => 'Rejected',
+                ]
+            );
+
             return redirect()->back()->with('success', 'Request Rejected successfully!');
         } catch (\Throwable $e) {
             return redirect()->back()->with(['error' => $e->getMessage()], 500);
@@ -791,13 +787,17 @@ class AdminController extends Controller
                 'penalty' => $request->penalty,
                 'Cancellation' => $request->cancelation,
             ]);
+            notifications::updateOrCreate(
+                [
+                    'user_id'  => $Quotations->user_id,
+                    'quotation_id' => $request->id,
+                ],
+                [
+                    'message'  => 'Your request for quotation has been approved.',
+                    'status'  => 'approved',
+                ]
+            );
 
-            notifications::create([
-                'user_id'  => $Quotations->user_id,
-                'quotation_id' => $request->id,
-                'message'  => 'Your request for quotation has been approved.',
-                'status'  => 'approved',
-            ]);
             return redirect()->back()->with('success', 'Request Rejected successfully!');
         } catch (\Throwable $e) {
             return redirect()->back()->with(['error' => $e->getMessage()], 500);
