@@ -18,10 +18,10 @@
             <i class="bi bi-quote"></i> Requests
         </a>
 
-        <!-- Request Tab -->
+        <!-- Payment Tab -->
         <a class="nav-link {{ Route::currentRouteName() == 'admin.ShowPayments' ? 'active' : '' }}"
             href="{{route('admin.ShowPayments')}}">
-            <i class="bi bi-quote"></i> Payments
+            <i class="bi bi-cash"></i> Payments
         </a>
 
 
@@ -31,6 +31,12 @@
             <i class="bi bi-person-circle"></i> Contacts
         </a>
 
+        
+        <!-- Users Tab -->
+        <a class="nav-link {{ Route::currentRouteName() == 'admin.users' ? 'active' : '' }}"
+            href="{{route('admin.users')}}">
+            <i class="bi bi-person-add"></i> Users
+        </a>
 
         <h6 class="text-center">---------Website Settings---------</h6>
 
@@ -43,7 +49,7 @@
         <!-- Header -->
         <a class="nav-link {{ Route::currentRouteName() == 'admin.header' ? 'active' : '' }}"
             href="{{route('admin.header')}}">
-            <i class="bi bi-house-door"></i> Headers
+            <i class="bi bi-card-heading"></i> Headers
         </a>
 
         <!-- Facilities Tab -->
@@ -61,7 +67,7 @@
         <!-- Membership Tab -->
         <a class="nav-link {{ Route::currentRouteName() == 'admin.Membership' ? 'active' : '' }}"
             href="{{route('admin.Membership')}}">
-            <i class="bi bi-people"></i> Membership
+            <i class="bi bi-person-badge-fill"></i> Membership
         </a>
 
         <!-- Articles Tab -->
@@ -86,12 +92,6 @@
         <h6 class="text-center">---------Account Settings---------</h6>
 
         <!-- Settings Tab -->
-        <a class="nav-link {{ Route::currentRouteName() == 'admin.users' ? 'active' : '' }}"
-            href="{{route('admin.users')}}">
-            <i class="bi bi-people"></i> Users
-        </a>
-
-        <!-- Settings Tab -->
         <a class="nav-link {{ Route::currentRouteName() == 'admin.settings' ? 'active' : '' }}"
             href="{{route('admin.settings')}}">
             <i class="bi bi-gear"></i> General Settings
@@ -103,7 +103,7 @@
     <form class="logout" action="{{ route('logout') }}" method="POST" style="display: inline;" id="logout-form">
         @csrf
         <a type="submit" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
-            class="nav-link  "><i class="bi bi-box-arrow-right"></i> Logout</a>
+            class="nav-link"><i class="bi bi-box-arrow-right"></i> Logout</a>
     </form>
 
 </div>

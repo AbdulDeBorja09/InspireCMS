@@ -10,10 +10,14 @@ body {
 /* NAVBAR */
 .navbar {
     /* background-color: rgba(0, 0, 0, 0.4);
-  border-bottom: 1px solid #64748b; */
+    border-bottom: 1px solid #64748b; */
     box-shadow: none;
     transition: background-color 0.4s ease-in-out;
     padding: 50px 600px;
+}
+
+.navbar .container-fluid {
+    padding: 0 100px;
 }
 
 .navbar.scrolled {
@@ -33,8 +37,54 @@ body {
 }
 
 .container .nav-item .nav-link:hover {
-    color: #bc943b;
+    color: #BC943B;
 }
+
+/* SERVICES DROPDOWN */
+.nav-item.dropdown .nav-link {
+    color: #f1f5f9;
+    font-weight: bold;
+    transition: color 0.3s ease-in-out;
+}
+
+.nav-item.dropdown .nav-link:hover {
+    color: #BC943B;
+}
+
+.dropdown-menu {
+    background-color: #122444;
+    padding: 10px 0;
+    min-width: 180px;
+}
+
+.dropdown-menu .dropdown-item {
+    color: #f1f5f9;
+    font-weight: bold;
+    padding: 10px 20px;
+
+}
+
+.dropdown-menu .dropdown-item:hover {
+    background-color: transparent;
+    color: #BC943B;
+}
+
+/* Align dropdown properly */
+.navbar .dropdown-menu {
+    margin-top: 10px;
+}
+
+/* Add subtle shadow for better visibility */
+.dropdown-menu {
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3);
+}
+
+.nav-item.dropdown i {
+    font-size: 20px;
+}
+
+
+
 
 .custom-toggler {
     border: none;
@@ -73,16 +123,16 @@ body {
     position: relative;
     overflow: hidden;
     cursor: pointer;
-    transition: 0.5s;
+    transition: .5s;
     font-weight: bold;
-    border: 2px solid #bc943b;
+    border: 2px solid #BC943B;
     color: var(--color);
     z-index: 1;
 }
 
 .quote-btn::before,
 .quote-btn::after {
-    content: "";
+    content: '';
     display: block;
     width: 50px;
     height: 50px;
@@ -90,7 +140,7 @@ body {
     position: absolute;
     border-radius: 50%;
     z-index: -1;
-    background-color: #bc943b;
+    background-color: #BC943B;
     transition: 0.8s ease;
 }
 
@@ -128,7 +178,7 @@ body {
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
-    
+    background-image: url(/frontends/images/home/bg.png);
 }
 
 .image-overlay {
@@ -188,7 +238,7 @@ body {
     position: relative;
     overflow: hidden;
     cursor: pointer;
-    transition: 0.5s;
+    transition: .5s;
     font-weight: 600;
     font-size: 18px;
     border: 1px solid;
@@ -198,7 +248,7 @@ body {
 
 .view-btn::before,
 .view-btn::after {
-    content: "";
+    content: '';
     display: block;
     width: 50px;
     height: 50px;
@@ -350,7 +400,7 @@ body {
     position: relative;
     overflow: hidden;
     cursor: pointer;
-    transition: 0.5s;
+    transition: .5s;
     font-weight: 600;
     font-size: 18px;
     border: 1px solid;
@@ -360,7 +410,7 @@ body {
 
 .join-btn::before,
 .join-btn::after {
-    content: "";
+    content: '';
     display: block;
     width: 50px;
     height: 50px;
@@ -406,6 +456,7 @@ body {
 
 /* END OF ACADEMY */
 
+
 /* ARTICLES */
 #articles {
     width: 100%;
@@ -435,7 +486,7 @@ body {
     position: relative;
     overflow: hidden;
     cursor: pointer;
-    transition: 0.5s;
+    transition: .5s;
     font-weight: 600;
     font-size: 18px;
     border: 1px solid;
@@ -445,7 +496,7 @@ body {
 
 .read-btn::before,
 .read-btn::after {
-    content: "";
+    content: '';
     display: block;
     width: 50px;
     height: 50px;
@@ -567,6 +618,7 @@ body {
 
 /* ABOUT */
 
+
 /* CONTACT US */
 #contact {
     width: 100%;
@@ -647,7 +699,7 @@ textarea {
     position: relative;
     overflow: hidden;
     cursor: pointer;
-    transition: 0.5s;
+    transition: .5s;
     font-weight: 600;
     font-size: 18px;
     border: 1px solid;
@@ -657,7 +709,7 @@ textarea {
 
 .submit-btn::before,
 .submit-btn::after {
-    content: "";
+    content: '';
     display: block;
     width: 50px;
     height: 50px;
@@ -704,6 +756,8 @@ textarea {
 }
 
 /* CONTACT US */
+
+
 
 /* FOOTER */
 .footer {
@@ -754,8 +808,7 @@ textarea {
 }
 
 .quick-links li a {
-    transition: color 0.3s ease-in-out, text-decoration 0.3s ease-in-out,
-        transform 0.2s ease-in-out;
+    transition: color 0.3s ease-in-out, text-decoration 0.3s ease-in-out, transform 0.2s ease-in-out;
 }
 
 .quick-links li:hover {
