@@ -376,7 +376,7 @@ class HomeController extends Controller
                     'billing_address' => $request->address,
                     'status' => 4,
                 ]);
-
+                notifications::where('quotation_id', $request->id)->delete();
                 return redirect()->route('ShowConfirmation', ['id' => $quotation->id])->with('success', 'Payment saved successfully!');
             } else {
                 return redirect()->back()->with('error', 'Failed to save!');

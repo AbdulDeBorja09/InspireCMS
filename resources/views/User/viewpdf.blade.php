@@ -121,7 +121,12 @@
     .pdf-table .approval-section div {
         width: 30%;
     }
+
+    nav {
+        background-color: #122444;
+    }
 </style>
+{{--
 <!-- HEADER -->
 <section id="image" class="position-relative text-white">
     <div class="bg-image" style=" background-image: url('/storage/{{ $contents['Payment-background']->value ?? ''}}');">
@@ -141,13 +146,13 @@
         </div>
     </div>
 </section>
-<!-- END OF HEADER -->
+<!-- END OF HEADER --> --}}
 
 
 <!-- CONTENTS -->
 
 <section id="contents">
-    <form action="{{ route('SubmitQuotationRequest') }}" method="POST">
+    <form action="{{ route('SubmitQuotationRequest') }}" method="POST" style="margin-top: 100px">
         @csrf
 
         @php
@@ -174,7 +179,6 @@
         <input type="hidden" name="end_time" value="{{ $quotationData['end_time'] ?? 0 }}">
         <div class="container py-5 mb-5 content-container">
             <!-- Tab Content -->
-            <hr>
             <div class="tab-content mt-4" style="min-height: 50vh">
 
                 <section class="pdf-table shadow-sm p-5">
@@ -193,7 +197,7 @@
 
                     <div class="line"></div>
 
-                    <div class="info">
+                    {{-- <div class="info">
                         <div class="info-left">
                             <p><strong>Quotation No.:</strong></p>
                             <p><strong>Event Start:</strong></p>
@@ -204,7 +208,7 @@
                             <p><strong>Quotation Date:</strong></p>
                             <p><strong>Quote Validity:</strong></p>
                         </div>
-                    </div>
+                    </div> --}}
 
                     <table class="quotation-table">
                         <tr>

@@ -74,6 +74,9 @@
                 @endforeach
             </tbody>
         </table>
+
+
+
     </div>
 </div>
 <div class="modal fade" id="ViewRequest" tabindex="-1" aria-labelledby="ViewRequestLabel" aria-hidden="true">
@@ -130,6 +133,27 @@
                         <div class="col-lg-6 col-md-12">
 
                         </div>
+                        <script>
+                            document.addEventListener('DOMContentLoaded', function() {
+                              var calendarEl = document.getElementById('calendar');
+                              var calendar = new FullCalendar.Calendar(calendarEl, {
+                                initialView: 'timeGridDay',
+                                initialDate: '2025-02-24',
+                                events: '/blocked-dates',
+                                eventContent: function(arg) {
+                                  // Format date and time from the event's start date
+                                  let eventDate = arg.event.start.toLocaleDateString();
+                                  let eventTime = arg.event.start.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+                                  let customHtml = `<div>
+                                                      <strong>${arg.event.title}</strong><br>
+                                                      <small>${eventDate} at ${eventTime}</small>
+                                                    </div>`;
+                                  return { html: customHtml };
+                                }
+                              });
+                              calendar.render();
+                            });
+                        </script>
                     </div>
 
 

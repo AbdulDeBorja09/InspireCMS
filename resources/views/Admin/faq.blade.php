@@ -97,7 +97,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <input type="text" name="id" id="editfaqid">
+                    <input type="hidden" name="id" id="editfaqid">
 
                     <div class="mb-3">
                         <label for="faqQuestion" class="form-label">Question</label>

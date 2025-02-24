@@ -25,10 +25,19 @@
                     placeholder="Input Here" required />
             </div>
             <div class="form-group">
-                <label for="facility-description">Facility Description:</label>
+                <label for="facility-stats">Status:</label>
+                <select name="status" id="">
+                    <option value="0" {{ $service->status == 0 ? 'selected' : '' }}>Unavailable</option>
+                    <option value="1" {{ $service->status == 1 ? 'selected' : '' }}>Available</option>
+                </select>
+
+            </div>
+            <div class="form-group">
+                <label for="facility-description">Description:</label>
                 <textarea class="form-control " type="text" id="facility-description" name="description"
                     placeholder="Input Here" rows="5">{{$service->description}}</textarea>
             </div>
+
             <div class="row">
                 <div class="col-md-12 col-lg-6">
                     <div class="form-group">
@@ -329,7 +338,7 @@
 
 <!-- Image Select Script-->
 <script>
-document.querySelectorAll(".imageUpload").forEach((imageUpload) => {
+    document.querySelectorAll(".imageUpload").forEach((imageUpload) => {
     imageUpload.addEventListener("change", function () {
     const file = this.files[0];
     const previewId = this.getAttribute("data-preview");

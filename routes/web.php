@@ -56,6 +56,7 @@ Route::middleware(['auth', 'user.type:admin'])->group(function () {
     Route::get('/Admin/facilities', [AdminController::class, 'ShowFacilities'])->name('admin.facilities');
     Route::get('/Admin/academies', [AdminController::class, 'ShowAcademies'])->name('admin.academies');
     Route::get('/Admin/articles', [AdminController::class, 'ShowArticles'])->name('admin.articles');
+    Route::get('/Admin/Users', [AdminController::class, 'ShowUsers'])->name('admin.users');
     Route::get('/Admin/Settings', [AdminController::class, 'ShowSettings'])->name('admin.settings');
     Route::get('/Admin/edit/{id}', [AdminController::class, 'ShowEditService'])->name('admin.ShowEditService');
 
@@ -64,6 +65,8 @@ Route::middleware(['auth', 'user.type:admin'])->group(function () {
     Route::get('/Admin/about', [AdminController::class, 'ShowAbout'])->name('admin.about');
     Route::get('/Admin/header', [AdminController::class, 'ShowHeader'])->name('admin.header');
     Route::get('/Admin/Contactus', [AdminController::class, 'ShowContactus'])->name('admin.ShowContactus');
+    Route::get('/Admin/dates', [AdminController::class, 'GetBlockedDates'])->name('admin.GetBlockedDates');
+
 
     Route::get('/Admin/Request/Details/api', [AdminController::class, 'GetContactDetails'])->name('admin.GetContactDetails');
 

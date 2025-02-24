@@ -17,6 +17,7 @@ use App\Models\User;
 use App\Models\ContactUs;
 use App\Models\Quotations;
 use App\Models\notifications;
+use App\Models\Dates;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
@@ -115,6 +116,12 @@ class AdminController extends Controller
     public function ShowSettings()
     {
         return $this->ShowPage('settings', 'settings');
+    }
+
+    public function ShowUsers()
+    {
+        $users = User::where('user_type', 'user')->get();
+        return $this->ShowPage('users', 'users', compact('users'));
     }
 
     public function ShowHeader()
@@ -710,6 +717,7 @@ class AdminController extends Controller
                 'image4' => $imagePaths['image4'],
                 'name' => $request->name,
                 'brief' => $request->brief,
+                'status' => $request->status,
                 'description' => $request->description,
             ]);
 
@@ -802,5 +810,25 @@ class AdminController extends Controller
         } catch (\Throwable $e) {
             return redirect()->back()->with(['error' => $e->getMessage()], 500);
         }
+    }
+    public function GetBlockedDates(Request $request)
+    {
+        // Retrieve the service_id (or quotation_id) from the request query parameters
+        $serviceId = $request->query('service_id');
+
+        // Query your BlockedDate model (make sure your table has a service_id column)
+        $blockedDates = Dates::where('service_id', $serviceId)->get();
+
+        // Format your events if needed (FullCalendar expects ISO 8601 dates)
+        $events = $blockedDates->map(function ($date) {
+            return [
+                'id'    => $date->id,
+                'start' => $date->start_date, // Ensure these are ISO 8601 (e.g., 2025-02-24T09:00:00)
+                'end'   => $date->end_date,
+                'title' => 'Blocked'
+            ];
+        });
+
+        return response()->json($events);
     }
 }

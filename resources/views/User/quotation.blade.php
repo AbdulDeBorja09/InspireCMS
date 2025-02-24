@@ -51,11 +51,7 @@
                 </button>
             </li>
 
-            <li class="nav-item ms-auto" role="presentation">
-                <button class="nav-link" id="cart" data-bs-toggle="tab" data-bs-target="#cart" type="button" role="tab">
-                    <i class="bi bi-cart-fill"></i>
-                </button>
-            </li>
+
         </ul>
 
         <!-- Tab Content -->

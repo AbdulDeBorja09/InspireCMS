@@ -34,6 +34,10 @@
     {{-- @vite(['resources/css/app.css', 'resources/js/app.js']) --}}
 
     {{-- Include pushed css from pages --}}
+
+    <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.7/index.global.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.7/index.global.min.js"></script>
+
     @stack('css')
 </head>
 

@@ -86,9 +86,15 @@
         <h6 class="text-center">---------Account Settings---------</h6>
 
         <!-- Settings Tab -->
+        <a class="nav-link {{ Route::currentRouteName() == 'admin.users' ? 'active' : '' }}"
+            href="{{route('admin.users')}}">
+            <i class="bi bi-people"></i> Users
+        </a>
+
+        <!-- Settings Tab -->
         <a class="nav-link {{ Route::currentRouteName() == 'admin.settings' ? 'active' : '' }}"
             href="{{route('admin.settings')}}">
-            <i class="bi bi-gear"></i> Settings
+            <i class="bi bi-gear"></i> General Settings
         </a>
     </div>
 

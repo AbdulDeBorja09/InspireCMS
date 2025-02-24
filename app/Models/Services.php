@@ -14,6 +14,7 @@ class Services extends Model
         'image3',
         'image4',
         'name',
+        'status',
         'description',
         'brief',
 
