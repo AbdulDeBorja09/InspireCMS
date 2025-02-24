@@ -13,10 +13,13 @@ use App\Models\Services;
 use App\Models\Teams;
 use App\Models\User;
 use App\Models\Quotations;
+use App\Models\notifications;
+use App\Models\payments;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Log;
 use Carbon\Carbon;
 use Illuminate\Support\Str;
 
@@ -54,7 +57,6 @@ class HomeController extends Controller
         return $this->ShowPage('article content', 'singlearticle', compact('article'));
     }
 
-
     public function ShowFAQs()
     {
         $categories = FaqsCategory::all();
@@ -89,7 +91,16 @@ class HomeController extends Controller
 
     public function ShowProfile()
     {
-        return $this->ShowPage('profile', 'profile');
+        $notif = notifications::with(['request'])->where('user_id', Auth::user()->id)->orderBy('created_at', 'desc')->get();
+        $items = Quotations::where('user_id', Auth::user()->id)->get();
+        return $this->ShowPage('profile', 'profile', compact('items', 'notif'));
+    }
+
+    public function ShowPayment(Request $request)
+    {
+        $quotations = Quotations::where('id', $request->id)->where('user_id', Auth::user()->id)->first();
+        $data = json_decode($quotations->items, true);
+        return $this->ShowPage('payment', 'payment', compact('quotations', 'data'));
     }
 
     public function singlequotation($id)
@@ -113,7 +124,6 @@ class HomeController extends Controller
         $membership = Services::where('type', 'Membership')->get();
         return $this->ShowPage('quotation', 'quotation', compact('facilities', 'academies', 'membership'));
     }
-
 
     public function contactus(Request $request)
     {
@@ -143,7 +153,6 @@ class HomeController extends Controller
             return redirect()->back()->with(['error' => $e->getMessage()], 500);
         }
     }
-
 
     public function EditProfile(Request $request)
     {
@@ -183,8 +192,6 @@ class HomeController extends Controller
             return redirect()->back()->with(['error' => $e->getMessage()], 500);
         }
     }
-
-
 
     public function ChangePassword(Request $request)
     {
@@ -263,6 +270,7 @@ class HomeController extends Controller
 
         // Prepare quotation data
         $quotationData = [
+            'service_id' => $request->service_id,
             'service_type' => $request->service_type,
             'service_name' => $request->service_name,
             'rate_type' => $rates->rate_type,
@@ -274,6 +282,8 @@ class HomeController extends Controller
             'individual' => $totalPrice,
             'individual_base' => $IndvRate,
             'date' => $request->date,
+            'start_time' => $request->start_time,
+            'end_time' => $request->end_time,
 
         ];
 
@@ -284,59 +294,77 @@ class HomeController extends Controller
         return $this->ShowPage('Payment', 'viewpdf', compact('quotationData'));
     }
 
-
-
-    public function SubmitQuotation(Request $request)
+    public function SubmitQuotationRequest(Request $request)
     {
-        // Define the validation rules
-        $request->validate([
-            'service_name' => 'required|string|max:255',
-            'rate_type' => 'required|string|max:255',
-            'rate' => 'required|numeric|min:0',
-            'hours' => 'nullable|numeric|min:0',
-            'qty' => 'nullable|numeric|min:0',
-            'total_price' => 'required|numeric|min:0',
-            'individual_base' => 'nullable|numeric|min:0',
-            'individual' => 'nullable|numeric|min:0',
-            'guest' => 'nullable|numeric|min:0',
-            'subtotal' => 'required|numeric|min:0',
-            'start_date' => 'required|date',
-            'end_date' => 'required|date',
-        ]);
-
-        // If validation passes, proceed to create the quotation
         $quotationRef = 'QUO-' . now()->format('Ymd') . '-' . Str::upper(Str::random(4));
         $quotationDataJson = json_encode([
-            'service_name' => $request->input('service_name'),
-            'rate_name' => $request->input('rate_type'),
-            'rate_value' => $request->input('rate'),
-            'total_hours' => $request->input('hours', 0),
-            'guest_qty' => $request->input('qty', 0),
-            'total_price' => $request->input('total_price'),
-            'individual_rate' => $request->input('individual_base', 0),
-            'individual_total' => $request->input('individual', 0),
-            'guest_count' => $request->input('guest', 0),
-            'subtotal' => $request->input('subtotal')
+            'service_name' => $request->service_name,
+            'rate_name' => $request->rate_type,
+            'rate_value' => $request->rate,
+            'total_hours' => $request->hours ?? 0,
+            'guest_qty' => $request->qty ?? 0,
+            'total_price' => $request->total_price ?? 0,
+            'individual_rate' => $request->individual_base ?? 0,
+            'individual_total' => $request->individual ?? 0,
+            'guest_count' => $request->guest ?? 0,
+            'subtotal' => $request->subtotal ?? 0,
         ]);
 
         try {
-            // Attempt to create the quotation
-            $create =  Quotations::create([
+            Quotations::create([
+                'user_id' => Auth::user()->id,
                 'Quotation_ref' => $quotationRef,
-                'service_type' => $request->input('service_type'),
+                'service_id' => $request->service_id,
+                'service_type' => $request->service_type ?? 'test',
                 'items' => $quotationDataJson,
-                'start_date' => $request->input('start_date', 0),
-                'end_date' => $request->input('end_date', 0),
+                'date' => $request->date,
+                'start_time' => $request->start_time,
+                'end_time' => $request->end_time,
+                'total' => $request->subtotal,
             ]);
 
-            if ($create) {
-                return redirect()->back()->with('success', 'Quotation created successfully!');
+            return redirect()->route('quotationpage');
+        } catch (\Throwable $e) {
+            return redirect()->route('quotationpage');
+        }
+    }
+
+
+    public function SubmitPayment(Request $request)
+    {
+        $quotation = Quotations::findOrFail($request->id);
+
+        try {
+            $imagePath = null;
+            if ($request->hasFile('image')) {
+                $imagePath = $request->file('image')->store('Proofs', 'public');
+            }
+
+            $payment = Payments::create([
+                'quotation_id' => $request->id,
+                'payment_term' => $request->payment_term,
+                'name'  => $request->fname . ' ' . $request->lname,
+                'address'  => $request->address,
+                'email'  => $request->email,
+                'phone'  => $request->phone,
+                'proof'  => $imagePath,
+            ]);
+
+            if ($payment) {
+                $quotation->update([
+                    'event_title' => $request->title,
+                    'billing_name' => $request->fname . ' ' . $request->lname,
+                    'billing_address' => $request->address,
+                    'status' => 4,
+                ]);
+
+                return redirect()->back()->with('success', 'Payment saved successfully!');
             } else {
                 return redirect()->back()->with('error', 'Failed to save!');
             }
         } catch (\Throwable $e) {
-            // Catch any exception and return the error message
-            return redirect()->back()->with(['error' => $e->getMessage()]);
+            Log::error('Payment submission failed', ['error' => $e->getMessage()]);
+            return redirect()->back()->with(['error' => $e->getMessage()], 500);
         }
     }
 }

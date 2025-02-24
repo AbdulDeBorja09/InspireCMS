@@ -13,9 +13,14 @@ use App\Models\Partners;
 use App\Models\Rate;
 use App\Models\Services;
 use App\Models\Teams;
+use App\Models\User;
 use App\Models\ContactUs;
+use App\Models\Quotations;
+use App\Models\notifications;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class AdminController extends Controller
 {
@@ -30,6 +35,23 @@ class AdminController extends Controller
 
         // Display view with data
         return view("admin.$viewName", $data);
+    }
+
+    public function ShowDashboard()
+    {
+        $items = Quotations::whereIn('status', [1, 2, 3, 4])
+            ->orderByRaw("CASE 
+                    WHEN status = 1 THEN 0 
+                    WHEN status = 2 THEN 1 
+                    ELSE 2 
+                END")
+            ->get();
+
+        $total =  Quotations::count();
+        $pending =  Quotations::whereIn('status', [1, 2,])->count();
+        $approved =  Quotations::whereIn('status', [3])->count();
+        $completed =  Quotations::whereIn('status', [4])->count();
+        return $this->ShowPage('dashboard', 'dashboard', compact('items', 'total', 'pending', 'approved', 'completed'));
     }
 
     public function ShowHome()
@@ -90,11 +112,35 @@ class AdminController extends Controller
         return $this->ShowPage('editpage', 'editpage', compact('service', 'rates'));
     }
 
+    public function ShowSettings()
+    {
+        return $this->ShowPage('settings', 'settings');
+    }
+
     public function ShowHeader()
     {
         $contents = Contents::pluck('value', 'key');
         return view('admin.header', compact('contents'));
     }
+
+    public function ShowRequests()
+    {
+        $items = Quotations::whereIn('status', [0, 1, 2, 3])
+            ->orderByRaw("CASE WHEN status = 1 THEN 0 WHEN status = 2 THEN 1  ELSE 2 END")
+            ->get();
+
+        return $this->ShowPage('requests', 'requests', compact('items'));
+    }
+
+    public function ShowPayments()
+    {
+        $items = Quotations::whereIn('status', [0, 1, 2, 3])
+            ->orderByRaw("CASE WHEN status = 1 THEN 0 ELSE 1 END")
+            ->get();
+
+        return $this->ShowPage('requests', 'requests', compact('items'));
+    }
+
 
     public function quotationpage()
     {
@@ -102,6 +148,37 @@ class AdminController extends Controller
         $academies = Services::where('type', 'academies')->get();
         $membership = Services::where('type', 'membership')->get();
         return $this->ShowPage('quotation', 'quotation', compact('facilities', 'academies', 'membership'));
+    }
+
+    public function ChangePasswords(Request $request)
+    {
+        $request->validate([
+            'old_password' => 'required|string|max:255',
+            'new_password' => 'required|string|max:255',
+            'confirm_password' => 'required|string',
+        ]);
+
+        $user = Auth::user();
+        if (!Hash::check($request->old_password, $user->password)) {
+            return redirect()->back()->with('error', 'Old Password Does Not Match!');
+        } else {
+            if ($request->new_password === $request->confirm_password) {
+                try {
+                    $user = User::where('id', Auth::user()->id)->update([
+                        'password' => Hash::make($request->new_password),
+                    ]);
+                    if ($user) {
+                        return redirect()->back()->with('success', 'Profile Updated successfully!');
+                    } else {
+                        return redirect()->back()->with('error', 'Failed to save!');
+                    }
+                } catch (\Throwable $e) {
+                    return redirect()->back()->with(['error' => $e->getMessage()], 500);
+                }
+            } else {
+                return redirect()->back()->with('error', 'Password Not Match!');
+            }
+        }
     }
 
     public function CreateOrUpdateContent(Request $request)
@@ -664,6 +741,64 @@ class AdminController extends Controller
                 'hour' => $request->hour,
             ]);
             return redirect()->back()->with('success', 'Rate Added successfully!');
+        } catch (\Throwable $e) {
+            return redirect()->back()->with(['error' => $e->getMessage()], 500);
+        }
+    }
+
+    public function RejectRequest(Request $request)
+    {
+        $Quotations = Quotations::findOrFail($request->id);
+
+        try {
+            $Quotations->update([
+                'status' => 0,
+            ]);
+            notifications::create([
+                'user_id'  => $Quotations->user_id,
+                'quotation_id' => $request->id,
+                'message'  => $request->reason,
+                'status'  => 'Rejected',
+            ]);
+            return redirect()->back()->with('success', 'Request Rejected successfully!');
+        } catch (\Throwable $e) {
+            return redirect()->back()->with(['error' => $e->getMessage()], 500);
+        }
+    }
+
+    public function GetContactDetails(Request $request)
+    {
+
+        $Quotaions = Quotations::where('id', $request->id)->first();
+
+        if ($Quotaions->status === 1) {
+            $Quotaions->update([
+                'status' => 2,
+            ]);
+        }
+        return response()->json(json_decode($Quotaions->items, true));
+    }
+
+    public function ApproveRequest(Request $request)
+    {
+        $Quotations = Quotations::findOrFail($request->id);
+
+        try {
+            $Quotations->update([
+                'status' => 3,
+                'tax' => $request->tax,
+                'discount' => $request->discount,
+                'penalty' => $request->penalty,
+                'Cancellation' => $request->cancelation,
+            ]);
+
+            notifications::create([
+                'user_id'  => $Quotations->user_id,
+                'quotation_id' => $request->id,
+                'message'  => 'Your request for quotation has been approved.',
+                'status'  => 'approved',
+            ]);
+            return redirect()->back()->with('success', 'Request Rejected successfully!');
         } catch (\Throwable $e) {
             return redirect()->back()->with(['error' => $e->getMessage()], 500);
         }

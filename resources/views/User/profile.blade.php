@@ -155,50 +155,62 @@
             width: 100%;
             margin: auto;
           " />
+            <div class="notif-containerr" style="height: 600px; overflow: auto">
+                @foreach($notif as $item)
+                <!-- APPROVED -->
+                @if($item->status === 'approved')
+                <div class="mt-3 notif-container">
+                    <div class="notif-header message-accept" onclick="toggleAccordion(this)">
+                        <h3>Request Approved!</h3>
+                    </div>
+                    <div class="notif-content">
+                        <p><strong>{{$item->request->Quotation_ref}}</strong> {{$item->message}}</p>
+                        <div class="btn-container">
 
-            <!-- APPROVED -->
-            <div class="mt-3 notif-container">
-                <div class="notif-header message-accept" onclick="toggleAccordion(this)">
-                    <h3>Request Approved!</h3>
-                </div>
-                <div class="notif-content">
-                    <p>Your request for quotation has been approved.</p>
-                    <div class="btn-container">
-                        <button class="transac-btn">Proceed to payment</button>
+                            <a class="transac-btn text-white" href="{{url('Payment/' .$item->quotation_id)}}"
+                                style="text-decoration:none">Proceed to payment</a>
+                        </div>
                     </div>
                 </div>
-            </div>
-
-            <!-- VERIFIED -->
-            <div class="notif-container">
-                <div class="notif-header message-accept" onclick="toggleAccordion(this)">
-                    <h3>Payment Verified Successfully!</h3>
-                </div>
-                <div class="notif-content">
-                    <p>
-                        Your payment has been verified and your schedule is now set.
-                    </p>
-                    <div class="btn-container">
-                        <button class="transac-btn">Download Payment Receipt</button>
+                @elseif($item->status === 'Rejected')
+                <!-- DENIED -->
+                <div class="mt-3 notif-container">
+                    <div class="notif-header message-deny" onclick="toggleAccordion(this)">
+                        <h3>Request Denied!</h3>
+                    </div>
+                    <div class="notif-content">
+                        <p>
+                            <strong>{{$item->request->Quotation_ref}}</strong> {{$item->message}}
+                        </p>
+                        <div class="btn-container">
+                            <button class="transac-btn" onclick="window.location.href='/Quotation';">Request
+                                Again</button>
+                        </div>
                     </div>
                 </div>
-            </div>
-
-            <!-- DENIED -->
-            <div class="notif-container">
-                <div class="notif-header message-deny" onclick="toggleAccordion(this)">
-                    <h3>Request Denied!</h3>
-                </div>
-                <div class="notif-content">
-                    <p>
-                        Your request for quotation has been denied due to a same-date
-                        conflict.
-                    </p>
-                    <div class="btn-container">
-                        <button class="transac-btn">Request Again</button>
+                @elseif($item->status === 'Verified')
+                <!-- VERIFIED -->
+                <div class="mt-3 notif-container">
+                    <div class="notif-header message-accept" onclick="toggleAccordion(this)">
+                        <h3>Payment Verified Successfully!</h3>
+                    </div>
+                    <div class="notif-content">
+                        <p>
+                            <strong>{{$item->request->Quotation_ref}}</strong> {{$item->message}}
+                        </p>
+                        <div class="btn-container">
+                            <button class="transac-btn">Download Payment Receipt</button>
+                        </div>
                     </div>
                 </div>
+                @endif
+
+
+                @endforeach
             </div>
+
+
+
         </div>
 
         <!-- TRANSACTIONS -->
@@ -220,73 +232,73 @@
                 <label for="filter">Filter Transactions:</label>
                 <select id="filter">
                     <option value="all">All</option>
-                    <option value="payment">Payments</option>
-                    <option value="quotation">Quotation Requests</option>
+                    <option value="Payment">Payments</option>
+                    <option value="Quotation">Quotation Requests</option>
                 </select>
 
                 <label for="status-filter">Filter by Status:</label>
                 <select id="status-filter">
                     <option value="all">All</option>
-                    <option value="completed">Completed</option>
-                    <option value="pending">Pending</option>
-                    <option value="approved">Approved</option>
-                    <option value="denied">Denied</option>
+                    <option value="Completed">Completed</option>
+                    <option value="New">Pending</option>
+                    <option value="Approved">Approved</option>
+                    <option value="Rejected">Denied</option>
                 </select>
 
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Date & Time</th>
-                            <th>Reference No.</th>
-                            <th>Type</th>
-                            <th>Amount</th>
-                            <th>Status</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody id="transaction-table">
-                        <tr data-type="payment" data-status="completed" data-date="2025-02-15">
-                            <td>2025-02-15 14:30</td>
-                            <td>REF123456</td>
-                            <td>Payment</td>
-                            <td>$150.00</td>
-                            <td>Completed</td>
-                            <td>
-                                <button class="shadow-none view-btn">View More</button>
-                            </td>
-                        </tr>
-                        <tr data-type="quotation" data-status="pending" data-date="2025-02-16">
-                            <td>2025-02-16 10:15</td>
-                            <td>REF789012</td>
-                            <td>Quotation Request</td>
-                            <td>$0.00</td>
-                            <td>Pending</td>
-                            <td>
-                                <button class="shadow-none view-btn">View More</button>
-                            </td>
-                        </tr>
-                        <tr data-type="payment" data-status="completed" data-date="2025-02-17">
-                            <td>2025-02-17 09:45</td>
-                            <td>REF345678</td>
-                            <td>Payment</td>
-                            <td>$200.00</td>
-                            <td>Completed</td>
-                            <td>
-                                <button class="shadow-none view-btn">View More</button>
-                            </td>
-                        </tr>
-                        <tr data-type="quotation" data-status="approved" data-date="2025-02-18">
-                            <td>2025-02-18 16:00</td>
-                            <td>REF901234</td>
-                            <td>Quotation Request</td>
-                            <td>$0.00</td>
-                            <td>Approved</td>
-                            <td>
-                                <button class="shadow-none view-btn">View More</button>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+                <div class="transaction-table" style="height: 350px; overflow: auto">
+                    <table>
+                        <thead class="sticky-top">
+                            <tr>
+                                <th>Date & Time</th>
+                                <th>Reference No.</th>
+                                <th>Type</th>
+                                <th>Amount</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="transaction-table">
+
+                            @foreach ($items as $item)
+                            @php
+                            // Determine the status text using if/elseif
+                            if ($item->status === 1) {
+                            $statusText = 'New';
+                            } elseif ($item->status === 2) {
+                            $statusText = 'Pending';
+                            } elseif ($item->status === 3) {
+                            $statusText = 'Approved';
+                            } elseif ($item->status === 4) {
+                            $statusText = 'Paid';
+                            } elseif ($item->status === 5) {
+                            $statusText = 'Completed';
+                            } else {
+                            $statusText = 'Rejected';
+                            }
+
+                            // Set the data type based on the status.
+                            $dataType = $item->status < 4 ? 'Quotation' : 'Payment' ; $dateFormatted=$item->
+                                created_at->format('Y-m-d');
+                                $dateTimeFormatted = $item->created_at->format('Y-m-d H:i');
+                                @endphp
+
+                                <tr data-type="{{ $dataType }}" data-status="{{ $statusText }}"
+                                    data-date="{{ $dateFormatted }}">
+                                    <td>{{ $dateTimeFormatted }}</td>
+                                    <td>{{ $item->Quotation_ref }}</td>
+                                    <td>{{ $dataType }}</td>
+                                    <td>₱ {{ number_format($item->total) }}</td>
+                                    <td>{{ $statusText }}</td>
+                                    <td>
+                                        <button class="shadow-none view-btn">View More</button>
+                                    </td>
+                                </tr>
+                                @endforeach
+
+
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
 
@@ -338,6 +350,40 @@
     }
 </script>
 
+<!-- FILTERING -->
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const dateFilter = document.getElementById("date-filter");
+      const typeFilter = document.getElementById("filter");
+      const statusFilter = document.getElementById("status-filter");
+      const tableRows = document.querySelectorAll("#transaction-table tr");
+
+      function filterTable() {
+        const selectedDate = dateFilter.value;
+        const selectedType = typeFilter.value;
+        const selectedStatus = statusFilter.value;
+
+        tableRows.forEach((row) => {
+          const rowDate = row.getAttribute("data-date");
+          const rowType = row.getAttribute("data-type");
+          const rowStatus = row.getAttribute("data-status");
+
+          const matchesDate = selectedDate ? rowDate === selectedDate : true;
+          const matchesType =
+            selectedType === "all" || rowType === selectedType;
+          const matchesStatus =
+            selectedStatus === "all" || rowStatus === selectedStatus;
+
+          row.style.display =
+            matchesDate && matchesType && matchesStatus ? "" : "none";
+        });
+      }
+
+      dateFilter.addEventListener("input", filterTable);
+      typeFilter.addEventListener("change", filterTable);
+      statusFilter.addEventListener("change", filterTable);
+    });
+</script>
 
 @endsection
 @push('css')

@@ -213,7 +213,7 @@
                     <textarea name="inclusions[]" id="inclusions" class="form-control mb-2" rows="5"
                         placeholder="Inclusions (optional)"></textarea>
                 </div>
-
+                <button type="button" class="btn btn-danger remove-rate" style="background-color: #f44336;">Remove</button>
         `;
 
         container.appendChild(rateRow);

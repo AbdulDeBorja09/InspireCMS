@@ -7,14 +7,22 @@
     <!-- SIDEBAR TABS -->
     <div class="sidebar-tabs" role="tablist">
         <!-- Dashboard Tab -->
-        <a class="nav-link  {{ Route::currentRouteName() == '' ? 'active' : '' }}" href="">
+        <a class="nav-link  {{ Route::currentRouteName() == '' ? 'active' : '' }}" href="{{route('admin.dashboard')}}">
             <i class="bi bi-bar-chart-line-fill"></i> Dashboard
         </a>
 
         <!-- Request Tab -->
-        <a class="nav-link" href="#" onclick="showTab(event, 'request')">
+        <a class="nav-link {{ Route::currentRouteName() == '' ? 'active' : '' }}"
+            href="{{route('admin.ShowRequests')}}">
             <i class="bi bi-quote"></i> Requests
         </a>
+
+        <!-- Request Tab -->
+        <a class="nav-link {{ Route::currentRouteName() == '' ? 'active' : '' }}"
+            href="{{route('admin.ShowRequests')}}">
+            <i class="bi bi-quote"></i> Payments
+        </a>
+
 
         <!-- Contact Tab -->
         <a class="nav-link {{ Route::currentRouteName() == 'admin.ShowContactus' ? 'active' : '' }}"
@@ -77,7 +85,8 @@
         <h6 class="text-center">---------Account Settings---------</h6>
 
         <!-- Settings Tab -->
-        <a class="nav-link" href="#" onclick="showTab(event, 'settings')">
+        <a class="nav-link {{ Route::currentRouteName() == 'admin.settings' ? 'active' : '' }}"
+            href="{{route('admin.settings')}}">
             <i class="bi bi-gear"></i> Settings
         </a>
     </div>

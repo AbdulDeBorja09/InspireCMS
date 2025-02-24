@@ -147,9 +147,9 @@
 <!-- CONTENTS -->
 
 <section id="contents">
-    <form action="{{ route('SubmitQuotation') }}" method="POST">
+    <form action="{{ route('SubmitQuotationRequest') }}" method="POST">
         @csrf
-        {{-- <button type="submit" class="btn"> SUBMIT</button> --}}
+
         @php
         $rate = $quotationData['rate'] ?? 0;
         $quantity = $quotationData['hours'] ?? $quotationData['qty'] ?? 0;
@@ -157,22 +157,24 @@
         $rateFormatted = number_format($rate, 2);
         $subtotal = $totalPrice + ($quotationData['individual'] ?? 0);
         @endphp
-
-        {{-- // <input type="text" name="service_type" value="{{ $quotationData['service_type'] }}">
-        // <input type="text" name="service_name" value="{{ $quotationData['service_name'] }}">
-        // <input type="text" name="rate_type" value="{{ $quotationData['rate_type'] }}">
-        // <input type="text" name="rate" value="{{ $quotationData['rate'] }}">
-        // <input type="text" name="hours" value="{{ $quotationData['hours'] ?? 0 }}">
-        // <input type="text" name="qty" value="{{ $quotationData['qty'] ?? 0 }}">
-        // <input type="text" name="total_price" value="{{ $totalPrice }}">
-        // <input type="text" name="individual_base" value="{{ $quotationData['individual_base'] ?? 0 }}">
-        // <input type="text" name="individual" value="{{ $quotationData['individual'] ?? 0 }}">
-        // <input type="text" name="guest" value="{{ $quotationData['guest'] ?? 0 }}">
-        // <input type="text" name="subtotal" value="{{ $subtotal }}">
-        // <input type="text" name="start_date" value="{{ $quotationData['start_date'] ?? 0 }}">
-        // <input type="text" name="end_date" value="{{ $quotationData['end_date'] ?? 0 }}"> --}}
+        <input type="hidden" name="service_id" value="{{ $quotationData['service_id'] }}">
+        <input type="hidden" name="service_type" value="{{ $quotationData['service_type'] }}">
+        <input type="hidden" name="service_name" value="{{ $quotationData['service_name'] }}">
+        <input type="hidden" name="rate_type" value="{{ $quotationData['rate_type'] }}">
+        <input type="hidden" name="rate" value="{{ $quotationData['rate'] }}">
+        <input type="hidden" name="hours" value="{{ $quotationData['hours'] ?? 0 }}">
+        <input type="hidden" name="qty" value="{{ $quotationData['qty'] ?? 0 }}">
+        <input type="hidden" name="total_price" value="{{ $totalPrice }}">
+        <input type="hidden" name="individual_base" value="{{ $quotationData['individual_base'] ?? 0 }}">
+        <input type="hidden" name="individual" value="{{ $quotationData['individual'] ?? 0 }}">
+        <input type="hidden" name="guest" value="{{ $quotationData['guest'] ?? 0 }}">
+        <input type="hidden" name="subtotal" value="{{ $subtotal }}">
+        <input type="hidden" name="date" value="{{ $quotationData['date'] ?? 0 }}">
+        <input type="hidden" name="start_time" value="{{ $quotationData['start_time'] ?? 0 }}">
+        <input type="hidden" name="end_time" value="{{ $quotationData['end_time'] ?? 0 }}">
         <div class="container py-5 mb-5 content-container">
             <!-- Tab Content -->
+            <hr>
             <div class="tab-content mt-4" style="min-height: 50vh">
 
                 <section class="pdf-table shadow-sm p-5">
@@ -339,19 +341,15 @@
                     </div>
                 </section>
             </div>
+            <hr>
+            <div class="text-center">
+                <button type="submit" class="btn btn-outline-success w-50 btn-quote m-5"> SUBMIT</button>
+            </div>
         </div>
+
         </div>
 
     </form>
-    @if ($errors->any())
-    <div class="alert alert-danger">
-        <ul>
-            @foreach ($errors->all() as $error)
-            <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-    </div>
-    @endif
 
 </section>
 {{-- <script src="{{asset('js/details.js')}}"></script> --}}

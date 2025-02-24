@@ -49,16 +49,15 @@
       return;
     }
 
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = function (event) {
-        imagePreview.innerHTML = `<img src="${event.target.result}" alt="Preview Image">`;
-      };
-      reader.readAsDataURL(file);
-    } else {
-      imagePreview.innerHTML = `<span>No image selected</span>`;
-    }
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function (event) {
+          imagePreview.innerHTML = `<img src="${event.target.result}" alt="Preview Image">`;
+        };
+        reader.readAsDataURL(file);
+      } else {
+        imagePreview.innerHTML = `<span>No image selected</span>`;
+      }
+    });
   });
-});
-
 </script>
