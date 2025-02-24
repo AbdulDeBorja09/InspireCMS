@@ -148,7 +148,6 @@ class AdminController extends Controller
         return $this->ShowPage('payments', 'payments', compact('items'));
     }
 
-
     public function quotationpage()
     {
         $facilities = Services::where('type', 'facility')->get();
@@ -727,7 +726,6 @@ class AdminController extends Controller
         }
     }
 
-
     public function EditRate(Request $request)
     {
         $rate = Rate::findOrFail($request->id);
@@ -756,31 +754,44 @@ class AdminController extends Controller
             notifications::updateOrCreate(
                 [
                     'quotation_id' => $request->id,
-                    'user_id'      => $Quotations->user_id,
+                    'user_id'  => $Quotations->user_id
                 ],
                 [
-                    'message' => $request->reason,
-                    'status'  => 'Rejected',
+                    'message'  => $request->reason,
+                    'status'   => 'Rejected',
                 ]
             );
-
             return redirect()->back()->with('success', 'Request Rejected successfully!');
         } catch (\Throwable $e) {
             return redirect()->back()->with(['error' => $e->getMessage()], 500);
         }
     }
 
-    public function GetContactDetails(Request $request)
+    public function CancelRequest(Request $request)
     {
+        $Quotations = Quotations::findOrFail($request->id);
 
-        $Quotaions = Quotations::where('id', $request->id)->first();
-
-        if ($Quotaions->status === 1) {
-            $Quotaions->update([
-                'status' => 2,
+        try {
+            $Quotations->update([
+                'status' => 6,
             ]);
+
+            notifications::updateOrCreate(
+                [
+                    'quotation_id' => $request->id,
+                    'user_id'  => $Quotations->user_id
+                ],
+                [
+                    'message'  => $request->reason,
+                    'status'   => 'Cancelled',
+                ]
+            );
+
+
+            return redirect()->back()->with('success', 'Request Rejected successfully!');
+        } catch (\Throwable $e) {
+            return redirect()->back()->with(['error' => $e->getMessage()], 500);
         }
-        return response()->json(json_decode($Quotaions->items, true));
     }
 
     public function ApproveRequest(Request $request)
@@ -795,25 +806,55 @@ class AdminController extends Controller
                 'penalty' => $request->penalty,
                 'Cancellation' => $request->cancelation,
             ]);
+
             notifications::updateOrCreate(
                 [
-                    'user_id'  => $Quotations->user_id,
                     'quotation_id' => $request->id,
+                    'user_id'  => $Quotations->user_id
                 ],
                 [
+
                     'message'  => 'Your request for quotation has been approved.',
-                    'status'  => 'approved',
+                    'status'   => 'Approved',
                 ]
             );
+
+
 
             return redirect()->back()->with('success', 'Request Rejected successfully!');
         } catch (\Throwable $e) {
             return redirect()->back()->with(['error' => $e->getMessage()], 500);
         }
     }
+
+    public function GetRequestDetails(Request $request)
+    {
+        $Quotaions = Quotations::where('id', $request->id)->first();
+
+        if ($Quotaions->status === 1) {
+            $Quotaions->update([
+                'status' => 2,
+            ]);
+        }
+
+        $users = User::where('id', $Quotaions->user_id)->first();
+        $items = json_decode($Quotaions->items, true);
+
+        $room_id = $request->id;
+        // Fetch all blocked dates for the given service_id
+        $blockedDates = Dates::where('service_id', $Quotaions->id)
+            ->get(['start_date', 'end_date']);
+
+        return response()->json([
+            'items' => $items,
+            'blocked_dates' => $blockedDates,
+            'user' => $users,   
+        ]);
+    }
+
     public function GetBlockedDates(Request $request)
     {
-        // Retrieve the service_id (or quotation_id) from the request query parameters
+
         $serviceId = $request->query('service_id');
 
         // Query your BlockedDate model (make sure your table has a service_id column)

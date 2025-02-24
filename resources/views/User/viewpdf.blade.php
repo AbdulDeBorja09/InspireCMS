@@ -183,7 +183,7 @@
 
                 <section class="pdf-table shadow-sm p-5">
                     <div class="header">
-                        <img src="{{asset('../images/logo/inspire-logo.png')}}" alt="INSPIRE Sports Academy" />
+                        <img src="{{asset('/images/logo/inspire-logo.png')}}" alt="INSPIRE Sports Academy" />
                         <div class="company-details">
                             <strong>NU SPORTS ACADEMY, INC.</strong><br />
                             NU Laguna, KM 53 Pan Philippine Highway<br />
@@ -359,5 +359,5 @@
 {{-- <script src="{{asset('js/details.js')}}"></script> --}}
 @endsection
 @push('css')
-<link href="{{ asset('../css/quote-page.css') }}?v={{ time() }}" rel="stylesheet">
+<link href="{{ asset('/css/quote-page.css') }}?v={{ time() }}" rel="stylesheet">
 @endpush

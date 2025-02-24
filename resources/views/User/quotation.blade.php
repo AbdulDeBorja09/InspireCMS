@@ -63,14 +63,14 @@
                     @foreach ($facilities as $item)
                     <div class="col-lg-3 col-md-6 col-sm-12">
                         <div class="card">
-                            <img src="{{asset('../storage/'.$item->image1)}}" class="card-img-top" alt="Facility 1" />
+                            <img src="{{asset('/storage/'.$item->image1)}}" class="card-img-top" alt="Facility 1" />
                             <div class="card-body">
                                 <h5 class="card-title">{{$item->name}}</h5>
                                 <p class="card-text">
                                     {{$item->brief}}
                                 </p>
                                 @if ($item->status === 1)
-                                <a href="{{url('../Quotation/'.$item->id)}}" class="btn shadow-none btn-custom">View
+                                <a href="{{url('/Quotation/'.$item->id)}}" class="btn shadow-none btn-custom">View
                                     More</a>
                                 @else
                                 <a style="cursor: not-allowed; " class="btn shadow-none btn-custom">Unavailable</a>
@@ -91,13 +91,13 @@
                     @foreach ($academies as $item)
                     <div class="col-lg-3 col-md-6 col-sm-12">
                         <div class="card">
-                            <img src="{{asset('../storage/'. $item->image1)}}" class="card-img-top" alt="Facility 1">
+                            <img src="{{asset('/storage/'. $item->image1)}}" class="card-img-top" alt="Facility 1">
                             <div class="card-body">
                                 <h5 class="card-title">{{$item->name}}</h5>
                                 <p class="card-text">
                                     {{$item->brief}}
                                 </p>
-                                <a href="{{url('../Quotation/'.$item->id)}}" class="btn shadow-none btn-custom">View
+                                <a href="{{url('/Quotation/'.$item->id)}}" class="btn shadow-none btn-custom">View
                                     More</a>
                             </div>
                         </div>
@@ -114,13 +114,13 @@
                     @foreach ($membership as $item)
                     <div class="col-lg-3 col-md-6 col-sm-12">
                         <div class="card">
-                            <img src="{{asset('../storage/'. $item->image1)}}" class="card-img-top" alt="Facility 1">
+                            <img src="{{asset('/storage/'. $item->image1)}}" class="card-img-top" alt="Facility 1">
                             <div class="card-body">
                                 <h5 class="card-title">{{$item->name}}</h5>
                                 <p class="card-text">
                                     {{$item->brief}}
                                 </p>
-                                <a href="{{url('../Quotation/'.$item->id)}}" class="btn shadow-none btn-custom">View
+                                <a href="{{url('/Quotation/'.$item->id)}}" class="btn shadow-none btn-custom">View
                                     More</a>
                             </div>
                         </div>
@@ -136,5 +136,5 @@
 {{-- <script src="{{asset('js/details.js')}}"></script> --}}
 @endsection
 @push('css')
-<link href="{{ asset('../css/quote-page.css') }}?v={{ time() }}" rel="stylesheet">
+<link href="{{ asset('/css/quote-page.css') }}?v={{ time() }}" rel="stylesheet">
 @endpush

@@ -28,7 +28,7 @@
                 <tr>
                     <th>ID</th>
                     <th>Date & Time</th>
-                    <th>Quotation No.</th>
+                    <th>Payment No.</th>
                     <th>Amount</th>
                     <th>Status</th>
                     <th>Action</th>
@@ -44,13 +44,13 @@
                     @if ($item->status === 4)
                     <td class="new">Paid</td>
                     <td>
-                        <button class="view-btn" onclick="ViewRequest({{$item}})">View</button>
+                        <button class="view-btn" onclick="ViewPayment({{$item}})">View</button>
                         <button class="approve-btn" onclick="ApproveRequest({{$item}})">Confirm</button>
                     </td>
                     @elseif($item->status === 5)
                     <td class="pending">Confirm</td>
                     <td>
-                        <button class="view-btn" onclick="ViewRequest({{$item}})">View</button>
+                        <button class="view-btn" onclick="ViewPayment({{$item}})">View</button>
                     </td>
                     @endif
                 </tr>
@@ -59,18 +59,19 @@
         </table>
     </div>
 </div>
-<div class="modal fade" id="ViewRequest" tabindex="-1" aria-labelledby="ViewRequestLabel" aria-hidden="true">
+
+{{-- <div class="modal fade" id="ViewPayment" tabindex="-1" aria-labelledby="ViewPaymentLabel" aria-hidden="true">
     <div class="modal-dialog modal-xl">
         <form id="editFAQForm" method="POST" action="{{ route('admin.ApproveRequest') }}">
             @csrf
             @method('PUT')
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="ViewRequestLabel">Approve Request</h5>
+                    <h5 class="modal-title" id="ViewPaymentLabel">Approve Request</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <input type="hidden" name="id" id="ViewRequestID">
+                    <input type="hidden" name="id" id="ViewPaymentID">
                     <div class="row">
                         <div class="col-lg-6 col-md-12">
                             <div class="mb-3">
@@ -111,7 +112,7 @@
                             </div>
                         </div>
                         <div class="col-lg-6 col-md-12">
-                            {{-- <img src="{{asset('../Storage/'. )}}" alt=""> --}}
+
                         </div>
                     </div>
 
@@ -124,7 +125,8 @@
             </div>
         </form>
     </div>
-</div>
+</div> --}}
+
 <div class="modal fade" id="ApproveRequest" tabindex="-1" aria-labelledby="RequestApproveLabel" aria-hidden="true">
     <div class="modal-dialog modal-xl">
         <form id="editFAQForm" method="POST" action="{{ route('admin.ApproveRequest') }}">
@@ -219,6 +221,79 @@
         </div>
     </div>
 </div>
+<div class="modal fade" id="viewpayment" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-4" id="staticBackdropLabel">
+                    View Payment
+                </h1>
+                <button type="button" class="btn-close shadow-none" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-lg-6 col-md-12 col-sm-12">
+                        <h4>User Details</h4>
+                        <div class="user-details">
+                            <h5>First Name</h5>
+                            <input class="mb-3 w-100" type="text" id="view_payment_fname" readonly
+                                placeholder="Fetching...">
+
+                            <h5>Last Name</h5>
+                            <input class="mb-3 w-100" type="text" id="view_payment_lname" readonly
+                                placeholder="Fetching...">
+
+                            <h5>Address</h5>
+                            <input class="mb-3 w-100" type="text" id="view_payment_address" readonly
+                                placeholder="Fetching...">
+
+                            <h5>Email</h5>
+                            <input class="mb-3 w-100" type="text" id="view_payment_email" readonly
+                                placeholder="Fetching...">
+
+                            <h5>Phone Number</h5>
+                            <input class="mb-3 w-100" type="text" id="view_payment_phone" readonly
+                                placeholder="Fetching...">
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6 col-md-12 col-sm-12">
+                        <h4>Payment Details</h4>
+                        <div class="user-transaction">
+                            <h5>Payment Reference</h5>
+                            <input class="mb-3 w-100" type="text" id="view_payment_reference" readonly
+                                placeholder="Fetching...">
+
+                            <h5>Date & Time</h5>
+                            <input class="mb-3 w-100" type="text" id="view_payment_time" readonly
+                                placeholder="Fetching...">
+
+                            <h5>Payment Terms</h5>
+                            <input class="mb-3 w-100" type="text" id="view_payment_terms" readonly
+                                placeholder="Fetching...">
+
+                            <h5>Paid Amount</h5>
+                            <input class="mb-3 w-100" type="text" id="view_payment_amount" readonly
+                                placeholder="Fetching...">
+
+                            <h5>Proof of Payment</h5>
+                            <button class="mb-3 w-100  btn btn-outline-light view-btn ">View Image</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="modal-btn" data-bs-dismiss="modal">
+                    Close
+                </button>
+                <button type="button" class="modal-btn" data-bs-dismiss="modal">
+                    View PDF
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
@@ -227,7 +302,7 @@
         document.getElementById('ApproveID').value = Item.id;
 
         $.ajax({
-            url: '{{ route("admin.GetContactDetails") }}', 
+            url: '{{ route("admin.GetRequestDetails") }}', 
             type: 'GET', 
             data: { id: Item.id },
             dataType: 'json', 
@@ -247,19 +322,20 @@
         let modal = new bootstrap.Modal(document.getElementById('ApproveRequest'));
         modal.show();
     }
-    function ViewRequest(Item) {
-        document.getElementById('ViewRequestID').value = Item.id;
+
+    function ViewPayment(Item) {
+        // document.getElementById('ViewPaymentID').value = Item.id;
         $.ajax({
-            url: '{{ route("admin.GetContactDetails") }}', 
+            url: '{{ route("admin.GetRequestDetails") }}', 
             type: 'GET', 
             data: { id: Item.id },
             dataType: 'json', 
             success: function(response) {
                 console.log("Quotation Order Details:", response);
             
-                document.getElementById('view_service_name').value = response.service_name;
-                document.getElementById('view_service_desc').value = response.rate_name;
-                document.getElementById('view_service_total').value = response.subtotal;
+                // document.getElementById('view_service_name').value = response.service_name;
+                // document.getElementById('view_service_desc').value = response.rate_name;
+                // document.getElementById('view_service_total').value = response.subtotal;
             },
             error: function(xhr, status, error) {
                 console.error("Error fetching quotation orders:", error);
@@ -267,7 +343,7 @@
         });
 
 
-        let modal = new bootstrap.Modal(document.getElementById('ViewRequest'));
+        let modal = new bootstrap.Modal(document.getElementById('viewpayment'));
         modal.show();
     }
 
@@ -277,9 +353,7 @@
         let modal = new bootstrap.Modal(document.getElementById('RejectRequest'));
         modal.show();
     }
-
-</script>
-<script>
+    
     function filterTable() {
       const dateFilter = document.getElementById("dateFilter").value;
       const statusFilter = document
@@ -307,4 +381,5 @@
       });
     }
 </script>
+
 @endsection

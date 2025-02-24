@@ -158,7 +158,7 @@
             <div class="notif-containerr" style="height: 600px; overflow: auto">
                 @foreach($notif as $item)
                 <!-- APPROVED -->
-                @if($item->status === 'approved')
+                @if($item->status === 'Approved')
                 <div class="mt-3 notif-container">
                     <div class="notif-header message-accept" onclick="toggleAccordion(this)">
                         <h3>Request Approved!</h3>
@@ -177,6 +177,22 @@
                 <div class="mt-3 notif-container">
                     <div class="notif-header message-deny" onclick="toggleAccordion(this)">
                         <h3>Request Denied!</h3>
+                    </div>
+                    <div class="notif-content">
+                        <p>
+                            <strong>{{$item->request->Quotation_ref}}</strong> {{$item->message}}
+                        </p>
+                        <div class="btn-container">
+                            <button class="transac-btn" onclick="window.location.href='/Quotation';">Request
+                                Again</button>
+                        </div>
+                    </div>
+                </div>
+                @elseif($item->status === 'Cancelled')
+                <!-- DENIED -->
+                <div class="mt-3 notif-container">
+                    <div class="notif-header message-deny" onclick="toggleAccordion(this)">
+                        <h3>Request Cancelled!</h3>
                     </div>
                     <div class="notif-content">
                         <p>

@@ -119,7 +119,7 @@
     <div class="mb-5 spinner"></div>
     <div class="mt-5 message">
         <h1 class="text-center text-white">Almost there! Just a moment...</h1>
-        <img src="{{asset('../images/logo/inspire-logo.png')}}" alt="" />
+        <img src="{{asset('/images/logo/inspire-logo.png')}}" alt="" />
     </div>
 </div>
 

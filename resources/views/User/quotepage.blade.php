@@ -25,27 +25,27 @@
     <div class="container my-5 py-5">
         <div class="row">
             <div class="col-lg-8">
-                <img id="mainImage" src="{{asset('../storage/'. $service->image1)}}" alt="Expert Trainer"
+                <img id="mainImage" src="{{asset('/storage/'. $service->image1)}}" alt="Expert Trainer"
                     class="content-image" />
 
                 <div class="row mt-3">
                     <div class="col-3">
-                        <img src="{{asset('../storage/'. $service->image1)}}" class="thumb-image"
+                        <img src="{{asset('/storage/'. $service->image1)}}" class="thumb-image"
                             onclick="changeImage(this)" />
                     </div>
 
                     <div class="col-3">
-                        <img src="{{asset('../storage/'. $service->image2)}}" class="thumb-image"
+                        <img src="{{asset('/storage/'. $service->image2)}}" class="thumb-image"
                             onclick="changeImage(this)" />
                     </div>
 
                     <div class="col-3">
-                        <img src="{{asset('../storage/'. $service->image3)}}" class="thumb-image"
+                        <img src="{{asset('/storage/'. $service->image3)}}" class="thumb-image"
                             onclick="changeImage(this)" />
                     </div>
 
                     <div class="col-3">
-                        <img src="{{asset('../storage/'. $service->image4)}}" class="thumb-image"
+                        <img src="{{asset('/storage/'. $service->image4)}}" class="thumb-image"
                             onclick="changeImage(this)" />
                     </div>
                 </div>
@@ -107,22 +107,53 @@
                         <!-- Quantity Input -->
                         <input type="number" name="guests" placeholder="Enter Guests" required />
 
+                        <button class="btn btn-dark " data-bs-toggle="modal"
+                            data-bs-target="#staticBackdrop">DATE</button>
 
-                        <input type="hidden" id="datessssss" class="form-control" placeholder="Start Time"
-                            style="height: 0px; padding:0; margin:0; background-color:#f1f5f9;" readonly>
-                        <!-- Visible Inputs for Start and End -->
-                        <input type="text" id="start_date" class="form-control" name="date" placeholder="Start Date"
-                            readonly required>
-                        <input type="text" id="start_time" class="form-control" name="start_time"
-                            placeholder="Start Time" readonly required>
+                        <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false"
+                            tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered modal-xl">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h1 class="modal-title fs-5" id="staticBackdropLabel">Modal title</h1>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="row">
+                                            <div class="col-lg-4 col-md-12 col-sm-12">
+                                                <input type="hidden" id="datessssss" class="form-control"
+                                                    placeholder="Start Time"
+                                                    style="height: 0px; padding:0; margin:0; background-color:#f1f5f9;"
+                                                    readonly>
+                                                <!-- Visible Inputs for Start and End -->
 
-                        <input type="text" id="end_time" class="form-control" name="end_time" placeholder="End Time"
-                            readonly required>
-                        <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-                        <script src="{{asset('/js/calendar.js')}}"></script>
+                                                <input type="text" id="start_date" class="form-control" name="date"
+                                                    placeholder="Start Date" readonly required>
+                                                <input type="text" id="start_time" class="form-control"
+                                                    name="start_time" placeholder="Start Time" readonly required>
+
+                                                <input type="text" id="end_time" class="form-control" name="end_time"
+                                                    placeholder="End Time" readonly required>
+                                                <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
+                                                <script src="{{asset('/js/calendar.js')}}"></script>
+                                            </div>
+                                            <div class="col-lg-8 col-md-12 col-sm-12" id="calendar"></div>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary"
+                                            data-bs-dismiss="modal">Close</button>
+                                        <button type="button" class="btn btn-primary">Understood</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         @else
                         <input type="number" name="qty" placeholder="Enter Qty." required />
                         @endif
+
                         <!-- Total Price -->
                         <div class="total-price" id="totalPrice">₱0.00</div>
                         <!-- Add to Quote Button -->
@@ -160,5 +191,5 @@
 <script src="{{asset('js/change-image.js')}}"></script>
 @endsection
 @push('css')
-<link href="{{ asset('../css/quote-single-content-page.css') }}?v={{ time() }}" rel="stylesheet">
+<link href="{{ asset('/css/quote-single-content-page.css') }}?v={{ time() }}" rel="stylesheet">
 @endpush

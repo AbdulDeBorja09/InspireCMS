@@ -27,27 +27,27 @@
         <!-- SINGLE CONTENT IMAGES -->
         <div class="row">
             <div class="col-lg-8">
-                <img id="mainImage" src="{{asset('../storage/'. $service->image1)}}" alt="Expert Trainer"
+                <img id="mainImage" src="{{asset('/storage/'. $service->image1)}}" alt="Expert Trainer"
                     class="content-image" />
 
                 <div class="row mt-3">
                     <div class="col-3">
-                        <img src="{{asset('../storage/'. $service->image1)}}" class="thumb-image"
+                        <img src="{{asset('/storage/'. $service->image1)}}" class="thumb-image"
                             onclick="changeImage(this)" />
                     </div>
 
                     <div class="col-3">
-                        <img src="{{asset('../storage/'. $service->image2)}}" class="thumb-image"
+                        <img src="{{asset('/storage/'. $service->image2)}}" class="thumb-image"
                             onclick="changeImage(this)" />
                     </div>
 
                     <div class="col-3">
-                        <img src="{{asset('../storage/'. $service->image3)}}" class="thumb-image"
+                        <img src="{{asset('/storage/'. $service->image3)}}" class="thumb-image"
                             onclick="changeImage(this)" />
                     </div>
 
                     <div class="col-3">
-                        <img src="{{asset('../storage/'. $service->image4)}}" class="thumb-image"
+                        <img src="{{asset('/storage/'. $service->image4)}}" class="thumb-image"
                             onclick="changeImage(this)" />
                     </div>
                 </div>

@@ -30,13 +30,15 @@
 
     <!-- STYLES -->
 
-    <link rel="stylesheet" href="{{asset('../css/admin.css')}}" />
+    <link rel="stylesheet" href="{{asset('/css/admin.css')}}" />
     {{-- @vite(['resources/css/app.css', 'resources/js/app.js']) --}}
 
     {{-- Include pushed css from pages --}}
 
-    <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.7/index.global.min.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.7/index.global.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.1/main.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.1/main.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.1/locales-all.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
 
     @stack('css')
 </head>
