@@ -30,13 +30,13 @@
             @foreach ($academies as $item)
             <div class="col-lg-3 col-md-6 col-sm-12">
                 <div class="card">
-                    <img src="{{asset('../storage/'.$item->image1)}}" class="card-img-top" alt="Facility 1" />
+                    <img src="{{asset('/storage/'.$item->image1)}}" class="card-img-top" alt="Facility 1" />
                     <div class="card-body">
                         <h5 class="card-title">{{$item->name}}</h5>
                         <p class="card-text">
                             {{$item->brief}}
                         </p>
-                        <a href="{{url('../service/'.$item->id)}}" class="btn shadow-none btn-custom">View More</a>
+                        <a href="{{url('/service/'.$item->id)}}" class="btn shadow-none btn-custom">View More</a>
                     </div>
                 </div>
             </div>

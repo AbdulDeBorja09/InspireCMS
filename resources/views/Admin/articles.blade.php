@@ -101,7 +101,7 @@
                     <tr>
                         <td>{{$index + 1}}</td>
                         <td>
-                            <img src="{{asset('../storage/'. $article->image)}}" alt="{{$article->title}}" />
+                            <img src="{{asset('/storage/'. $article->image)}}" alt="{{$article->title}}" />
                         </td>
                         <td>{{$article->title}}</td>
                         <td>{{$article->author}}</td>

@@ -26,7 +26,7 @@
     <div class="my-5 pdf-container">
         <div class="header">
             <div class="logo">
-                <img src="{{asset('../images/logo/inspire-logo-black.png')}}" alt="INSPIRE Sports Academy" />
+                <img src="{{asset('/images/logo/inspire-logo-black.png')}}" alt="INSPIRE Sports Academy" />
             </div>
             <div class="company-details">
                 <strong>NU SPORTS ACADEMY, INC.</strong><br />

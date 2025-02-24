@@ -68,7 +68,7 @@ Route::middleware(['auth', 'user.type:admin'])->group(function () {
     Route::get('/Admin/dates', [AdminController::class, 'GetBlockedDates'])->name('admin.GetBlockedDates');
 
 
-    Route::get('/Admin/Request/Details/api', [AdminController::class, 'GetContactDetails'])->name('admin.GetContactDetails');
+    Route::get('/Admin/Request/Details/api', [AdminController::class, 'GetRequestDetails'])->name('admin.GetRequestDetails');
 
 
 
@@ -88,9 +88,10 @@ Route::middleware(['auth', 'user.type:admin'])->group(function () {
     Route::put('/Admin/Team/update', [AdminController::class, 'editeam'])->name('admin.editeam');
     Route::put('/Admin/Service/update', [AdminController::class, 'EditService'])->name('admin.EditService');
     Route::put('/Admin/Rate/update', [AdminController::class, 'EditRate'])->name('admin.EditRate');
-
     Route::put('/Admin/Request/Approve', [AdminController::class, 'ApproveRequest'])->name('admin.ApproveRequest');
     Route::put('/Admin/Request/Reject', [AdminController::class, 'RejectRequest'])->name('admin.RejectRequest');
+    Route::put('/Admin/Request/Cancel', [AdminController::class, 'CancelRequest'])->name('admin.CancelRequest');
+
 
 
 

@@ -1,7 +1,7 @@
 <div class="sidebar">
     <!-- ISA LOGO -->
     <div class="logo">
-        <img src="{{asset('../images/logo/primary-logo.png')}}" alt="INSPIRE SPORTS ACADEMY" />
+        <img src="{{asset('/images/logo/primary-logo.png')}}" alt="INSPIRE SPORTS ACADEMY" />
     </div>
 
     <!-- SIDEBAR TABS -->

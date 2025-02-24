@@ -22,7 +22,7 @@
             </div>
 
             <div class="col-lg-6 contact-image">
-                <img src="{{asset('../images/contact-bg.png')}}" alt="Academy Image" class="img-fluid" />
+                <img src="{{asset('/images/contact-bg.png')}}" alt="Academy Image" class="img-fluid" />
             </div>
         </div>
     </div>

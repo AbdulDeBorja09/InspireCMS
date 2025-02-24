@@ -42,7 +42,7 @@
         }
 
         .image-section {
-            background: url('../images/login-bg.png');
+            background: url('/images/login-bg.png');
             height: 100vh;
             object-fit: cover;
             background-position: center;

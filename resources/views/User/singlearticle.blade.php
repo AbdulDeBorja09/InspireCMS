@@ -40,7 +40,7 @@
                 <!-- CONTENT IMAGE -->
                 <div class="row">
                     <div class="col-lg-8 col-md-12 col-sm-12">
-                        <img class="content-image" src="{{asset('../storage/'. $article->image)}}"
+                        <img class="content-image" src="{{asset('/storage/'. $article->image)}}"
                             alt="{{$article->title}}" />
 
 
@@ -95,5 +95,5 @@
 </section>
 @endsection
 @push('css')
-<link href="{{ asset('../css/single-page-article.css') }}?v={{ time() }}" rel="stylesheet">
+<link href="{{ asset('/css/single-page-article.css') }}?v={{ time() }}" rel="stylesheet">
 @endpush

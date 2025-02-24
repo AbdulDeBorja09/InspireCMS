@@ -3,7 +3,7 @@
 
 <!-- HEADER PAGE -->
 <section id="image" class="position-relative text-white"
-    style="background-image: url('/storage/{{ $contents['top-background']->value ?? '../images/home/bg.png' }}');">
+    style="background-image: url('/storage/{{ $contents['top-background']->value ?? '/images/home/bg.png' }}');">
     <div class="image-overlay d-flex align-items-center">
         <div class="container-fluid">
             <div class="row justify-content-center image-text">
@@ -40,7 +40,7 @@
 
                 @foreach($services->concat($services) as $item)
                 <div class="swiper-slide">
-                    <img src="{{asset('../storage/'. $item->image1)}}" />
+                    <img src="{{asset('/storage/'. $item->image1)}}" />
                     <div class="facility-title">{{$item->name}}</div>
                 </div>
                 @endforeach
@@ -100,11 +100,11 @@
                 {{-- Check if there is image --}}
                 @if (!empty($contents['academy-background']->value))
                 <img class="img-fluid"
-                    src="{{ asset('storage/' . $contents['academy-background']->value ?? '../images/academy/image.png') }}"
+                    src="{{ asset('storage/' . $contents['academy-background']->value ?? '/images/academy/image.png') }}"
                     alt="academy-img">
                 @else
                 {{-- Display default image --}}
-                <img class="img-fluid" src="{{ asset('../images/academy/image.png') }}" alt="academy-img">
+                <img class="img-fluid" src="{{ asset('/images/academy/image.png') }}" alt="academy-img">
                 @endif
 
             </div>
@@ -124,7 +124,7 @@
             @foreach($articles as $item)
             <div class="col-lg-4 col-md-6 col-sm-12 d-flex">
                 <a class="news-card" href="{{$item->url}}" target="_blank">
-                    <img src="{{asset('../storage/'. $item->image)}}" alt="{{$item->title}}" />
+                    <img src="{{asset('/storage/'. $item->image)}}" alt="{{$item->title}}" />
                     <div class="meta-info">
                         <span><i class="bi bi-person"></i> {{$item->author}}</span>
                         <span><i class="bi bi-calendar"></i>{{ \Carbon\Carbon::parse($item->date)->format('F j, Y')
@@ -158,11 +158,11 @@
                 {{-- Check if there is image --}}
                 @if (!empty($contents['homeabout-background']->value))
                 <img class="img-fluid"
-                    src="{{ asset('storage/' . $contents['homeabout-background']->value ?? '../images/academy/image.png') }}"
+                    src="{{ asset('storage/' . $contents['homeabout-background']->value ?? '/images/academy/image.png') }}"
                     alt="About Us Image">
                 @else
                 {{-- Display default image --}}
-                <img src="{{asset('../images/about/image.png')}}" alt="About Us Image" class="img-fluid" />
+                <img src="{{asset('/images/about/image.png')}}" alt="About Us Image" class="img-fluid" />
                 @endif
             </div>
 
@@ -195,5 +195,5 @@
 <script src="js/swiper-about.js"></script>
 @endsection
 @push('css')
-<link href="{{ asset('../css/styles.css') }}?v={{ time() }}" rel="stylesheet">
+<link href="{{ asset('/css/styles.css') }}?v={{ time() }}" rel="stylesheet">
 @endpush

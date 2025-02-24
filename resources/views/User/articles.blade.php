@@ -40,7 +40,7 @@
                 @endif" @if($item->redirect_url)
                     target="__blank"
                     @endif>
-                    <img src="{{asset('../storage/'. $item->image)}}" alt="{{$item->title}}" />
+                    <img src="{{asset('/storage/'. $item->image)}}" alt="{{$item->title}}" />
                     <div class="meta-info">
                         <span><i class="bi bi-person"></i> {{$item->author}}</span>
                         <span><i class="bi bi-calendar"></i>{{ \Carbon\Carbon::parse($item->date)->format('F j, Y') }}
