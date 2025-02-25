@@ -174,21 +174,6 @@
                     <h6 class="mb-4 text-center">
                         Welcome back! Log in to access your account and request a quote.
                     </h6>
-                    @if ($errors->has('login_error'))
-                    <div class="alert alert-danger">
-                        {{ $errors->first('login_error') }}
-                    </div>
-                    @endif
-
-                    @if ($errors->any() && !$errors->has('login_error'))
-                    <div class="alert alert-danger">
-                        <ul>
-                            @foreach ($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                            @endforeach
-                        </ul>
-                    </div>
-                    @endif
                     <form action="{{ route('login') }}" method="POST">
                         @csrf
                         <div class="mb-3">
