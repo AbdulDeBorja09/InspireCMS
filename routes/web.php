@@ -35,18 +35,18 @@ Route::middleware(['auth', 'user.type:user'])->group(function () {
     Route::get('/Profile', [HomeController::class, 'ShowProfile']);
     Route::get('/Quotations/view', [HomeController::class, 'QuotationPDF']);
     Route::get('/Payment/{id}', [HomeController::class, 'ShowPayment'])->name('ShowPayment');
-    Route::get('/Confirmation/{id}', [HomeController::class, 'ShowConfirmation'])->name('ShowConfirmation');
-    Route::get('/Quote/Confirmation/{id}', [HomeController::class, 'ShowQuoteConfirmation'])->name('ShowQuoteConfirmation');
     Route::get('/User/Request/Details/api', [HomeController::class, 'GetQUoteDetails'])->name('GetQUoteDetails');
     Route::get('/User/Payments/Details/api', [HomeController::class, 'GetPaymentDetails'])->name('GetPaymentDetails');
     Route::get('/Reservation/Confirmed/{id}', [HomeController::class, 'ShowPDF'])->name('ShowPDF');
-
+    Route::get('/Confirmation/{id}', [HomeController::class, 'ShowConfirmation'])->name('ShowConfirmation');
+    Route::get('/Quote/Confirmation/{id}', [HomeController::class, 'ShowQuoteConfirmation'])->name('ShowQuoteConfirmation');
     Route::post('/Quotations/Submit', [HomeController::class, 'SubmitQuotationRequest'])->name('SubmitQuotationRequest');
     Route::post('/Quotation/Payment/Submit', [HomeController::class, 'SubmitPayment'])->name('SubmitPayment');
     Route::post('/Profile/Edit', [HomeController::class, 'EditProfile'])->name('EditProfile');
     Route::put('/Profile/Password/Change', [HomeController::class, 'ChangePassword'])->name('ChangePassword');
     Route::post('/Delete/Notification/Api', [HomeController::class, 'DeleteNotif'])->name('DeleteNotif');
 });
+
 
 
 Route::middleware(['auth', 'user.type:admin'])->group(function () {
@@ -73,6 +73,8 @@ Route::middleware(['auth', 'user.type:admin'])->group(function () {
     Route::get('/Admin/Payments/Details/api', [AdminController::class, 'GetPaymentsDetails'])->name('admin.GetPaymentsDetails');
 
 
+
+
     Route::post('/Admin/Content/Modify', [AdminController::class, 'CreateOrUpdateContent'])->name('admin.CreateOrUpdateContent');
     Route::post('/Admin/Partners/Create', [AdminController::class, 'CreatePartners'])->name('admin.CreatePartners');
     Route::post('/Admin/Team/Create', [AdminController::class, 'Createteam'])->name('admin.Createteam');
@@ -82,6 +84,9 @@ Route::middleware(['auth', 'user.type:admin'])->group(function () {
     Route::post('/Admin/Services/Create', [AdminController::class, 'CreateService'])->name('admin.CreateService');
     Route::post('/Admin/Rate/Create', [AdminController::class, 'NewRate'])->name('admin.NewRate');
     Route::post('/Admin/Password/update', [AdminController::class, 'ChangePasswords'])->name('admin.ChangePassword');
+    Route::post('/Admin/Layout/Edit', [AdminController::class, 'EditLayout'])->name('admin.EditLayout');
+    Route::post('/Admin/Layout/Delete', [AdminController::class, 'DeleteLayout'])->name('admin.DeleteLayout');
+    Route::post('/Admin/Layout/New', [AdminController::class, 'NewLayout'])->name('admin.NewLayout');
 
 
     Route::put('/Admin/Faqs/Update', [AdminController::class, 'EditFaqs'])->name('admin.editfaqs');

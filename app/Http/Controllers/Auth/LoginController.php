@@ -38,7 +38,7 @@ class LoginController extends Controller
             $user = Auth::user();
 
             // Redirect to the intended URL if available, otherwise go to their home page
-            return redirect()->intended($user->user_type === 'admin' ? route('admin.home') : route('user.home'));
+            return redirect()->intended($user->user_type === 'admin' ? route('admin.dashboard') : route('user.home'));
         }
 
         return back()->withErrors(['email' => 'Invalid credentials.']);

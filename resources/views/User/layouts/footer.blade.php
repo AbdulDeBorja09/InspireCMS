@@ -5,7 +5,7 @@
             <!-- Logo and Social Media -->
             <div class="col-md-4 mb-4 footer-images">
                 @if ($footerLogo)
-                <img src="{{ asset($footerLogo->value) }}" alt="Inspire Sports Academy" width="180" />
+                <img src="{{ asset('/storage/' .$footerLogo->value) }}" class="img-fluid" alt="Logo" width="180" />
                 @else
 
                 <img src=" {{asset('/images/logo/inspire-logo.png')}}" alt="Inspire Sports Academy" width="180" />

@@ -345,7 +345,7 @@ class HomeController extends Controller
         ]);
 
         try {
-            Quotations::create([
+            $quotation = Quotations::create([
                 'user_id' => Auth::user()->id,
                 'event_title' =>  $request->event,
                 'Quotation_ref' => $quotationRef,
@@ -358,7 +358,7 @@ class HomeController extends Controller
                 'total' => $request->subtotal,
             ]);
 
-            return redirect()->route('quotationpage');
+            return redirect()->route('ShowQuoteConfirmation', ['id' => $quotation->id])->with('success', 'Payment saved successfully!');
         } catch (\Throwable $e) {
             Log::error('Error creating quotation: ' . $e->getMessage(), [
                 'exception' => $e,

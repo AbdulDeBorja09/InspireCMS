@@ -19,6 +19,7 @@ use App\Models\Quotations;
 use App\Models\notifications;
 use App\Models\Dates;
 use App\Models\Payments;
+use App\Models\Layout;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
@@ -118,7 +119,14 @@ class AdminController extends Controller
 
     public function ShowSettings()
     {
-        return $this->ShowPage('settings', 'settings');
+        $footer = Layout::where('key', 'footer')->first();
+        $nav = Layout::where('key', 'nav')->first();
+        $contact =  Layout::where('type', 'contact')->get();
+        $address =  Layout::where('type', 'location')->get();
+        $instagram = Layout::where('key', 'instagram')->first();
+        $tiktok = Layout::where('key', 'tiktok')->first();
+        $facebook = Layout::where('key', 'facebook')->first();
+        return $this->ShowPage('settings', 'settings', compact('footer', 'nav', 'contact', 'address', 'instagram', 'tiktok', 'facebook'));
     }
 
     public function ShowUsers()
@@ -908,6 +916,7 @@ class AdminController extends Controller
     {
         $invoice = Quotations::where('id', $id)->where('status', 5)->first();
         $payment = Payments::where('quotation_id', $invoice->id)->first();
+
         $item = json_decode($invoice->items, true);
         if ($invoice) {
             notifications::where('quotation_id', $invoice->id)->where('user_id', Auth::user()->id)->delete();
@@ -916,6 +925,66 @@ class AdminController extends Controller
             return $pdf->stream('reciept.pdf');
         } else {
             return redirect()->back()->with('error', 'Not Found');
+        }
+    }
+
+    public function EditLayout(Request $request)
+
+    {
+        $layout =  Layout::where('id', $request->id)->first();
+        try {
+            if ($layout->type === 'logo' || $layout->type === 'logo') {
+                $imagePath = $request->value;
+                if ($request->hasFile('value')) {
+                    $imagePath = $request->file('value')->store('Layout', 'public');
+
+                    // Delete old image if it exists
+                    if ($layout->value) {
+                        $oldFilePath = public_path('storage/' . $layout->value);
+                        if (file_exists($oldFilePath)) {
+                            unlink($oldFilePath);
+                        }
+                    }
+                }
+                $layout->value = $imagePath;
+                $update = $layout->save();
+            } else {
+                $layout->value = $request->value;
+                $update = $layout->save();
+            }
+
+
+            if ($update) {
+                return redirect()->back()->with('success', 'Layout Edited Succesfully');
+            } else {
+                return redirect()->back()->with('error', 'Layout Failed to save ');
+            }
+        } catch (\Throwable $e) {
+            return redirect()->back()->with(['error' => $e->getMessage()], 500);
+        }
+    }
+
+    public function DeleteLayout(Request $request)
+    {
+        $layout =  Layout::where('id', $request->id)->delete();
+        if ($layout) {
+            return redirect()->back()->with('success', 'Layout Deleted Succesfully');
+        } else {
+            return redirect()->back()->with('error', 'Layout Failed to save ');
+        }
+    }
+    public function NewLayout(Request $request)
+    {
+        $layout = Layout::create([
+            'type' => $request->key,
+            'key' => $request->key,
+            'value' => $request->value,
+        ]);
+
+        if ($layout) {
+            return redirect()->back()->with('success', 'Layout Created Succesfully');
+        } else {
+            return redirect()->back()->with('error', 'Layout Failed to save ');
         }
     }
 }
