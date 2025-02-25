@@ -18,10 +18,12 @@ use App\Models\ContactUs;
 use App\Models\Quotations;
 use App\Models\notifications;
 use App\Models\Dates;
+use App\Models\Payments;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Carbon\Carbon;
 
 class AdminController extends Controller
 {
@@ -667,7 +669,6 @@ class AdminController extends Controller
         }
     }
 
-
     public function NewRate(Request $request)
     {
         try {
@@ -827,6 +828,45 @@ class AdminController extends Controller
         }
     }
 
+    public function ApprovePayment(Request $request)
+    {
+        $Quotations = Quotations::findOrFail($request->id);
+
+
+
+        try {
+            $Quotations->update([
+                'status' => 5,
+            ]);
+
+
+            $start_time = Carbon::createFromFormat('Y-m-d H:i', "$Quotations->date $Quotations->start_time");
+            $end_time = Carbon::createFromFormat('Y-m-d H:i', "$Quotations->date $Quotations->end_time");
+            Dates::create([
+                'title' =>  $Quotations->event_title,
+                'service_id' => $Quotations->service_id,
+                'start_date' => $start_time,
+                'end_date'  => $end_time,
+            ]);
+            notifications::updateOrCreate(
+                [
+                    'quotation_id' => $request->id,
+                    'user_id'  => $Quotations->user_id
+                ],
+                [
+
+                    'message'  => $request->message,
+                    'status'   => 'Verified',
+                ]
+            );
+
+
+            return redirect()->back()->with('success', 'Request Rejected successfully!');
+        } catch (\Throwable $e) {
+            return redirect()->back()->with(['error' => $e->getMessage()], 500);
+        }
+    }
+
     public function GetRequestDetails(Request $request)
     {
         $Quotaions = Quotations::where('id', $request->id)->first();
@@ -838,38 +878,28 @@ class AdminController extends Controller
         }
 
         $users = User::where('id', $Quotaions->user_id)->first();
+
+        $blockedDates = Dates::where('service_id', $Quotaions->service_id)
+            ->get(['start_date', 'end_date', 'title']);
+
         $items = json_decode($Quotaions->items, true);
-
-        $room_id = $request->id;
-        // Fetch all blocked dates for the given service_id
-        $blockedDates = Dates::where('service_id', $Quotaions->id)
-            ->get(['start_date', 'end_date']);
-
         return response()->json([
             'items' => $items,
             'blocked_dates' => $blockedDates,
-            'user' => $users,   
+            'user' => $users,
         ]);
     }
 
-    public function GetBlockedDates(Request $request)
+    public function GetPaymentsDetails(Request $request)
     {
-
-        $serviceId = $request->query('service_id');
-
-        // Query your BlockedDate model (make sure your table has a service_id column)
-        $blockedDates = Dates::where('service_id', $serviceId)->get();
-
-        // Format your events if needed (FullCalendar expects ISO 8601 dates)
-        $events = $blockedDates->map(function ($date) {
-            return [
-                'id'    => $date->id,
-                'start' => $date->start_date, // Ensure these are ISO 8601 (e.g., 2025-02-24T09:00:00)
-                'end'   => $date->end_date,
-                'title' => 'Blocked'
-            ];
-        });
-
-        return response()->json($events);
+        $Quotaions = Quotations::where('id', $request->id)->first();
+        $users = User::where('id', $Quotaions->user_id)->first();
+        $payments = Payments::where('quotation_id', $Quotaions->id)->first();
+        $items = json_decode($Quotaions->items, true);
+        return response()->json([
+            'items' => $items,
+            'payment' => $payments,
+            'user' => $users,
+        ]);
     }
 }

@@ -428,11 +428,7 @@ td.rejected {
 .card:hover {
     transform: scale(1.05);
 }
-
 /* END OF DASHBOARD */
-.modal-dialog {
-    background-color: #f1f5f9;
-}
 
 .modal-content {
     border-radius: 0;
@@ -480,3 +476,4 @@ td.rejected {
     color: #122244;
     font-weight: bold;
 }
+

@@ -15,6 +15,7 @@ class Payments extends Model
         'email',
         'phone',
         'proof',
+        'total',
 
     ];
 }

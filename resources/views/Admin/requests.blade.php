@@ -253,7 +253,7 @@
 </div>
 
 <div class="modal fade" id="ViewRequest" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-    aria-labelledby="ViewRequestLabel" aria-hidden="true">
+    aria-labelledby="ViewRequestLabel">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
@@ -344,7 +344,7 @@
             }
         });
 
-        function initializeCalendar(blockedDates) {
+        function initializeCalendar(blockedDates, title) {
             var calendarEl = document.getElementById('View_calendar');
 
                 if (!calendarEl) {
@@ -360,7 +360,7 @@
                 initialView: 'dayGridWeek',
                 events: blockedDates.map(date => {
                     return {
-                        title: ` <strong >MILO MILOMILO MILOMILO MILO MILOMILO MILO </strong><br>(${moment(date.start_date).format('hh:mm A')} - ${moment(date.end_date).format('hh:mm A')})`, 
+                        title: ` <strong >${date.title}</strong><br>(${moment(date.start_date).format('hh:mm A')} - ${moment(date.end_date).format('hh:mm A')})`, 
                         start: moment(date.start_date).toISOString(),  
                         end: moment(date.end_date).toISOString(), 
                         color: '#064e3b',
@@ -390,7 +390,6 @@
             data: { id: Item.id },
             dataType: 'json',
             success: function(response) {
-                console.log("Response Data:", response); // Debugging
             
                 if (response.items) {
                     document.getElementById('service_name').value = response.items.service_name || "";
@@ -401,7 +400,7 @@
                 }
 
                 if (Array.isArray(response.blocked_dates)) {
-                    initializeCalendar(response.blocked_dates);
+                    initializeCalendar(response.blocked_dates, Item.event_title );
                 } else {
                     console.warn("Blocked dates not an array:", response.blocked_dates);
                 }
@@ -416,8 +415,6 @@
     }
 
     function ViewRequest(Item) {
-        // document.getElementById('ViewRequestID').value = Item.id;
-
         $.ajax({
             url: "/Admin/Request/Details/api",  
             type: 'GET',
@@ -426,19 +423,22 @@
             success: function(response) {
                 document.getElementById('view_quotaion_ref').value = Item.Quotation_ref;
                 document.getElementById('view_date_created').value = moment(Item.created_at).format("MMM D y, hh:mm A");
-
                 
+                document.getElementById('view_service_name').value = response.items.service_name;
                 document.getElementById('view_service_fname').value = response.user.fname;
                 document.getElementById('view_service_lname').value = response.user.lname;
                 document.getElementById('view_user_email').value = response.user.email;
                 document.getElementById('view_user_phone').value = response.user.phone || ' ';
 
+              
+                if(Item.service_type == "Facility"){
+                    document.getElementById('veiw_service_hours').value = `${Item.start_time} - ${Item.end_time}`;
+                }
                 
+            
                 document.getElementById('view_date_time').value =   moment(response.items.date).format("MMM D y");
                 document.getElementById('view_date_time').value =   moment(response.items.date).format("MMM D y");
-                document.getElementById('veiw_service_hours').value = `${Item.start_time} - ${Item.end_time}`;
                 document.getElementById('view_service_total').value = Item.total;
-                // document.getElementById('veiw_service_hours').value = response.items.total_hours;
      
 
             },

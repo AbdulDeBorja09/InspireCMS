@@ -318,6 +318,61 @@ body {
     font-weight: bold;
 }
 
+.modal-date-btn {
+    background: rgba(201, 201, 201, 0.2);
+    border: 2px solid transparent;
+    color: #122444;
+    padding: 12px;
+    width: 100%;
+    border-radius: 10px;
+    margin-top: 12px;
+    font-size: 16px;
+    text-align: center;
+    transition: all 0.3s ease;
+    font-weight: bold;
+}
+.modal .confirm-btn {
+    background: #122444;
+    border: none;
+    padding: 10px 30px;
+    border-radius: 10px;
+    font-size: 15px;
+    font-weight: bold;
+    color: #f1f5f9;
+    cursor: pointer;
+    width: 200px;
+}
+.modal-content {
+    border-radius: 0px;
+}
+.modal-body {
+    min-height: 50vh;
+}
+
+.modal-content th {
+    background-color: #122444;
+}
+.modal-content th a {
+    text-decoration: none;
+    color: white;
+    padding: 3px;
+}
+.modal-content td a {
+    text-decoration: none;
+    color: #122444;
+    font-size: 12px;
+}
+.modal .close-btn {
+    padding: 10px 30px;
+    border-radius: 10px;
+    font-size: 15px;
+    font-weight: bold;
+    border: 1px solid #122444;
+    color: #122444;
+    background-color: white;
+    width: 200px;
+}
+
 .content-page select:focus,
 .content-page input:focus {
     outline: none;

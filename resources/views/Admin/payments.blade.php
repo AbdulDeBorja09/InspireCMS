@@ -45,7 +45,7 @@
                     <td class="new">Paid</td>
                     <td>
                         <button class="view-btn" onclick="ViewPayment({{$item}})">View</button>
-                        <button class="approve-btn" onclick="ApproveRequest({{$item}})">Confirm</button>
+                        <button class="approve-btn" onclick="ConfirmBookings({{$item}})">Confirm</button>
                     </td>
                     @elseif($item->status === 5)
                     <td class="pending">Confirm</td>
@@ -60,167 +60,37 @@
     </div>
 </div>
 
-{{-- <div class="modal fade" id="ViewPayment" tabindex="-1" aria-labelledby="ViewPaymentLabel" aria-hidden="true">
-    <div class="modal-dialog modal-xl">
-        <form id="editFAQForm" method="POST" action="{{ route('admin.ApproveRequest') }}">
-            @csrf
-            @method('PUT')
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="ViewPaymentLabel">Approve Request</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <input type="hidden" name="id" id="ViewPaymentID">
-                    <div class="row">
-                        <div class="col-lg-6 col-md-12">
-                            <div class="mb-3">
-                                <label for="service_name">Service Name:</label>
-                                <input id="view_service_name" type="text" name="view_service_name"
-                                    class="form-control mb-2" placeholder="Fetching..." readonly>
-                            </div>
-                            <div class="mb-3">
-                                <label for="service_desc">Description:</label>
-                                <input id="view_service_desc" type="text" name="view_service_desc"
-                                    class="form-control mb-2" placeholder="Fetching..." readonly>
-                            </div>
-                            <div class="mb-3">
-                                <label for="service_total">Total:</label>
-                                <input id="view_service_total" type=" text" name="view_service_total"
-                                    class="form-control mb-2" placeholder="Fetching..." readonly>
-                            </div>
-
-                            <div class="mb-3">
-                                <label for="editrate-type">Discount:</label>
-                                <input id="editrate-type" type="text" name="discount" class="form-control mb-2"
-                                    placeholder="10%" required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="editrate-type">Sales Tax:</label>
-                                <input id="editrate-type" type="text" name="tax" class="form-control mb-2"
-                                    placeholder="Input Here" required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="editrate-type">Penalty:</label>
-                                <input id="editrate-type" type="text" name="penalty" class="form-control mb-2"
-                                    placeholder="Input Here" required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="editrate-type">Cancellation Fee:</label>
-                                <input id="editrate-type" type="text" name="cancelation" class="form-control mb-2"
-                                    placeholder="Input Here" required>
-                            </div>
-                        </div>
-                        <div class="col-lg-6 col-md-12">
-
-                        </div>
-                    </div>
 
 
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <button type="submit" class="btn btn-primary">Approve Request</button>
-                </div>
-            </div>
-        </form>
-    </div>
-</div> --}}
-
-<div class="modal fade" id="ApproveRequest" tabindex="-1" aria-labelledby="RequestApproveLabel" aria-hidden="true">
-    <div class="modal-dialog modal-xl">
-        <form id="editFAQForm" method="POST" action="{{ route('admin.ApproveRequest') }}">
-            @csrf
-            @method('PUT')
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="RequestApproveLabel">Approve Request</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <input type="hidden" name="id" id="ApproveID">
-                    <div class="row">
-                        <div class="col-lg-6 col-md-12">
-                            <div class="mb-3">
-                                <label for="service_name">Service Name:</label>
-                                <input id="service_name" type="text" name="service_name" class="form-control mb-2"
-                                    placeholder="Fetching..." readonly>
-                            </div>
-                            <div class="mb-3">
-                                <label for="service_desc">Description:</label>
-                                <input id="service_desc" type="text" name="service_desc" class="form-control mb-2"
-                                    placeholder="IFetching..." readonly>
-                            </div>
-                            <div class="mb-3">
-                                <label for="service_total">Total:</label>
-                                <input id="service_total" type=" text" name="service_total" class="form-control mb-2"
-                                    placeholder="Fetching..." readonly>
-                            </div>
-
-                            <div class="mb-3">
-                                <label for="editrate-type">Discount:</label>
-                                <input id="editrate-type" type="text" name="discount" class="form-control mb-2"
-                                    placeholder="10%" required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="editrate-type">Sales Tax:</label>
-                                <input id="editrate-type" type="text" name="tax" class="form-control mb-2"
-                                    placeholder="Input Here" required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="editrate-type">Penalty:</label>
-                                <input id="editrate-type" type="text" name="penalty" class="form-control mb-2"
-                                    placeholder="Input Here" required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="editrate-type">Cancellation Fee:</label>
-                                <input id="editrate-type" type="text" name="cancelation" class="form-control mb-2"
-                                    placeholder="Input Here" required>
-                            </div>
-                        </div>
-                        <div class="col-lg-6 col-md-12">
-
-                        </div>
-                    </div>
-
-
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <button type="submit" class="btn btn-primary">Approve Request</button>
-                </div>
-            </div>
-        </form>
-    </div>
-</div>
-
-<div class="modal fade" id="RejectRequest" tabindex="-1" aria-labelledby="RejectRequestLabel" aria-hidden="true">
+<div class="modal fade" id="ConfirmBookings" tabindex="-1" aria-labelledby="ConfirmBookingsLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form id="deleteFAQForm" method="POST" action="{{ route('admin.RejectRequest') }}">
+            <form id="deleteFAQForm" method="POST" action="{{ route('admin.ApprovePayment') }}">
                 @csrf
                 @method('PUT')
                 <div class="modal-header">
-                    <h5 class="modal-title" id="RejectRequestLabel">Confirm Delete</h5>
+                    <h5 class="modal-title" id="ConfirmBookingsLabel">Confirm Payment</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    Are you sure you want to reject this request?
-                    <input type="hidden" name="id" id="rejectrequest_id">
+                    Are you sure you want to Confirm this payment?
+                    <input type="hidden" name="id" id="ConfirmBookings_id">
                 </div>
                 <div class="mb-3 p-3">
-                    <label for="rate-inclusions" class="form-label">Reason:</label>
-                    <textarea class="form-control" id="editrate-inclusions" name="reason"
-                        rows="3">Your request for quotation has been denied due to</textarea>
+                    <label for="rate-inclusions" class="form-label">Message:</label>
+                    <textarea class="form-control" id="editrate-inclusions" name="message" rows="3"
+                        required>Your payment has been verified and your reservation is confirmed</textarea>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn approve-btn" data-bs-dismiss="modal">Cancel</button>
-                    <button type="submit" class="btn reject-btn">Reject</button>
+                    <button type="button" class="btn reject-btn" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn approve-btn">Approve</button>
                 </div>
             </form>
         </div>
     </div>
 </div>
+
+
 <div class="modal fade" id="viewpayment" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
     aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
@@ -271,14 +141,15 @@
 
                             <h5>Payment Terms</h5>
                             <input class="mb-3 w-100" type="text" id="view_payment_terms" readonly
-                                placeholder="Fetching...">
+                                placeholder="Fetching..." style="text-transform: capitalize">
 
                             <h5>Paid Amount</h5>
                             <input class="mb-3 w-100" type="text" id="view_payment_amount" readonly
                                 placeholder="Fetching...">
 
                             <h5>Proof of Payment</h5>
-                            <button class="mb-3 w-100  btn btn-outline-light view-btn ">View Image</button>
+                            <button class="mb-3 w-100  btn btn-outline-light view-btn " id="view_payment_proof">View
+                                Image</button>
                         </div>
                     </div>
                 </div>
@@ -298,44 +169,33 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <script>
-    function ApproveRequest(Item) {
-        document.getElementById('ApproveID').value = Item.id;
-
-        $.ajax({
-            url: '{{ route("admin.GetRequestDetails") }}', 
-            type: 'GET', 
-            data: { id: Item.id },
-            dataType: 'json', 
-            success: function(response) {
-                console.log("Quotation Order Details:", response);
-            
-                document.getElementById('service_name').value = response.service_name;
-                document.getElementById('service_desc').value = response.rate_name;
-                document.getElementById('service_total').value = response.subtotal;
-            },
-            error: function(xhr, status, error) {
-                console.error("Error fetching quotation orders:", error);
-            }
-        });
-
-
-        let modal = new bootstrap.Modal(document.getElementById('ApproveRequest'));
-        modal.show();
-    }
-
     function ViewPayment(Item) {
         // document.getElementById('ViewPaymentID').value = Item.id;
         $.ajax({
-            url: '{{ route("admin.GetRequestDetails") }}', 
+            url: '/Admin/Payments/Details/api', 
             type: 'GET', 
             data: { id: Item.id },
             dataType: 'json', 
             success: function(response) {
-                console.log("Quotation Order Details:", response);
-            
-                // document.getElementById('view_service_name').value = response.service_name;
-                // document.getElementById('view_service_desc').value = response.rate_name;
-                // document.getElementById('view_service_total').value = response.subtotal;
+                var paymentName = response.payment.name;
+                let parts = paymentName.split(",");
+                const proof = response.payment.proof;
+
+
+                proofUrl = '/storage/' + proof;
+                document.getElementById('view_payment_reference').value = Item.Quotation_ref;
+                document.getElementById('view_payment_time').value = moment(response.user.created_at).format("MMM D y, hh:mm A");
+                document.getElementById('view_payment_terms').value = response.payment.payment_term;
+                document.getElementById('view_payment_fname').value = parts[1].trim();
+                document.getElementById('view_payment_lname').value = parts[0].trim();
+                document.getElementById('view_payment_address').value = response.payment.address;
+                document.getElementById('view_payment_email').value = response.payment.email;
+                document.getElementById('view_payment_phone').value = response.payment.phone;
+                document.getElementById('view_payment_amount').value = response.payment.total;
+                document.getElementById('view_payment_proof').addEventListener('click', function() {
+                    window.open(proofUrl, '_blank');
+                });
+                
             },
             error: function(xhr, status, error) {
                 console.error("Error fetching quotation orders:", error);
@@ -347,10 +207,10 @@
         modal.show();
     }
 
-    function RejectRequest(Item) {
-        document.getElementById('rejectrequest_id').value = Item.id;
+    function ConfirmBookings(Item) {
+        document.getElementById('ConfirmBookings_id').value = Item.id;
 
-        let modal = new bootstrap.Modal(document.getElementById('RejectRequest'));
+        let modal = new bootstrap.Modal(document.getElementById('ConfirmBookings'));
         modal.show();
     }
     

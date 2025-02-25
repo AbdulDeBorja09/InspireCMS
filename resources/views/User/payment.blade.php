@@ -208,45 +208,30 @@
             <form class="user-info" action="{{route('SubmitPayment')}}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <input type="hidden" name="id" value="{{$quotations->id}}">
-                {{-- @if($quotations->service_type === "Facility")
-                <!-- Event Title -->
-                <div class="mb-3 form-group">
-                    <label for="firstname">Event Title</label>
-                    <input type="text" id="firstname" name="title" placeholder="Milo camp" required />
-                </div>
-                @else
 
-                @endif --}}
-
-                <input type="hidden" id="firstname" name="title" />
                 <!-- Full Name -->
                 <div class="mb-3 form-group">
                     <label for="fullname">Full Name</label>
-                    <input type="text" id="firstname" name="fname" placeholder="AUTOFILL" required />
+                    <input type="text" id="firstname" name="fullname" placeholder="AUTOFILL" readonly
+                        value="{{Auth::user()->lname}}, {{Auth::user()->fname}}" />
                 </div>
                 <!-- Address -->
                 <div class="mb-3 form-group">
                     <label for="address">Address</label>
-                    <input type="text" id="lastname" name="lname" placeholder="Calamba" required />
+                    <input type="text" id="lastname" name="address" placeholder="Calamba" required />
                 </div>
 
                 <!-- Email -->
                 <div class="mb-3 form-group">
                     <label for="email">Email</label>
-                    <input type="text" id="email" name="email" placeholder="anthonyjennings@gmail.com" required />
+                    <input type="email" id="email" name="email" placeholder="anthonyjennings@gmail.com" required />
                 </div>
 
 
                 <!-- Phone Number -->
                 <div class="mb-3 form-group">
                     <label for="phone">Phone Number</label>
-                    <input type="text" id="phone" name="phone" placeholder="09123456789" required />
-                </div>
-
-                <!-- Phone Number -->
-                <div class="mb-3 form-group">
-                    <label for="phone">Phone Number</label>
-                    <input type="text" id="phone" name="phone" placeholder="09123456789" required />
+                    <input type="number" id="phone" name="phone" placeholder="09123456789" required />
                 </div>
 
                 <!-- Payment Terms -->
@@ -261,7 +246,7 @@
                 <!-- Amount -->
                 <div class="mb-3 form-group">
                     <label for="amount">Amount</label>
-                    <input type="number" id="amount" name="phone" placeholder="DP or FP" required />
+                    <input type="number" id="amount" name="total" placeholder="DP or FP" required />
                 </div>
 
                 <!-- Proof of Payment -->

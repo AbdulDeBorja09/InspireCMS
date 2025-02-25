@@ -142,105 +142,106 @@
 
     /* USER FILL UP */
     .payment-details {
-    background-color: #f1f5f9;
-    width: 480px;
-    border-radius: 10px;
-    padding: 15px;
-    box-shadow: 0 5px 8px rgba(0, 0, 0, 0.1);
-}
+        background-color: #f1f5f9;
+        width: 480px;
+        border-radius: 10px;
+        padding: 15px;
+        box-shadow: 0 5px 8px rgba(0, 0, 0, 0.1);
+    }
 
-.payment-details h3 {
-    color: #122444;
-    font-weight: bold;
-}
+    .payment-details h3 {
+        color: #122444;
+        font-weight: bold;
+    }
 
-.quote-form-container {
-    width: 100%;
-    height: auto;
-}
+    .quote-form-container {
+        width: 100%;
+        height: auto;
+    }
 
-.quote-form-container h4 {
-    color: #112240;
-    font-weight: bold;
-}
+    .quote-form-container h4 {
+        color: #112240;
+        font-weight: bold;
+    }
 
-.form-group {
-    display: flex;
-    flex-direction: column;
-    color: #112240;
-}
+    .form-group {
+        display: flex;
+        flex-direction: column;
+        color: #112240;
+    }
 
-.payment-details label {
-    font-weight: bold;
-    margin-bottom: 5px;
-}
+    .payment-details label {
+        font-weight: bold;
+        margin-bottom: 5px;
+    }
 
-.payment-details input {
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    font-size: 16px;
-}
+    .payment-details input {
+        padding: 8px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 16px;
+    }
 
-.btn-container {
-    display: flex;
-    justify-content: end;
-}
+    .btn-container {
+        display: flex;
+        justify-content: end;
+    }
 
-.payment-details .submit-btn {
-    width: 220px;
-    background-color: transparent;
-    --color: #122444;
-    padding: 0.5em 1em;
-    border-radius: 999px;
-    position: relative;
-    overflow: hidden;
-    cursor: pointer;
-    transition: 0.5s;
-    font-weight: 600;
-    font-size: 15px;
-    border: 1px solid;
-    color: var(--color);
-    z-index: 1;
-}
+    .payment-details .submit-btn {
+        width: 220px;
+        background-color: transparent;
+        --color: #122444;
+        padding: 0.5em 1em;
+        border-radius: 999px;
+        position: relative;
+        overflow: hidden;
+        cursor: pointer;
+        transition: 0.5s;
+        font-weight: 600;
+        font-size: 15px;
+        border: 1px solid;
+        color: var(--color);
+        z-index: 1;
+    }
 
-.payment-details .submit-btn::before,
-.payment-details .submit-btn::after {
-    content: "";
-    display: block;
-    width: 50px;
-    height: 50px;
-    transform: translate(-50%, -50%);
-    position: absolute;
-    border-radius: 50%;
-    z-index: -1;
-    background-color: var(--color);
-    transition: 0.8s ease;
-}
+    .payment-details .submit-btn::before,
+    .payment-details .submit-btn::after {
+        content: "";
+        display: block;
+        width: 50px;
+        height: 50px;
+        transform: translate(-50%, -50%);
+        position: absolute;
+        border-radius: 50%;
+        z-index: -1;
+        background-color: var(--color);
+        transition: 0.8s ease;
+    }
 
-.payment-details .submit-btn::before {
-    top: -1em;
-    left: -1em;
-}
+    .payment-details .submit-btn::before {
+        top: -1em;
+        left: -1em;
+    }
 
-.payment-details .submit-btn::after {
-    left: calc(100% + 1em);
-    top: calc(100% + 1em);
-}
+    .payment-details .submit-btn::after {
+        left: calc(100% + 1em);
+        top: calc(100% + 1em);
+    }
 
-.payment-details .submit-btn:hover::before,
-.payment-details .submit-btn:hover::after {
-    height: 410px;
-    width: 410px;
-}
+    .payment-details .submit-btn:hover::before,
+    .payment-details .submit-btn:hover::after {
+        height: 410px;
+        width: 410px;
+    }
 
-.payment-details .submit-btn:hover {
-    color: #f1f5f9;
-}
+    .payment-details .submit-btn:hover {
+        color: #f1f5f9;
+    }
 
-.payment-details .submit-btn:active {
-    filter: brightness(1);
-}
+    .payment-details .submit-btn:active {
+        filter: brightness(1);
+    }
+
     /* END OF USER FILL UP */
 </style>
 
@@ -301,8 +302,8 @@
         <input type="hidden" name="date" value="{{ $quotationData['date'] ?? 0 }}">
         <input type="hidden" name="start_time" value="{{ $quotationData['start_time'] ?? 0 }}">
         <input type="hidden" name="end_time" value="{{ $quotationData['end_time'] ?? 0 }}">
-        
-        
+
+
         <div class="container content-container">
             <!-- Tab Content -->
             <div class="d-flex gap-3 tab-content">
@@ -312,7 +313,7 @@
                         <div class="logo">
                             <img src="{{asset('/images/logo/inspire-logo-black.png')}}" alt="INSPIRE Sports Academy" />
                         </div>
-    
+
                         <div class="company-details">
                             <strong>NU SPORTS ACADEMY, INC.</strong><br />
                             NU Laguna, KM 53 Pan Philippine Highway<br />
@@ -471,89 +472,59 @@
                 <div class="my-5 payment-details">
                     <h3 class="text-center">User Details</h3>
                     <div class="mt-3 quote-form-container">
-                      <div class="user-info">
-                        <!-- Event Title -->
-                        <div class="mb-3 form-group">
-                          <label for="event">Event Title</label>
-                          <input
-                            type="text"
-                            id="event"
-                            name="event"
-                            placeholder="REQUIRED"
-                          />
+                        <div class="user-info">
+                            <!-- Event Title -->
+                            <div class="mb-3 form-group">
+                                <label for="event">Event Title</label>
+                                <input type="text" id="event" name="event" placeholder="REQUIRED" required />
+                            </div>
+                            <!-- Full Name -->
+                            <div class="mb-3 form-group">
+                                <label for="fullname">Full Name</label>
+                                <input type="text" id="fullname" name="fullname" placeholder="REQUIRED" required />
+                            </div>
+
+                            <!-- Quoted Date -->
+                            <div class="mb-3 form-group">
+                                <label for="date">Quoted Date</label>
+                                <input type="date" id="date" name="date" placeholder="AUTO FILL"
+                                    value="{{  $quotationData['date'] }}" readonly />
+                            </div>
+
+                            <!-- Quoted Time Start -->
+                            <div class="mb-3 form-group">
+                                <label for="time">Time Start</label>
+                                <input type="time" id="time" name="time" placeholder="AUTO FILL"
+                                    value="{{  $quotationData['start_time'] }}" readonly />
+                            </div>
+
+                            <!-- Quoted Time End -->
+                            <div class="mb-3 form-group">
+                                <label for="time">Time End</label>
+                                <input type="time" id="time" name="time" placeholder="AUTO FILL"
+                                    value="{{  $quotationData['end_time'] }}" readonly />
+                            </div>
+
+                            <!-- Duration -->
+                            <div class="mb-3 form-group">
+                                <label for="time">Duration</label>
+                                <input id="time" name="time" value="{{  $quotationData['hours'] }} Hours" readonly />
+                            </div>
+
+                            <!-- Quoted Amount -->
+                            <div class="mb-3 form-group">
+                                <label for="amount">Quoted Amount</label>
+                                <input type="amount" id="amount" name="amount" placeholder="AUTO FILL"
+                                    value="{{number_format($subtotal)}}" readonly />
+                            </div>
+
+                            <div class="btn-container">
+                                <button class="submit-btn" type="submit">Submit for
+                                    Approval</button>
+                            </div>
                         </div>
-                        <!-- Full Name -->
-                        <div class="mb-3 form-group">
-                          <label for="fullname">Full Name</label>
-                          <input
-                            type="text"
-                            id="fullname"
-                            name="fullname"
-                            placeholder="REQUIRED"
-                          />
-                        </div>
-
-                        <!-- Quoted Date -->
-                        <div class="mb-3 form-group">
-                            <label for="date">Quoted Date</label>
-                            <input
-                              type="date"
-                              id="date"
-                              name="date"
-                              placeholder="AUTO FILL"
-                            />
-                          </div>
-
-                        <!-- Quoted Time Start -->
-                        <div class="mb-3 form-group">
-                            <label for="time">Time Start</label>
-                            <input
-                              type="time"
-                              id="time"
-                              name="time"
-                              placeholder="AUTO FILL"
-                            />
-                          </div>
-
-                        <!-- Quoted Time End -->
-                        <div class="mb-3 form-group">
-                            <label for="time">Time End</label>
-                            <input
-                              type="time"
-                              id="time"
-                              name="time"
-                              placeholder="AUTO FILL"
-                            />
-                          </div>
-
-                        <!-- Duration -->
-                        <div class="mb-3 form-group">
-                            <label for="time">Duration</label>
-                            <input
-                              type="time"
-                              id="time"
-                              name="time"
-                              placeholder="AUTO FILL"
-                            />
-                          </div>
-
-                        <!-- Quoted Amount -->
-                        <div class="mb-3 form-group">
-                            <label for="amount">Quoted Amount</label>
-                            <input
-                              type="amount"
-                              id="amount"
-                              name="amount"
-                              placeholder="AUTO FILL"
-                            />
-                          </div>
-          
-                        <div class="btn-container">
-                          <button class="submit-btn" type="submit">Submit for Approval</button>
-                        </div>
-                      </div>
                     </div>
-                  </div>
+                </div>
             </div>
         </div>
 

@@ -93,7 +93,7 @@
                         <input type="hidden" name="service_name" value="{{$service->name}}">
                         <!-- Rate Selector -->
                         <select id="rateSelector" name="rate_type" required>
-                            <option disabled selected value="">Select a rate</option>
+                            <option disabled selected value="">Select a Rate</option>
                             @foreach ($rates as $items)
                             @if (!Str::contains(strtolower($items->rate_type), 'individual'))
                             <option value="{{$items->id}}" data-rate="{{ $items->rate }}">
@@ -105,17 +105,17 @@
 
                         @if($service->type === 'Facility')
                         <!-- Quantity Input -->
+                        <button class="modal-date-btn" type="button" onclick="ViewCalendar({{$service}})">Select
+                            Date</button>
                         <input type="number" name="guests" placeholder="Enter Guests" required />
 
-                        <button class="btn btn-dark " data-bs-toggle="modal"
-                            data-bs-target="#staticBackdrop">DATE</button>
-
                         <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false"
-                            tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                            tabindex="-1" aria-labelledby="staticBackdropLabel">
                             <div class="modal-dialog modal-dialog-centered modal-xl">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h1 class="modal-title fs-5" id="staticBackdropLabel">Modal title</h1>
+                                        <h1 class="modal-title fs-5" id="staticBackdropLabel">
+                                        </h1>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal"
                                             aria-label="Close"></button>
                                     </div>
@@ -128,24 +128,46 @@
                                                     readonly>
                                                 <!-- Visible Inputs for Start and End -->
 
-                                                <input type="text" id="start_date" class="form-control" name="date"
-                                                    placeholder="Start Date" readonly required>
-                                                <input type="text" id="start_time" class="form-control"
-                                                    name="start_time" placeholder="Start Time" readonly required>
+                                                <div class="flex-box">
+                                                    <h1 style="margin-top: 65px; font-size: 23px">Select Reservation
+                                                        Date
+                                                    </h1>
+                                                    <input type="text" id="start_date" class="form-control" name="date"
+                                                        placeholder="Start Date" readonly required>
+                                                    <input type="text" id="start_time" class="form-control"
+                                                        name="start_time" placeholder="Start Time" readonly required>
+                                                    <input type="text" id="end_time" class="form-control"
+                                                        name="end_time" placeholder="End Time" readonly required>
 
-                                                <input type="text" id="end_time" class="form-control" name="end_time"
-                                                    placeholder="End Time" readonly required>
+                                                </div>
+
                                                 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 
                                                 <script src="{{asset('/js/calendar.js')}}"></script>
                                             </div>
-                                            <div class="col-lg-8 col-md-12 col-sm-12" id="calendar"></div>
+                                            <div class="col-lg-8 col-md-12 col-sm-12" id="View_calendar"></div>
                                         </div>
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary"
-                                            data-bs-dismiss="modal">Close</button>
-                                        <button type="button" class="btn btn-primary">Understood</button>
+                                        <button type="button" class="close-btn" data-bs-dismiss="modal">Close</button>
+                                        <button type="button" class="confirm-btn" id="CheckBtn">Confirm</button>
+                                        <script>
+                                            document.getElementById("CheckBtn").addEventListener("click", function (e) {
+                                            // Validate before closing the modal
+                                            if (validateForm()) {
+                                                let modalEl = document.getElementById("staticBackdrop");
+                                                let modalInstance = bootstrap.Modal.getInstance(modalEl);
+                                                if (modalInstance) {
+                                                    modalInstance.hide();
+                                                } else {
+                                                    modalInstance = new bootstrap.Modal(modalEl);
+                                                    modalInstance.hide();
+                                                }
+                                            } else {
+                                                e.preventDefault();
+                                            }
+                                        });
+                                        </script>
                                     </div>
                                 </div>
                             </div>
@@ -176,6 +198,76 @@
         </div>
     </div>
 </section>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+{{-- <script>
+    document.addEventListener("DOMContentLoaded", function () {
+            if (document.getElementById('View_calendar')) {
+                initializeCalendar([]);
+            }
+        });
+
+        function initializeCalendar(blockedDates) {
+            var calendarEl = document.getElementById('View_calendar');
+
+                if (!calendarEl) {
+                    console.error("Error: Calendar element not found!");
+                    return;
+                }
+
+                // Destroy existing calendar instance if it exists
+                if (calendarEl._calendar) {
+                    calendarEl._calendar.destroy();
+                }
+                var calendar = new FullCalendar.Calendar(calendarEl, {
+                initialView: 'dayGridMonth',
+                events: blockedDates.map(date => {
+                    return {
+                        title: `(${moment(date.start_date).format('hh:mm A')} - ${moment(date.end_date).format('hh:mm A')})`, 
+                        start: moment(date.start_date).toISOString(),  
+                        end: moment(date.end_date).toISOString(), 
+                        color: '#064e3b',
+                        backgroundColor: '#122444',
+                        allDay: false
+                    };
+                }),
+                eventDidMount: function(info) {
+                    info.el.style.whiteSpace = 'normal';
+                    info.el.style.display = 'block'; 
+                },
+                eventContent: function(arg) {
+                    return { html: arg.event.title };
+                }
+        });
+
+        calendarEl._calendar = calendar;
+        calendar.render();
+    }
+
+    function ViewCalendar(Item) {
+
+
+        $.ajax({
+            url: "/User/Request/Dates/api",  // Directly use the route without Blade syntax
+            type: 'GET',
+            data: { id: Item.id },
+            dataType: 'json',
+            success: function(response) {
+                console.log("Response Data:", response); // Debugging
+                if (Array.isArray(response.blocked_dates)) {
+                    initializeCalendar(response.blocked_dates);
+                } else {
+                    console.warn("Blocked dates not an array:", response.blocked_dates);
+                }
+            },
+            error: function(xhr, status, error) {
+                console.error("Error fetching quotation orders:", error);
+            }
+        });
+
+        let modal = new bootstrap.Modal(document.getElementById('staticBackdrop'));
+        modal.show();
+    }
+</script> --}}
 <script>
     document.getElementById('rateSelector').addEventListener('change', function() {
         let selectedOption = this.options[this.selectedIndex]; // Get selected option

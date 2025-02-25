@@ -127,15 +127,16 @@
                     @method('PUT')
                     <div class="mb-3 form-group">
                         <label for="password">Enter old password</label>
-                        <input type="password" id="password" name="old_password" placeholder="Enter old password" />
+                        <input type="password" id="old_password" name="old_password" placeholder="Enter old password" />
                     </div>
                     <div class="mb-3 form-group">
                         <label for="password">Enter new password</label>
-                        <input type="password" id="password" name="new_password" placeholder="Enter new password" />
+                        <input type="password" id="new_password" name="new_password" placeholder="Enter new password" />
                     </div>
                     <div class="mb-3 form-group">
                         <label for="password">Confirm password</label>
-                        <input type="password" id="password" name="confirm_password" placeholder="Confirm password" />
+                        <input type="password" id="confirm_password" name="confirm_password"
+                            placeholder="Confirm password" />
                     </div>
                     <div class="btn-container">
                         <button class="save-btn" type="submit">Save Changes</button>
@@ -215,7 +216,10 @@
                             <strong>{{$item->request->Quotation_ref}}</strong> {{$item->message}}
                         </p>
                         <div class="btn-container">
-                            <button class="transac-btn">Download Payment Receipt</button>
+                            <a class="transac-btn" style="text-decoration:none; color:white"
+                                href="{{url('/Reservation/Confirmed/'. $item->quotation_id )}}"
+                                target="__blank">Download Payment
+                                Receipt</a>
                         </div>
                     </div>
                 </div>

@@ -15,6 +15,7 @@ use App\Models\User;
 use App\Models\Quotations;
 use App\Models\notifications;
 use App\Models\payments;
+use App\Models\Dates;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -22,6 +23,8 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Log;
 use Carbon\Carbon;
 use Illuminate\Support\Str;
+use Barryvdh\DomPDF\Facade\Pdf;
+
 
 class HomeController extends Controller
 {
@@ -95,7 +98,6 @@ class HomeController extends Controller
         $items = Quotations::where('user_id', Auth::user()->id)->get();
         return $this->ShowPage('profile', 'profile', compact('items', 'notif'));
     }
-
 
     public function ShowPayment(Request $request)
     {
@@ -324,11 +326,13 @@ class HomeController extends Controller
             'individual_total' => $request->individual ?? 0,
             'guest_count' => $request->guest ?? 0,
             'subtotal' => $request->subtotal ?? 0,
+            'full_name' => $request->fullname ?? ' ',
         ]);
 
         try {
             Quotations::create([
                 'user_id' => Auth::user()->id,
+                'event_title' =>  $request->event,
                 'Quotation_ref' => $quotationRef,
                 'service_id' => $request->service_id,
                 'service_type' => $request->service_type ?? 'test',
@@ -345,7 +349,6 @@ class HomeController extends Controller
         }
     }
 
-
     public function SubmitPayment(Request $request)
     {
         $quotation = Quotations::findOrFail($request->id);
@@ -359,11 +362,13 @@ class HomeController extends Controller
             $payment = Payments::create([
                 'quotation_id' => $request->id,
                 'payment_term' => $request->payment_term,
-                'name'  => $request->fname . ' ' . $request->lname,
+                'name'  => $request->fullname,
                 'address'  => $request->address,
                 'email'  => $request->email,
                 'phone'  => $request->phone,
+                'total'  => $request->total,
                 'proof'  => $imagePath,
+
             ]);
 
 
@@ -371,7 +376,6 @@ class HomeController extends Controller
                 $quotationRef = 'PAY-' . now()->format('Ymd') . '-' . now()->format('h') . Str::upper(Str::random(4));
                 $quotation->update([
                     'Quotation_ref' => $quotationRef,
-                    'event_title' => $request->title,
                     'billing_name' => $request->fname . ' ' . $request->lname,
                     'billing_address' => $request->address,
                     'status' => 4,
@@ -383,6 +387,31 @@ class HomeController extends Controller
             }
         } catch (\Throwable $e) {
             return redirect()->back()->with(['error' => $e->getMessage()], 500);
+        }
+    }
+
+    public function GetReservedDates(Request $request)
+    {
+        $services = services::where('id', $request->id)->first();
+        $blockedDates = Dates::where('service_id', $services->id)
+            ->get(['start_date', 'end_date']);
+        return response()->json([
+            'blocked_dates' => $blockedDates,
+
+        ]);
+    }
+
+    public function ShowPDF($id)
+    {
+        $invoice = Quotations::where('id', $id)->where('status', 5)->first();
+        $payment = Payments::where('quotation_id', $invoice->id)->first();
+        $item = json_decode($invoice->items, true);
+        if ($invoice) {
+            $pdf = PDF::loadView('PDFs.reciept', compact('invoice', 'payment', 'item'));
+            $pdf->setPaper('letter', 'portrait');
+            return $pdf->stream('reciept.pdf');
+        } else {
+            return redirect()->back()->with('error', 'Not Found');
         }
     }
 }

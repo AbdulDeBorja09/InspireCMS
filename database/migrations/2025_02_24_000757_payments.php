@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('email');
             $table->string('phone');
             $table->string('proof');
+            $table->decimal('total', 10, 2);
             $table->timestamps();
         });
     }
