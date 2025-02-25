@@ -1,4 +1,4 @@
-@extends('user.layouts.app')
+@extends('User.layouts.app')
 
 @section('content')
 <section id="image" class="position-relative text-white">
