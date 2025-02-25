@@ -1,5 +1,6 @@
 <!-- CONTACT US -->
-<section id="contact">
+<section id="contact"
+    style="background-image: url('{{ asset('/images/contact-bg.png') }}'); background-size: cover; background-position: center; height: 100%;">
     <div class="mb-5 container-fluid">
         <div class="row">
             <div class="col-lg-6 form-container">
@@ -21,9 +22,9 @@
                 </form>
             </div>
 
-            <div class="col-lg-6 contact-image">
+            {{-- <div class="col-lg-6 contact-image" style="background-image: ">
                 <img src="{{asset('/images/contact-bg.png')}}" alt="Academy Image" class="img-fluid" />
-            </div>
+            </div> --}}
         </div>
     </div>
 </section>
