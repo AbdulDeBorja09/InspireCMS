@@ -115,7 +115,7 @@ class HomeController extends Controller
         $quotation = Quotations::where('id', $id)->where('user_id', Auth::user()->id)->first();
         $payment = payments::where('quotation_id', $id)->first();
         if ($quotation->status != 4) {
-            return redirect()->route('user.home');
+            return redirect()->route('User.home');
         } else {
             return view('User.confirmation', compact('payment', 'quotation'));
         }
@@ -260,7 +260,7 @@ class HomeController extends Controller
         $service = Services::with('rates')->where('id', $request->service_id)->first();
         $rates = Rate::where('id', $request->rate_type)->first();
         if (!$request->service_id) {
-            return redirect()->route('user.home');
+            return redirect()->route('User.home');
         }
 
         // Initialize total price and total hours
