@@ -53,7 +53,7 @@
 
 <body class="font-sans antialiased">
     <div class="min-h-screen bg-gray-100">
-        @include('user.layouts.navbar')
+        @include('User.layouts.navbar')
         @include('components.loader')
         <!-- Page Heading -->
         @isset($header)
@@ -68,8 +68,8 @@
         <main>
             @yield('content')
         </main>
-        @include('user.layouts.contactus')
-        @include('user.layouts.footer')
+        @include('User.layouts.contactus')
+        @include('User.layouts.footer')
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
