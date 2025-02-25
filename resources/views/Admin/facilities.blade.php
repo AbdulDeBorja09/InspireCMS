@@ -123,20 +123,21 @@
         <!-- Table -->
     </div>
 </div>
-<div class="modal fade" id="deleteService" tabindex="-1" aria-labelledby="deleteServicelabel" aria-hidden="true">
+
+<div class="modal fade" id="deleteServiceModal" tabindex="-1" aria-labelledby="deleteServicelabel" aria-hidden="true">
     <div class="modal-dialog">
         <form id="deleteFAQForm" method="POST" action="{{ route('admin.DeleteService') }}">
             @csrf
             @method('DELETE')
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="deleteservice">Confirm Delete</h5>
+                    <h5 class="modal-title">Confirm Delete</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"
                         aria-label="deleteServicelabel"></button>
                 </div>
                 <div class="modal-body">
                     Are you sure you want to delete this Service?
-                    <input type="hidden" name="id" id="deletearticleID">
+                    <input type="hidden" name="id" id="deleteservice">
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
@@ -146,6 +147,17 @@
         </form>
     </div>
 </div>
+<script>
+    function confirmDelete(SeriveId) {
+            // Set the FAQ ID in the hidden input field
+        document.getElementById('deleteservice').value = SeriveId;
+
+        // Show the delete confirmation modal
+        let modal = new bootstrap.Modal(document.getElementById('deleteServiceModal'));
+        modal.show();
+
+    }
+</script>
 <script>
     document.querySelectorAll(".imageUpload").forEach((imageUpload) => {
   imageUpload.addEventListener("change", function () {
@@ -178,7 +190,7 @@
         document.getElementById('deleteservice').value = SeriveId;
 
         // Show the delete confirmation modal
-        let modal = new bootstrap.Modal(document.getElementById('deleteService'));
+        let modal = new bootstrap.Modal(document.getElementById('deleteServiceModal'));
         modal.show();
 
     }

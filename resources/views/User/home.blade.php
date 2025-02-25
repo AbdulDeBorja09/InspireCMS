@@ -123,7 +123,7 @@
             @if(isset($articles) && $articles->isNotEmpty())
             @foreach($articles as $item)
             <div class="col-lg-4 col-md-6 col-sm-12 d-flex">
-                <a class="news-card" href="{{$item->url}}" target="_blank">
+                <a class="news-card">
                     <img src="{{asset('/storage/'. $item->image)}}" alt="{{$item->title}}" />
                     <div class="meta-info">
                         <span><i class="bi bi-person"></i> {{$item->author}}</span>

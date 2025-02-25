@@ -28,19 +28,19 @@ Route::get('/Quotation/{id}', [HomeController::class, 'singlequotation']);
 Route::get('/service/{id}', [HomeController::class, 'ShowRate']);
 Route::post('/Contactus', [HomeController::class, 'contactus'])->name('contactus');
 Route::get('/User/Request/Dates/api', [HomeController::class, 'GetReservedDates'])->name('GetReservedDates');
+Route::post('/Quotation/Create', [HomeController::class, 'CreateQuotation'])->name('CreateQuotation');
 
 Route::middleware(['auth', 'user.type:user'])->group(function () {
     Route::get('/Profile', [HomeController::class, 'ShowProfile']);
     Route::get('/Quotations/view', [HomeController::class, 'QuotationPDF']);
     Route::get('/Payment/{id}', [HomeController::class, 'ShowPayment'])->name('ShowPayment');
     Route::get('/Confirmation/{id}', [HomeController::class, 'ShowConfirmation'])->name('ShowConfirmation');
+    Route::get('/User/Request/Details/api', [HomeController::class, 'GetQUoteDetails'])->name('GetQUoteDetails');
+    Route::get('/User/Payments/Details/api', [HomeController::class, 'GetPaymentDetails'])->name('GetPaymentDetails');
     Route::get('/Reservation/Confirmed/{id}', [HomeController::class, 'ShowPDF'])->name('ShowPDF');
 
-
-    Route::post('/Quotation/Create', [HomeController::class, 'CreateQuotation'])->name('CreateQuotation');
     Route::post('/Quotations/Submit', [HomeController::class, 'SubmitQuotationRequest'])->name('SubmitQuotationRequest');
     Route::post('/Quotation/Payment/Submit', [HomeController::class, 'SubmitPayment'])->name('SubmitPayment');
-
     Route::post('/Profile/Edit', [HomeController::class, 'EditProfile'])->name('EditProfile');
     Route::put('/Profile/Password/Change', [HomeController::class, 'ChangePassword'])->name('ChangePassword');
 });

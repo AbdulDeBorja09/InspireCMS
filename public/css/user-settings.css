@@ -745,3 +745,53 @@ tr {
     overflow: hidden;
     padding: 0;
 }
+.modal-dialog {
+    background-color: #f1f5f9;
+}
+
+.modal-content {
+    border-radius: 0;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.modal-body {
+    padding: 20px 30px;
+}
+
+.user-details,
+.user-transaction {
+    padding: 5px 10px;
+    color: #122244;
+}
+
+.modal-content h1 {
+    color: #064e3b;
+    font-weight: bold;
+}
+
+.modal-content h4 {
+    color: #064e3b;
+}
+
+.modal-btn {
+    padding: 10px 15px;
+    margin: 0 5px;
+    border: none;
+    cursor: pointer;
+    background: #064e3b;
+    color: white;
+    border-radius: 999px;
+    transition: background 0.3s ease;
+}
+
+.modal-btn:hover {
+    opacity: 0.9;
+}
+
+.view-btn {
+    background: none;
+    border: none;
+    text-decoration: underline;
+    color: #122244;
+    font-weight: bold;
+}

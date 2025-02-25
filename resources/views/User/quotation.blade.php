@@ -97,8 +97,12 @@
                                 <p class="card-text">
                                     {{$item->brief}}
                                 </p>
+                                @if ($item->status === 1)
                                 <a href="{{url('/Quotation/'.$item->id)}}" class="btn shadow-none btn-custom">View
                                     More</a>
+                                @else
+                                <a style="cursor: not-allowed; " class="btn shadow-none btn-custom">Unavailable</a>
+                                @endif
                             </div>
                         </div>
                     </div>
@@ -120,8 +124,12 @@
                                 <p class="card-text">
                                     {{$item->brief}}
                                 </p>
+                                @if ($item->status === 1)
                                 <a href="{{url('/Quotation/'.$item->id)}}" class="btn shadow-none btn-custom">View
                                     More</a>
+                                @else
+                                <a style="cursor: not-allowed; " class="btn shadow-none btn-custom">Unavailable</a>
+                                @endif
                             </div>
                         </div>
                     </div>

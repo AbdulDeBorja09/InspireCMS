@@ -175,7 +175,7 @@
                 </div>
                 @elseif($item->status === 'Rejected')
                 <!-- DENIED -->
-                <div class="mt-3 notif-container">
+                <div class="mt-3 notif-container" data-id="{{$item->id}}">
                     <div class="notif-header message-deny" onclick="toggleAccordion(this)">
                         <h3>Request Denied!</h3>
                     </div>
@@ -191,7 +191,7 @@
                 </div>
                 @elseif($item->status === 'Cancelled')
                 <!-- DENIED -->
-                <div class="mt-3 notif-container">
+                <div class="mt-3 notif-container" data-id="{{$item->id}}">
                     <div class="notif-header message-deny" onclick="toggleAccordion(this)">
                         <h3>Request Cancelled!</h3>
                     </div>
@@ -309,9 +309,17 @@
                                     <td>{{ $dataType }}</td>
                                     <td>₱ {{ number_format($item->total) }}</td>
                                     <td>{{ $statusText }}</td>
+                                    @if( $item->status == 5)
                                     <td>
-                                        <button class="shadow-none view-btn">View More</button>
+                                        <button class="shadow-none view-btn" onclick="ViewPayments({{$item}})">View
+                                            More</button>
                                     </td>
+                                    @else
+                                    <td>
+                                        <button class="shadow-none view-btn" onclick="ViewQuote({{$item}})">View
+                                            More</button>
+                                    </td>
+                                    @endif
                                 </tr>
                                 @endforeach
 
@@ -324,6 +332,269 @@
 
     </div>
 </div>
+<script>
+    function deleteNotification(button) {
+      // Find the notification container
+      var container = $(button).closest('.notif-container');
+      container.hide();
+      container.style.display = 'none';
+      var id = container.data('id');
+      $.ajax({
+        url: '/delete-item', 
+        type: 'POST',
+        data: {
+          id: id,
+          _token: '{{ csrf_token() }}' 
+        },
+        success: function(response) {
+        
+        },
+        error: function(xhr) {
+          console.error('Error deleting item:', xhr);
+        }
+      });
+    }
+</script>
+
+<div class="modal fade" id="userpayment" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-4" id="staticBackdropLabel">
+                    Your Payment Transaction
+                </h1>
+                <button type="button" class="btn-close shadow-none" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-lg-6 col-md-12 col-sm-12">
+                        <h4>User Details</h4>
+                        <div class="user-details">
+                            <h5>First Name</h5>
+                            <input class="mb-3 w-100" type="text" id="view_payment_fname" readonly
+                                placeholder="Fetching...">
+
+                            <h5>Last Name</h5>
+                            <input class="mb-3 w-100" type="text" id="view_payment_lname" readonly
+                                placeholder="Fetching...">
+
+                            <h5>Address</h5>
+                            <input class="mb-3 w-100" type="text" id="view_payment_address" readonly
+                                placeholder="Fetching...">
+
+                            <h5>Email</h5>
+                            <input class="mb-3 w-100" type="text" id="view_payment_email" readonly
+                                placeholder="Fetching...">
+
+                            <h5>Phone Number</h5>
+                            <input class="mb-3 w-100" type="text" id="view_payment_phone" readonly
+                                placeholder="Fetching...">
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6 col-md-12 col-sm-12">
+                        <h4>Payment Details</h4>
+                        <div class="user-transaction">
+                            <h5>Payment Reference</h5>
+                            <input class="mb-3 w-100" type="text" id="view_payment_reference" readonly
+                                placeholder="Fetching...">
+
+                            <h5>Date & Time</h5>
+                            <input class="mb-3 w-100" type="text" id="view_payment_time" readonly
+                                placeholder="Fetching...">
+
+                            <h5>Payment Terms</h5>
+                            <input class="mb-3 w-100" type="text" id="view_payment_terms" readonly
+                                placeholder="Fetching..." style="text-transform: capitalize">
+
+                            <h5>Paid Amount</h5>
+                            <input class="mb-3 w-100" type="text" id="view_payment_amount" readonly
+                                placeholder="Fetching...">
+
+                            <h5>Proof of Payment</h5>
+                            <button class="mb-3 w-100  btn btn-outline-light view-btn " id="view_payment_proof">View
+                                Image</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="modal-btn" data-bs-dismiss="modal">
+                    Close
+                </button>
+                <button type="button" class="modal-btn" id="download_btn">
+                    Download Quotation
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="userquote" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-4" id="staticBackdropLabel">
+                    Your Quotation Request
+                </h1>
+                <button type="button" class="btn-close shadow-none" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <h4>Summary</h4>
+                        <div class="row">
+                            <div class="col-lg-6 col-md-12 col-sm-12">
+                                <div class="user-transaction">
+                                    <h5>Quotation Reference</h5>
+                                    <input class="w-100 mb-3" id="view_quotaion_ref" type="text" readonly
+                                        value="Fetching...">
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-12 col-sm-12">
+                                <div class="user-transaction">
+                                    <h5>Date & Time</h5>
+                                    <input class="w-100 mb-3" id="view_date_created" type="text" readonly
+                                        value="Fetching...">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-12 col-sm-12">
+                        <h4>User Details</h4>
+                        <div class="user-details">
+                            <h5>First Name</h5>
+                            <input class="w-100 mb-3" id="view_service_fname" type="text" readonly value="Fetching...">
+
+                            <h5>Last Name</h5>
+                            <input class="w-100 mb-3" id="view_service_lname" type="text" readonly value="Fetching...">
+
+                            <h5>Email</h5>
+                            <input class="w-100 mb-3" id="view_user_email" type="text" readonly value=" ">
+
+                            <h5>Phone Number</h5>
+                            <input class="w-100 mb-3" id="view_user_phone" type="text" readonly value="Fetching...">
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6 col-md-12 col-sm-12">
+
+                        <h4>Quotation Details</h4>
+                        <div class="user-transaction">
+                            <h5>Service Name</h5>
+                            <input class="w-100 mb-3" id="view_service_name" type="text" readonly value="Fetching...">
+
+
+                            <h5>Quoted Date & Time</h5>
+                            <input class="w-100 mb-3" id="view_date_time" type="text" readonly value="Fetching...">
+
+
+                            <h5>Duration</h5>
+                            <input class="w-100 mb-3" id="veiw_service_hours" type="text" readonly value="Fetching...">
+
+                            <h5>Total Amount Quoted</h5>
+                            <input class="w-100 mb-3" id="view_service_total" type="text" readonly value="Fetching...">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="modal-btn" data-bs-dismiss="modal">
+                    Close
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function ViewQuote(Item) {
+        $.ajax({
+            url: "/User/Request/Details/api",  
+            type: 'GET',
+            data: { id: Item.id },
+            dataType: 'json',
+            success: function(response) {
+                document.getElementById('view_quotaion_ref').value = Item.Quotation_ref;
+                document.getElementById('view_date_created').value = moment(Item.created_at).format("MMM D y, hh:mm A");
+                
+                document.getElementById('view_service_name').value = response.items.service_name;
+                document.getElementById('view_service_fname').value = response.user.fname;
+                document.getElementById('view_service_lname').value = response.user.lname;
+                document.getElementById('view_user_email').value = response.user.email;
+                document.getElementById('view_user_phone').value = response.user.phone || ' ';
+
+              
+                if(Item.service_type == "Facility"){
+                    document.getElementById('veiw_service_hours').value = `${Item.start_time} - ${Item.end_time}`;
+                }
+                
+            
+                document.getElementById('view_date_time').value =   moment(response.items.date).format("MMM D y");
+                document.getElementById('view_date_time').value =   moment(response.items.date).format("MMM D y");
+                document.getElementById('view_service_total').value = Item.total;
+     
+
+            },
+            error: function(xhr, status, error) {
+                console.error("Error fetching quotation orders:", error);
+            }
+        });
+
+
+        let modal = new bootstrap.Modal(document.getElementById('userquote'));
+        modal.show();
+    }
+
+    function ViewPayments(Item) {
+        $.ajax({
+            url: 'User/Payments/Details/api/', 
+            type: 'GET', 
+            data: { id: Item.id },
+            dataType: 'json', 
+            success: function(response) {
+                var paymentName = response.payment.name;
+                let parts = paymentName.split(",");
+                const proof = response.payment.proof;
+
+
+                proofUrl = '/storage/' + proof;
+                DownloadURL = '/Reservation/Confirmed/' + Item.id
+                document.getElementById('view_payment_reference').value = Item.Quotation_ref;
+                document.getElementById('view_payment_time').value = moment(response.user.created_at).format("MMM D y, hh:mm A");
+                document.getElementById('view_payment_terms').value = response.payment.payment_term;
+                document.getElementById('view_payment_fname').value = parts[1].trim();
+                document.getElementById('view_payment_lname').value = parts[0].trim();
+                document.getElementById('view_payment_address').value = response.payment.address;
+                document.getElementById('view_payment_email').value = response.payment.email;
+                document.getElementById('view_payment_phone').value = response.payment.phone;
+                document.getElementById('view_payment_amount').value = response.payment.total;
+                document.getElementById('view_payment_proof').addEventListener('click', function() {
+                    window.open(proofUrl, '_blank');
+                });
+
+                document.getElementById('download_btn').addEventListener('click', function() {
+                    window.open(DownloadURL, '_blank');
+                });
+
+
+                
+                
+            },
+            error: function(xhr, status, error) {
+                console.error("Error fetching quotation orders:", error);
+            }
+        });
+
+        let modal = new bootstrap.Modal(document.getElementById('userpayment'));
+        modal.show();
+
+    }
+
+</script>
+
 <!-- END OF USER SETTINGS -->
 
 <!-- Change Tab on Click -->

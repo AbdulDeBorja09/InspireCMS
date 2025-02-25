@@ -1,5 +1,6 @@
 @extends('admin.layouts.app')
 @section('content')
+@include('Admin.components.alert')
 <!-- About Content -->
 <div class="content" id="about">
     <h1>About</h1>

@@ -182,6 +182,8 @@
                         <button id="addToQuote" type="submit" class="btn-quote">
                             Request Quote
                         </button>
+                      
+
                     </form>
                 </div>
 
@@ -198,7 +200,7 @@
         </div>
     </div>
 </section>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 {{-- <script>
     document.addEventListener("DOMContentLoaded", function () {
             if (document.getElementById('View_calendar')) {

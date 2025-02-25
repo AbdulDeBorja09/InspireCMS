@@ -1,5 +1,6 @@
 @extends('admin.layouts.app')
 @section('content')
+@include('Admin.components.alert')
 <!-- Academies Content -->
 <div class="content" id="academies">
     <h1>Academies</h1>
@@ -103,7 +104,7 @@
                         <td class="text-center">
                             <a class="edit-btn" style="text-decoration:none"
                                 href="{{url('/Admin/edit/'.$item->id)}}">View</a>
-                            <button class="delete-btn">Delete</button>
+                            <button class="delete-btn" onclick="confirmDelete({{$item->id}})">Delete</button>
                         </td>
                     </tr>
                     @endforeach
@@ -113,6 +114,42 @@
         <!-- Table -->
     </div>
 </div>
+
+
+<div class="modal fade" id="deleteServiceModal" tabindex="-1" aria-labelledby="deleteServicelabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <form id="deleteFAQForm" method="POST" action="{{ route('admin.DeleteService') }}">
+            @csrf
+            @method('DELETE')
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Confirm Delete</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                        aria-label="deleteServicelabel"></button>
+                </div>
+                <div class="modal-body">
+                    Are you sure you want to delete this Service?
+                    <input type="hidden" name="id" id="deleteservice">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<script>
+    function confirmDelete(SeriveId) {
+            // Set the FAQ ID in the hidden input field
+        document.getElementById('deleteservice').value = SeriveId;
+
+        // Show the delete confirmation modal
+        let modal = new bootstrap.Modal(document.getElementById('deleteServiceModal'));
+        modal.show();
+
+    }
+</script>
 <!-- Image Select Script-->
 <script>
     document.querySelectorAll(".imageUpload").forEach((imageUpload) => {

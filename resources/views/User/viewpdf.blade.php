@@ -517,11 +517,21 @@
                                 <input type="amount" id="amount" name="amount" placeholder="AUTO FILL"
                                     value="{{number_format($subtotal)}}" readonly />
                             </div>
-
+                            @Auth
                             <div class="btn-container">
                                 <button class="submit-btn" type="submit">Submit for
                                     Approval</button>
                             </div>
+                            @else
+                            <div class="btn-container">
+                                <button class="submit-btn" type="button"
+                                    onclick="window.location.href='/register';">Submit for
+                                    Approval</button>
+                            </div>
+
+
+                            @endauth
+
                         </div>
                     </div>
                 </div>

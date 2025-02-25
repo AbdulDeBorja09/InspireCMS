@@ -1,5 +1,6 @@
 @extends('admin.layouts.app')
 @section('content')
+@include('Admin.components.alert')
 <!-- Home Content -->
 <div class="content" id="home">
     <h1>Home</h1>

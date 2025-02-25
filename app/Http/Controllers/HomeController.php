@@ -95,7 +95,7 @@ class HomeController extends Controller
     public function ShowProfile()
     {
         $notif = notifications::with(['request'])->where('user_id', Auth::user()->id)->orderBy('created_at', 'desc')->get();
-        $items = Quotations::where('user_id', Auth::user()->id)->get();
+        $items = Quotations::where('user_id', Auth::user()->id)->orderBy('created_at', 'desc')->get();
         return $this->ShowPage('profile', 'profile', compact('items', 'notif'));
     }
 
@@ -247,6 +247,9 @@ class HomeController extends Controller
 
         $service = Services::with('rates')->where('id', $request->service_id)->first();
         $rates = Rate::where('id', $request->rate_type)->first();
+        if (!$request->service_id) {
+            return redirect()->route('user.home');
+        }
 
         // Initialize total price and total hours
         $totalPrice = 0;
@@ -335,7 +338,7 @@ class HomeController extends Controller
                 'event_title' =>  $request->event,
                 'Quotation_ref' => $quotationRef,
                 'service_id' => $request->service_id,
-                'service_type' => $request->service_type ?? 'test',
+                'service_type' => $request->service_type,
                 'items' => $quotationDataJson,
                 'date' => $request->date,
                 'start_time' => $request->start_time,
@@ -345,6 +348,11 @@ class HomeController extends Controller
 
             return redirect()->route('quotationpage');
         } catch (\Throwable $e) {
+            Log::error('Error creating quotation: ' . $e->getMessage(), [
+                'exception' => $e,
+                'user_id'   => Auth::user()->id ?? null,
+                'data'      => $request->all(),
+            ]);
             return redirect()->route('quotationpage');
         }
     }
@@ -407,11 +415,44 @@ class HomeController extends Controller
         $payment = Payments::where('quotation_id', $invoice->id)->first();
         $item = json_decode($invoice->items, true);
         if ($invoice) {
+            notifications::where('quotation_id', $invoice->id)->where('user_id', Auth::user()->id)->delete();
             $pdf = PDF::loadView('PDFs.reciept', compact('invoice', 'payment', 'item'));
             $pdf->setPaper('letter', 'portrait');
             return $pdf->stream('reciept.pdf');
         } else {
             return redirect()->back()->with('error', 'Not Found');
         }
+    }
+
+    public function GetQUoteDetails(Request $request)
+    {
+        $Quotaions = Quotations::where('id', $request->id)->first();
+
+        if ($Quotaions->status === 1) {
+            $Quotaions->update([
+                'status' => 2,
+            ]);
+        }
+        $users = User::where('id', $Quotaions->user_id)->first();
+
+        $items = json_decode($Quotaions->items, true);
+        return response()->json([
+            'items' => $items,
+            'user' => $users,
+            'Quotaions' => $Quotaions,
+        ]);
+    }
+
+    public function GetPaymentDetails(Request $request)
+    {
+        $Quotaions = Quotations::where('id', $request->id)->first();
+        $users = User::where('id', $Quotaions->user_id)->first();
+        $payments = Payments::where('quotation_id', $Quotaions->id)->first();
+        $items = json_decode($Quotaions->items, true);
+        return response()->json([
+            'items' => $items,
+            'payment' => $payments,
+            'user' => $users,
+        ]);
     }
 }
