@@ -158,7 +158,7 @@
                 <button type="button" class="modal-btn" data-bs-dismiss="modal">
                     Close
                 </button>
-                <button type="button" class="modal-btn" data-bs-dismiss="modal">
+                <button type="button" class="modal-btn" id="view_paymentbtn">
                     View PDF
                 </button>
             </div>
@@ -183,6 +183,7 @@
 
 
                 proofUrl = '/storage/' + proof;
+                PDF = '/Reservation/Confirmed/' + Item.id;
                 document.getElementById('view_payment_reference').value = Item.Quotation_ref;
                 document.getElementById('view_payment_time').value = moment(response.user.created_at).format("MMM D y, hh:mm A");
                 document.getElementById('view_payment_terms').value = response.payment.payment_term;
@@ -195,7 +196,9 @@
                 document.getElementById('view_payment_proof').addEventListener('click', function() {
                     window.open(proofUrl, '_blank');
                 });
-                
+                document.getElementById('view_paymentbtn').addEventListener('click', function() {
+                    window.open(PDF, '_blank');
+                });
             },
             error: function(xhr, status, error) {
                 console.error("Error fetching quotation orders:", error);

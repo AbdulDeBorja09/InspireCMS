@@ -24,6 +24,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Carbon\Carbon;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class AdminController extends Controller
 {
@@ -901,5 +902,20 @@ class AdminController extends Controller
             'payment' => $payments,
             'user' => $users,
         ]);
+    }
+
+    public function ShowPDFAdmin($id)
+    {
+        $invoice = Quotations::where('id', $id)->where('status', 5)->first();
+        $payment = Payments::where('quotation_id', $invoice->id)->first();
+        $item = json_decode($invoice->items, true);
+        if ($invoice) {
+            notifications::where('quotation_id', $invoice->id)->where('user_id', Auth::user()->id)->delete();
+            $pdf = PDF::loadView('PDFs.reciept', compact('invoice', 'payment', 'item'));
+            $pdf->setPaper('letter', 'portrait');
+            return $pdf->stream('reciept.pdf');
+        } else {
+            return redirect()->back()->with('error', 'Not Found');
+        }
     }
 }

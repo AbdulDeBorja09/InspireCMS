@@ -116,21 +116,7 @@
                     <h6 class="mb-4 text-center">
                         Welcome back! Log in to access your account and request a quote.
                     </h6>
-                    @if ($errors->has('login_error'))
-                    <div class="alert alert-danger">
-                        {{ $errors->first('login_error') }}
-                    </div>
-                    @endif
 
-                    @if ($errors->any() && !$errors->has('login_error'))
-                    <div class="alert alert-danger">
-                        <ul>
-                            @foreach ($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                            @endforeach
-                        </ul>
-                    </div>
-                    @endif
                     <form action="{{ route('login') }}" method="POST">
                         @csrf
                         <div class="mb-3">
@@ -141,6 +127,19 @@
                             <label class="form-label">Password</label>
                             <input type="password" name="password" class="form-control" required />
                         </div>
+                        @if ($errors->has('login_error'))
+                        <div class="">
+                            {{ $errors->first('login_error') }}
+                        </div>
+                        @endif
+
+                        @if ($errors->any() && !$errors->has('login_error'))
+                        <div class="mb-3">
+                            @foreach ($errors->all() as $error)
+                            <span style="color: rgb(133, 11, 11)"> {{ $error }}</span>
+                            @endforeach
+                        </div>
+                        @endif
                         <button type="submit" class="btn shadow-none w-100">Login</button>
                     </form>
                     <p class="mt-3 text-center">

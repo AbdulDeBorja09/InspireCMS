@@ -30,6 +30,7 @@ Route::post('/Contactus', [HomeController::class, 'contactus'])->name('contactus
 Route::get('/User/Request/Dates/api', [HomeController::class, 'GetReservedDates'])->name('GetReservedDates');
 Route::post('/Quotation/Create', [HomeController::class, 'CreateQuotation'])->name('CreateQuotation');
 
+
 Route::middleware(['auth', 'user.type:user'])->group(function () {
     Route::get('/Profile', [HomeController::class, 'ShowProfile']);
     Route::get('/Quotations/view', [HomeController::class, 'QuotationPDF']);
@@ -44,7 +45,6 @@ Route::middleware(['auth', 'user.type:user'])->group(function () {
     Route::post('/Quotation/Payment/Submit', [HomeController::class, 'SubmitPayment'])->name('SubmitPayment');
     Route::post('/Profile/Edit', [HomeController::class, 'EditProfile'])->name('EditProfile');
     Route::put('/Profile/Password/Change', [HomeController::class, 'ChangePassword'])->name('ChangePassword');
-
     Route::post('/Delete/Notification/Api', [HomeController::class, 'DeleteNotif'])->name('DeleteNotif');
 });
 
@@ -67,7 +67,7 @@ Route::middleware(['auth', 'user.type:admin'])->group(function () {
     Route::get('/Admin/header', [AdminController::class, 'ShowHeader'])->name('admin.header');
     Route::get('/Admin/Contactus', [AdminController::class, 'ShowContactus'])->name('admin.ShowContactus');
     Route::get('/Admin/dates', [AdminController::class, 'GetBlockedDates'])->name('admin.GetBlockedDates');
-
+    Route::get('/Reservation/Confirmed/{id}', [AdminController::class, 'ShowPDFAdmin'])->name('ShowPDF');
 
     Route::get('/Admin/Request/Details/api', [AdminController::class, 'GetRequestDetails'])->name('admin.GetRequestDetails');
     Route::get('/Admin/Payments/Details/api', [AdminController::class, 'GetPaymentsDetails'])->name('admin.GetPaymentsDetails');

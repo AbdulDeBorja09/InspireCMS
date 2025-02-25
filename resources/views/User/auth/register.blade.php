@@ -146,6 +146,20 @@
                             <label class="form-label">Confirm Password</label>
                             <input type="password" name="confirmpassword" class="form-control" required />
                         </div>
+                        @if ($errors->has('login_error'))
+                        <div class="">
+                            {{ $errors->first('login_error') }}
+                        </div>
+                        @endif
+
+                        @if ($errors->any() && !$errors->has('login_error'))
+                        <div class="mb-3">
+                            @foreach ($errors->all() as $error)
+                            <span style="color: rgb(133, 11, 11)"> {{ $error }}</span>
+                            @endforeach
+                        </div>
+                        @endif
+
                         <button type="submit" class="btn shadow-none w-100">
                             Register
                         </button>
