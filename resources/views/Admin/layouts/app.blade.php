@@ -31,7 +31,7 @@
     <!-- STYLES -->
 
     <link rel="stylesheet" href="{{asset('/css/admin.css')}}" />
-    {{-- @vite(['resources/css/app.css', 'resources/js/app.js']) --}}
+    
 
     {{-- Include pushed css from pages --}}
 

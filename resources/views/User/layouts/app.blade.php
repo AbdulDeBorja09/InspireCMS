@@ -34,7 +34,7 @@
     {{-- Include pushed css from pages --}}
     @stack('css')
     @stack('script')
-    @vite(['resources/js/app.js'])
+    
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.1/main.min.css">
     <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.1/main.min.js"></script>
