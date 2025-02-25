@@ -3,7 +3,7 @@
 
 <!-- HEADER PAGE -->
 <section id="image" class="position-relative text-white"
-    style="background-image: url({{ $contents['top-background']->value ?? '/images/home/bg.png' }});">
+    style="background-image: url({{ $contents['top-background']->value }});">
     <div class="image-overlay d-flex align-items-center">
         <div class="container-fluid">
             <div class="row justify-content-center image-text">
