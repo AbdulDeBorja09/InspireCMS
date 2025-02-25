@@ -8,10 +8,14 @@
 
     .pdf-table {
         font-family: Arial, sans-serif;
-        margin: 20px;
+        padding: 20px;
+        /* margin: 20px; */
         width: 8.5in;
-        height: max-content;
-        background-color: white
+        height: auto;
+
+        background-color: #f1f5f9;
+        border-radius: 10px;
+        box-shadow: 0 5px 8px rgba(0, 0, 0, 0.1);
     }
 
     .pdf-table .header {
@@ -19,10 +23,16 @@
         justify-content: space-between;
         align-items: center;
         margin-bottom: 5px;
+        line-height: 25px;
+    }
+
+    .logo {
+        width: 250px;
+        height: 150px;
     }
 
     .pdf-table .header img {
-        width: 180px;
+        width: 300px;
     }
 
     .pdf-table .company-details {
@@ -43,7 +53,6 @@
 
     .pdf-table .info-right {
         width: 50%;
-        padding-left: 50px;
 
         .info p {
             display: flex;
@@ -59,8 +68,8 @@
     }
 
     .pdf-table .line {
-        border-top: 2px solid black;
-        margin-top: 5px;
+        border-top: 4px solid black;
+        margin-top: 10px;
     }
 
     .pdf-table .quotation-table {
@@ -84,7 +93,7 @@
     }
 
     .pdf-table .quotation-header {
-        background-color: #0056b3;
+        background-color: #034892;
         color: white;
         font-size: 14px;
         font-weight: bold;
@@ -100,19 +109,24 @@
 
     .pdf-table .terms {
         width: 60%;
-        font-size: 11px;
+        font-size: 12px;
+    }
+
+    .pdf-table .terms h3 {
+        font-size: 18px;
+        font-weight: bold
     }
 
     .pdf-table .subtotal-box {
-        width: 35%;
+        width: 40%;
         border: 1px solid black;
-        padding: 6px;
         font-size: 12px;
+        line-height: 15px;
     }
 
     .pdf-table .approval-section {
         display: flex;
-        justify-content: space-around;
+        justify-content: space-evenly;
         text-align: center;
         margin-top: 20px;
         font-size: 12px;
@@ -125,7 +139,117 @@
     nav {
         background-color: #122444;
     }
+
+    /* USER FILL UP */
+    .payment-details {
+    background-color: #f1f5f9;
+    width: 480px;
+    border-radius: 10px;
+    padding: 15px;
+    box-shadow: 0 5px 8px rgba(0, 0, 0, 0.1);
+}
+
+.payment-details h3 {
+    color: #122444;
+    font-weight: bold;
+}
+
+.quote-form-container {
+    width: 100%;
+    height: auto;
+}
+
+.quote-form-container h4 {
+    color: #112240;
+    font-weight: bold;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    color: #112240;
+}
+
+.payment-details label {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.payment-details input {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+.btn-container {
+    display: flex;
+    justify-content: end;
+}
+
+.payment-details .submit-btn {
+    width: 220px;
+    background-color: transparent;
+    --color: #122444;
+    padding: 0.5em 1em;
+    border-radius: 999px;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    transition: 0.5s;
+    font-weight: 600;
+    font-size: 15px;
+    border: 1px solid;
+    color: var(--color);
+    z-index: 1;
+}
+
+.payment-details .submit-btn::before,
+.payment-details .submit-btn::after {
+    content: "";
+    display: block;
+    width: 50px;
+    height: 50px;
+    transform: translate(-50%, -50%);
+    position: absolute;
+    border-radius: 50%;
+    z-index: -1;
+    background-color: var(--color);
+    transition: 0.8s ease;
+}
+
+.payment-details .submit-btn::before {
+    top: -1em;
+    left: -1em;
+}
+
+.payment-details .submit-btn::after {
+    left: calc(100% + 1em);
+    top: calc(100% + 1em);
+}
+
+.payment-details .submit-btn:hover::before,
+.payment-details .submit-btn:hover::after {
+    height: 410px;
+    width: 410px;
+}
+
+.payment-details .submit-btn:hover {
+    color: #f1f5f9;
+}
+
+.payment-details .submit-btn:active {
+    filter: brightness(1);
+}
+    /* END OF USER FILL UP */
 </style>
+
+
+
+
+
+
+
 {{--
 <!-- HEADER -->
 <section id="image" class="position-relative text-white">
@@ -177,13 +301,18 @@
         <input type="hidden" name="date" value="{{ $quotationData['date'] ?? 0 }}">
         <input type="hidden" name="start_time" value="{{ $quotationData['start_time'] ?? 0 }}">
         <input type="hidden" name="end_time" value="{{ $quotationData['end_time'] ?? 0 }}">
-        <div class="container py-5 mb-5 content-container">
+        
+        
+        <div class="container content-container">
             <!-- Tab Content -->
-            <div class="tab-content mt-4" style="min-height: 50vh">
+            <div class="d-flex gap-3 tab-content">
 
-                <section class="pdf-table shadow-sm p-5">
+                <section class="my-5 pdf-table shadow-sm">
                     <div class="header">
-                        <img src="{{asset('/images/logo/inspire-logo.png')}}" alt="INSPIRE Sports Academy" />
+                        <div class="logo">
+                            <img src="{{asset('/images/logo/inspire-logo-black.png')}}" alt="INSPIRE Sports Academy" />
+                        </div>
+    
                         <div class="company-details">
                             <strong>NU SPORTS ACADEMY, INC.</strong><br />
                             NU Laguna, KM 53 Pan Philippine Highway<br />
@@ -255,13 +384,7 @@
                     </table>
 
 
-                    <p>
-                        <em>* The first 150 spectators will be admitted free of charge.</em>
-                    </p>
-                    <p>
-                        <em>** For any additional attendees beyond 150, there will be a 50
-                            pesos per head admission fee.</em>
-                    </p>
+
 
                     <div class="terms-section">
                         <div class="terms">
@@ -344,10 +467,93 @@
                         </div>
                     </div>
                 </section>
-            </div>
-            <hr>
-            <div class="text-center">
-                <button type="submit" class="btn btn-outline-success w-50 btn-quote m-5"> SUBMIT</button>
+
+                <div class="my-5 payment-details">
+                    <h3 class="text-center">User Details</h3>
+                    <div class="mt-3 quote-form-container">
+                      <div class="user-info">
+                        <!-- Event Title -->
+                        <div class="mb-3 form-group">
+                          <label for="event">Event Title</label>
+                          <input
+                            type="text"
+                            id="event"
+                            name="event"
+                            placeholder="REQUIRED"
+                          />
+                        </div>
+                        <!-- Full Name -->
+                        <div class="mb-3 form-group">
+                          <label for="fullname">Full Name</label>
+                          <input
+                            type="text"
+                            id="fullname"
+                            name="fullname"
+                            placeholder="REQUIRED"
+                          />
+                        </div>
+
+                        <!-- Quoted Date -->
+                        <div class="mb-3 form-group">
+                            <label for="date">Quoted Date</label>
+                            <input
+                              type="date"
+                              id="date"
+                              name="date"
+                              placeholder="AUTO FILL"
+                            />
+                          </div>
+
+                        <!-- Quoted Time Start -->
+                        <div class="mb-3 form-group">
+                            <label for="time">Time Start</label>
+                            <input
+                              type="time"
+                              id="time"
+                              name="time"
+                              placeholder="AUTO FILL"
+                            />
+                          </div>
+
+                        <!-- Quoted Time End -->
+                        <div class="mb-3 form-group">
+                            <label for="time">Time End</label>
+                            <input
+                              type="time"
+                              id="time"
+                              name="time"
+                              placeholder="AUTO FILL"
+                            />
+                          </div>
+
+                        <!-- Duration -->
+                        <div class="mb-3 form-group">
+                            <label for="time">Duration</label>
+                            <input
+                              type="time"
+                              id="time"
+                              name="time"
+                              placeholder="AUTO FILL"
+                            />
+                          </div>
+
+                        <!-- Quoted Amount -->
+                        <div class="mb-3 form-group">
+                            <label for="amount">Quoted Amount</label>
+                            <input
+                              type="amount"
+                              id="amount"
+                              name="amount"
+                              placeholder="AUTO FILL"
+                            />
+                          </div>
+          
+                        <div class="btn-container">
+                          <button class="submit-btn" type="submit">Submit for Approval</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
             </div>
         </div>
 
