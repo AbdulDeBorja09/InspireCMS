@@ -15,9 +15,9 @@
                     <tr>
                         <th class="text-center">#</th>
                         <th>Username</th>
-                        <th>Email</th>
                         <th>First Name</th>
                         <th>Last Name</th>
+                        <th>Email</th>
                         <th>Account Age</th>
                         <th>Created At</th>
                     </tr>
