@@ -3,9 +3,9 @@
         <!-- ISA LOGO -->
         <a class="navbar-brand" href="{{url('/')}}">
             @if ($navLogo)
-            <img src="{{ asset('/storage/' .$navLogo->value) }}" class="img-fluid" alt="Logo" width="180" />
+            <img src="{{ asset('storage/' .$navLogo->value) }}" class="img-fluid" alt="Logo" width="180" />
             @else
-            <img src=" {{asset('/images/logo/inspire-logo.png')}}" alt="Inspire Sports Academy" width="180" />
+            <img src=" {{asset('images/logo/inspire-logo.png')}}" alt="Inspire Sports Academy" width="180" />
             @endif
         </a>
 
