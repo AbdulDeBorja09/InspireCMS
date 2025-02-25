@@ -117,7 +117,7 @@ class HomeController extends Controller
         if ($quotation->status != 4) {
             return redirect()->route('user.home');
         } else {
-            return view('user.confirmation', compact('payment', 'quotation'));
+            return view('User.confirmation', compact('payment', 'quotation'));
         }
     }
 
@@ -125,7 +125,7 @@ class HomeController extends Controller
     {
         $quotation = Quotations::where('id', $id)->where('user_id', Auth::user()->id)->first();
         $items = json_decode($quotation->items, true);
-        return view('user.confirmation_quote', compact('quotation', 'items'));
+        return view('User.confirmation_quote', compact('quotation', 'items'));
         // if ($quotation->status != 1) {
         //     return redirect()->route('user.home');
         // } else {
