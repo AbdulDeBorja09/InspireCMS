@@ -176,8 +176,11 @@
                 @elseif($item->status === 'Rejected')
                 <!-- DENIED -->
                 <div class="mt-3 notif-container" data-id="{{$item->id}}">
-                    <div class="notif-header message-deny" onclick="toggleAccordion(this)">
+                    <div class="notif-header message-deny d-flex " onclick="toggleAccordion(this)"
+                        style="justify-content: space-between">
                         <h3>Request Denied!</h3>
+                        <button class="btn" onclick="deleteNotification(this)" style="margin-top: -5px "><i
+                                class="bi bi-x-circle" style="font-size: 20px"></i></button>
                     </div>
                     <div class="notif-content">
                         <p>
@@ -186,14 +189,18 @@
                         <div class="btn-container">
                             <button class="transac-btn" onclick="window.location.href='/Quotation';">Request
                                 Again</button>
+
                         </div>
                     </div>
                 </div>
                 @elseif($item->status === 'Cancelled')
                 <!-- DENIED -->
                 <div class="mt-3 notif-container" data-id="{{$item->id}}">
-                    <div class="notif-header message-deny" onclick="toggleAccordion(this)">
+                    <div class="notif-header message-deny d-flex " onclick="toggleAccordion(this)"
+                        style="justify-content: space-between">
                         <h3>Request Cancelled!</h3>
+                        <button class="btn" onclick="deleteNotification(this)" style="margin-top: -5px "><i
+                                class="bi bi-x-circle" style="font-size: 20px"></i></button>
                     </div>
                     <div class="notif-content">
                         <p>
@@ -260,7 +267,7 @@
                 <select id="status-filter">
                     <option value="all">All</option>
                     <option value="Completed">Completed</option>
-                    <option value="New">Pending</option>
+                    <option value="Pending">Pending</option>
                     <option value="Approved">Approved</option>
                     <option value="Rejected">Denied</option>
                 </select>
@@ -289,7 +296,7 @@
                             } elseif ($item->status === 3) {
                             $statusText = 'Approved';
                             } elseif ($item->status === 4) {
-                            $statusText = 'Paid';
+                            $statusText = 'Pending';
                             } elseif ($item->status === 5) {
                             $statusText = 'Completed';
                             } else {
@@ -334,27 +341,41 @@
 </div>
 <script>
     function deleteNotification(button) {
-      // Find the notification container
-      var container = $(button).closest('.notif-container');
-      container.hide();
+      // Try to find the closest .notif-container element
+      const container = button.closest('.notif-container');
+      
+      // If container is not found, log an error and exit the function
+      if (!container) {
+        console.error("Notification container not found.");
+        return;
+      }
+      
+      // Hide the container immediately
       container.style.display = 'none';
-      var id = container.data('id');
-      $.ajax({
-        url: '/delete-item', 
-        type: 'POST',
-        data: {
-          id: id,
-          _token: '{{ csrf_token() }}' 
+      
+      // Retrieve the item ID from the data attribute
+      const id = container.getAttribute('data-id');
+      
+      // Send AJAX (using Fetch API) to delete the item
+      fetch('/Delete/Notification/Api', { // Replace with your actual delete URL
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-CSRF-TOKEN': '{{ csrf_token() }}'
         },
-        success: function(response) {
-        
-        },
-        error: function(xhr) {
-          console.error('Error deleting item:', xhr);
-        }
+        body: JSON.stringify({ id: id })
+      })
+      .then(response => response.json())
+      .then(data => {
+        console.log('Item deleted successfully:', data);
+      })
+      .catch((error) => {
+        console.error('Error deleting item:', error);
+        // Optionally, revert the hide action or notify the user
       });
     }
 </script>
+
 
 <div class="modal fade" id="userpayment" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
     aria-labelledby="staticBackdropLabel" aria-hidden="true">

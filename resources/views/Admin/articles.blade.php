@@ -136,19 +136,13 @@
                         <input type="text" class="form-control" id="articletitle" name="title" required>
                     </div>
                     <div class="row">
-                        <div class="col-lg-6 col-md-12 col-sm-6">
+                        <div class="col-lg-12 col-md-12 col-sm-6">
                             <div class="mb-3">
                                 <label for="faqAnswer" class="form-label">author</label>
                                 <input type="text" class="form-control" id="articleauthor" name="author" required>
                             </div>
                         </div>
-                        <div class="col-lg-6 col-md-12 col-sm-6">
-                            <div class="mb-3">
 
-                                <label for="faqAnswer" class="form-label">author</label>
-                                <input type="text" class="form-control" id="articledescription" name="author" required>
-                            </div>
-                        </div>
                         <div class="col-lg-6 col-md-12 col-sm-6">
                             <div class="mb-3">
                                 <label for="faqAnswer" class="form-label">Date</label>
@@ -260,6 +254,8 @@
         let modal = new bootstrap.Modal(document.getElementById('editArticle'));
         modal.show();
     }
+
+    
     function confirmDelete(ArticleId) {
             // Set the FAQ ID in the hidden input field
         document.getElementById('deletearticleID').value = ArticleId;

@@ -411,18 +411,18 @@ class AdminController extends Controller
     public function editarticle(Request $request)
     {
         // Validate the incoming request
-        $request->validate([
-            'title' => 'required|string|max:255',
-            'author' => 'required|string|max:255',
-            'date' => 'required|date',
-            'redirect_url' => 'nullable|string',
-            'url1' => 'nullable|url',
-            'url2' => 'nullable|string',
-            'url3' => 'nullable|string',
-            'url4' => 'nullable|string',
-            'description' => 'nullable|string',
-            'image' => 'nullable|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
-        ]);
+        // $request->validate([
+        //     'title' => 'required|string|max:255',
+        //     'author' => 'required|string|max:255',
+        //     'date' => 'required|date',
+        //     'redirect_url' => 'nullable|string',
+        //     'url1' => 'nullable|url',
+        //     'url2' => 'nullable|string',
+        //     'url3' => 'nullable|string',
+        //     'url4' => 'nullable|string',
+        //     'description' => 'nullable|string',
+        //     'image' => 'nullable|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
+        // ]);
 
 
         // Find the article by ID
@@ -815,7 +815,7 @@ class AdminController extends Controller
                 ],
                 [
 
-                    'message'  => 'Your request for quotation has been approved.',
+                    'message'  => $request->reason,
                     'status'   => 'Approved',
                 ]
             );

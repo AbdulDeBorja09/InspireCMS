@@ -35,6 +35,7 @@ Route::middleware(['auth', 'user.type:user'])->group(function () {
     Route::get('/Quotations/view', [HomeController::class, 'QuotationPDF']);
     Route::get('/Payment/{id}', [HomeController::class, 'ShowPayment'])->name('ShowPayment');
     Route::get('/Confirmation/{id}', [HomeController::class, 'ShowConfirmation'])->name('ShowConfirmation');
+    Route::get('/Quote/Confirmation/{id}', [HomeController::class, 'ShowQuoteConfirmation'])->name('ShowQuoteConfirmation');
     Route::get('/User/Request/Details/api', [HomeController::class, 'GetQUoteDetails'])->name('GetQUoteDetails');
     Route::get('/User/Payments/Details/api', [HomeController::class, 'GetPaymentDetails'])->name('GetPaymentDetails');
     Route::get('/Reservation/Confirmed/{id}', [HomeController::class, 'ShowPDF'])->name('ShowPDF');
@@ -43,6 +44,8 @@ Route::middleware(['auth', 'user.type:user'])->group(function () {
     Route::post('/Quotation/Payment/Submit', [HomeController::class, 'SubmitPayment'])->name('SubmitPayment');
     Route::post('/Profile/Edit', [HomeController::class, 'EditProfile'])->name('EditProfile');
     Route::put('/Profile/Password/Change', [HomeController::class, 'ChangePassword'])->name('ChangePassword');
+
+    Route::post('/Delete/Notification/Api', [HomeController::class, 'DeleteNotif'])->name('DeleteNotif');
 });
 
 

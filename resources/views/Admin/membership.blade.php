@@ -40,11 +40,11 @@
             </div>
             <div class="form-group">
                 <label for="image3">Image:</label>
-                <input class="form-control" name="image3" type="file" id="image3" accept="image/*" required />
+                <input class="form-control" name="image3" type="file" id="image3" accept="image/*"  />
             </div>
             <div class="form-group">
                 <label for="image4">Image:</label>
-                <input class="form-control" name="image4" type="file" id="image4" accept="image/*" required />
+                <input class="form-control" name="image4" type="file" id="image4" accept="image/*"  />
             </div>
             <div id="rates-container">
                 <div class="rate-row mb-3">

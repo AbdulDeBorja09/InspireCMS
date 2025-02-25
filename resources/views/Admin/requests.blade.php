@@ -148,6 +148,17 @@
                                 <input id="service_name" type="text" name="service_name" class="form-control mb-2"
                                     placeholder="Fetching..." readonly>
                             </div>
+
+                            <div class="mb-3">
+                                <label for="service_desc">Selected Date:</label>
+                                <input id="service_date" type="text" name="service_date" class="form-control mb-2"
+                                    placeholder="IFetching..." readonly>
+                            </div>
+                            <div class="mb-3">
+                                <label for="service_desc">Selected Date:</label>
+                                <input id="service_time" type="text" name="service_time" class="form-control mb-2"
+                                    placeholder="IFetching..." readonly>
+                            </div>
                             <div class="mb-3">
                                 <label for="service_desc">Description:</label>
                                 <input id="service_desc" type="text" name="service_desc" class="form-control mb-2"
@@ -178,6 +189,11 @@
                                 <label for="editrate-type">Cancellation Fee:</label>
                                 <input id="editrate-type" type="text" name="cancelation" class="form-control mb-2"
                                     placeholder="Input Here">
+                            </div>
+                            <div class="mb-3">
+                                <label for="editrate-type">Message:</label>
+                                <textarea id="editrate-type" type="text" name="reason" class="form-control mb-2"
+                                    rows="3" placeholder="Input Here"></textarea>
                             </div>
                         </div>
                         <div class="col-lg-9 col-md-12" id="View_calendar">
@@ -392,7 +408,9 @@
             success: function(response) {
             
                 if (response.items) {
-                    document.getElementById('service_name').value = response.items.service_name || "";
+                    document.getElementById('service_date').value = Item.date || "";
+                    document.getElementById('service_time').value = `${Item.start_time} - ${Item.end_time}`;; 
+                    document.getElementById('service_name').value = Item.date || "";
                     document.getElementById('service_desc').value = response.items.rate_name || "";
                     document.getElementById('service_total').value = response.items.subtotal || "";
                 } else {

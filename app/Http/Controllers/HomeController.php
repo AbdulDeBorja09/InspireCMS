@@ -121,6 +121,18 @@ class HomeController extends Controller
         }
     }
 
+    public function ShowQuoteConfirmation($id)
+    {
+        $quotation = Quotations::where('id', $id)->where('user_id', Auth::user()->id)->first();
+        $items = json_decode($quotation->items, true);
+        return view('user.confirmation_quote', compact('quotation', 'items'));
+        // if ($quotation->status != 1) {
+        //     return redirect()->route('user.home');
+        // } else {
+
+        // }
+    }
+
     public function singlequotation($id)
     {
         $service = Services::findOrFail($id);
@@ -454,5 +466,12 @@ class HomeController extends Controller
             'payment' => $payments,
             'user' => $users,
         ]);
+    }
+
+    public function DeleteNotif(Request $request)
+    {
+        notifications::where('id', $request->id)->delete();
+
+        return response()->json('success', 'Deleted');
     }
 }

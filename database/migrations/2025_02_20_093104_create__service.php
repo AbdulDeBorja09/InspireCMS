@@ -15,16 +15,16 @@ return new class extends Migration
             $table->id();
             $table->string('type');
             $table->string('name');
-            $table->string('image1');
-            $table->string('image2');
-            $table->string('image3');
-            $table->string('image4');
+            $table->string('image1')->nullable();
+            $table->string('image2')->nullable();
+            $table->string('image3')->nullable();
+            $table->string('image4')->nullable();
             $table->text('description')->nullable();
             $table->string('brief')->nullable();
             $table->boolean('status')->default('1');
             $table->timestamps();
         });
-        
+
         Schema::create('service_rates', function (Blueprint $table) {
             $table->id();
             $table->foreignId('service_id')->constrained()->onDelete('cascade');

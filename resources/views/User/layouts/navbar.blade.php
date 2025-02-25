@@ -1,51 +1,11 @@
-{{-- <nav class="navbar navbar-expand-lg fixed-top p-md-3">
-    <div class="container">
-        <!-- ISA LOGO -->
-
-        <a class="navbar-brand" href="{{url('/')}}">
-            @if ($navLogo)
-            <img src="{{ asset($navLogo->value) }}" class="img-fluid" alt="Logo" width="180" />
-            @endif
-        </a>
-
-        <!-- BURGER FOR MOBILE -->
-        <button class="navbar-toggler custom-toggler" type="button" data-bs-toggle="collapse"
-            data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <i class="bi bi-menu-button-wide"></i>
-        </button>
-
-        <!-- NAVBAR TABS -->
-        <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
-            <ul class="navbar-nav d-flex align-items-center gap-5">
-                <li class="nav-item">
-                    <a class="nav-link" href="{{url('/facilities')}}">Facilities</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{url('/academies')}}">Academies</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{url('/articles')}}">Articles</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{url('/faq')}}">FAQ</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{url('/about')}}">About</a>
-                </li>
-                <a href="quote-page.html" class="btn shadow-none quote-btn" type="button">
-                    Request a Quote
-                </a>
-            </ul>
-        </div>
-    </div>
-</nav> --}}
-
 <nav class="navbar navbar-expand-lg fixed-top p-md-3">
     <div class="container">
         <!-- ISA LOGO -->
         <a class="navbar-brand" href="{{url('/')}}">
             @if ($navLogo)
             <img src="{{ asset($navLogo->value) }}" class="img-fluid" alt="Logo" width="180" />
+            @else
+            <img src=" {{asset('/images/logo/inspire-logo.png')}}" alt="Inspire Sports Academy" width="180" />
             @endif
         </a>
 

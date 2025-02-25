@@ -23,13 +23,13 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
 
     <!-- STYLES -->
-    <link rel="stylesheet" href="{{asset('css/payment-confirm.css')}}" />
+    <link rel="stylesheet" href="{{asset('css/request-confirm.css')}}" />
 
     <!-- JS -->
     <script src="js/bootstrap.js"></script>
     <script src="js/navbar-color-scroll.js"></script>
 
-    <title>Payment Confirmation - ISA</title>
+    <title>Request Confirmation - ISA</title>
 </head>
 
 <body>
@@ -47,20 +47,19 @@
             </div>
         </div>
     </nav>
-
     <!-- CONFIRMATION -->
     <section id="confirmation">
         <div class="container confirm-box">
             <div class="confirm-message">
                 <div class="header">
                     <h1 class="mb-4 text-center">
-                        <i class="bi bi-hourglass-split"></i>Payment Pending
+                        <i class="bi bi-hourglass-split"></i>Request Pending
                     </h1>
                     <p>
-                        We have received your payment submission along with your proof of
-                        payment. Your transaction is currently under verification. Once
-                        confirmed, we will notify you, and your selected date will be
-                        officially reserved.
+                        We have received your quotation request for
+                        <strong>{{$items['service_name']}}</strong>. Our team is currently
+                        reviewing the details, and we will get back to you shortly with a
+                        quotation.
                     </p>
                 </div>
 
@@ -70,29 +69,32 @@
                     <div class="col-lg-7" style="border-right: 1px solid #64748b">
                         <h4>Summary</h4>
                         <div class="summary">
-                            <p>Payment Reference: <strong>{{$quotation->Quotation_ref}}</strong></p>
-                            <p>Date & Time: <strong> {{ \Carbon\Carbon::parse($payment->created_at)->format('F j, Y h:m
+                            <p>Quotation Reference: <strong>{{$quotation->Quotation_ref}}</strong></p>
+                            <p>Date and Time: <strong>{{ \Carbon\Carbon::parse($quotation->created_at)->format('F j, Y
+                                    h:m
                                     A')
                                     }}</strong></p>
-                            <p>
-                                Payment Terms: <strong> @if($payment->payment_term === 'fullpayment')
-                                    Full Payment
-                                    @else
-                                    Half Payment
-                                    @endif
-                                </strong>
-                            </p>
-                            <p>Paid Amount: ₱<strong>{{number_format($payment->total)}}</strong></p>
+                        </div>
+                        <h4 class="mt-3">Quotation Details</h4>
+                        <div class="summary">
+                            <p>Service Name: <strong>NUMBER TO</strong></p>
+                            <p>Date & Time Requested: <strong>{{
+                                    \Carbon\Carbon::parse($quotation->date)->format('F j, Y')}}</strong></p>
+                            <p>Duration: <strong>{{
+                                    \Carbon\Carbon::parse($quotation->start_time)->format(' h:m
+                                    A')}} - {{
+                                    \Carbon\Carbon::parse($quotation->end_time)->format(' h:m
+                                    A')}}</strong></p>
+                            <p>Total Amount Quoted: <strong>{{number_format($quotation->total)}}</strong></p>
                         </div>
                     </div>
 
                     <div class="col-lg-5">
-                        <h4>Billing Address</h4>
+                        <h4>User Details</h4>
                         <div class="summary">
-                            <p>{{$payment->name}}</p>
-                            <p>{{$payment->address}}</p>
-                            <p>{{$payment->email}}</p>
-                            <p>{{$payment->phone}}</p>
+                            <p>{{Auth::user()->fname}} {{Auth::user()->lname}}</p>
+                            <p>{{Auth::user()->email}}</p>
+                            <p>{{Auth::user()->phone}}</p>
                         </div>
                     </div>
                 </div>
