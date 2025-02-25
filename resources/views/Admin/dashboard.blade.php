@@ -1,4 +1,4 @@
-@extends('admin.layouts.app')
+@extends('Admin.layouts.app')
 @section('content')
 <!-- Dashboard Content -->
 <div class="content active" id="dashboard">
