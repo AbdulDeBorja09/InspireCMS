@@ -1,4 +1,4 @@
-@extends('admin.layouts.app')
+@extends('Admin.layouts.app')
 @section('content')
 <!-- faq Content -->
 @include('Admin.components.alert')

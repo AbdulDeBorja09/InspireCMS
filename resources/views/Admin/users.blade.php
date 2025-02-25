@@ -1,4 +1,4 @@
-@extends('admin.layouts.app')
+@extends('Admin.layouts.app')
 @section('content')
 <!-- User Us Content -->
 <div class="content" id="Contact Us" style="min-height: 100vh">
