@@ -4,7 +4,7 @@
 <!-- HEADER -->
 <section id="image" class="position-relative text-white">
     <div class="bg-image"
-        style=" background-image: url('/storage/{{ $contents['articles-background']->value ?? ''}}');">
+        style=" background-image: url('{{ $contents['articles-background']->value ?? ''}}');">
         <div class="image-overlay">
             <div class="container">
                 <div class="row justify-content-start image-text">
@@ -40,7 +40,7 @@
                 @endif" @if($item->redirect_url)
                     target="__blank"
                     @endif>
-                    <img src="{{asset('/storage/'. $item->image)}}" alt="{{$item->title}}" />
+                    <img src="{{asset( $item->image)}}" alt="{{$item->title}}" />
                     <div class="meta-info">
                         <span><i class="bi bi-person"></i> {{$item->author}}</span>
                         <span><i class="bi bi-calendar"></i>{{ \Carbon\Carbon::parse($item->date)->format('F j, Y') }}

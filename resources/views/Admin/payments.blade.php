@@ -181,8 +181,8 @@
                 let parts = paymentName.split(",");
                 const proof = response.payment.proof;
 
-
-                proofUrl = '/storage/' + proof;
+                // proofUrl = '/storage/' + proof;
+                proofUrl = proof;
                 PDF = '/Reservation/Confirmed/' + Item.id;
                 document.getElementById('view_payment_reference').value = Item.Quotation_ref;
                 document.getElementById('view_payment_time').value = moment(response.user.created_at).format("MMM D y, hh:mm A");

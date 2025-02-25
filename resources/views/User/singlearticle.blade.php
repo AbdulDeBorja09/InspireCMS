@@ -2,7 +2,7 @@
 @section('content')
 <section id="image" class="position-relative text-white">
     <div class="bg-image"
-        style=" background-image: url('/storage/{{ $contents['article_content-background']->value ?? ''}}');">
+        style=" background-image: url({{ $contents['article_content-background']->value ?? ''}});">
         <div class="image-overlay">
             <div class="container">
                 <div class="row justify-content-start image-text">
@@ -40,7 +40,7 @@
                 <!-- CONTENT IMAGE -->
                 <div class="row">
                     <div class="col-lg-8 col-md-12 col-sm-12">
-                        <img class="content-image" src="{{asset('/storage/'. $article->image)}}"
+                        <img class="content-image" src="{{asset( $article->image)}}"
                             alt="{{$article->title}}" />
 
 

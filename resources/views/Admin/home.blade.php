@@ -185,7 +185,7 @@
                 <label for="imageUpload">Background Image:</label>
                 <div class="image-preview" id="preview3">
                     @if (!empty($contents['homeabout-background']->value))
-                    <img src="{{ asset('/storage/' . $contents['homeabout-background']->value) }}" alt="Top-page-img">
+                    <img src="{{ asset($contents['homeabout-background']->value) }}" alt="Top-page-img">
                     @else
                     <span>No image selected</span>
                     @endif

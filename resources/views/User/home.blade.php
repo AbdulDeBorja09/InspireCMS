@@ -3,7 +3,7 @@
 
 <!-- HEADER PAGE -->
 <section id="image" class="position-relative text-white"
-    style="background-image: url('/storage/{{ $contents['top-background']->value ?? '/images/home/bg.png' }}');">
+    style="background-image: url({{ $contents['top-background']->value ?? '/images/home/bg.png' }});">
     <div class="image-overlay d-flex align-items-center">
         <div class="container-fluid">
             <div class="row justify-content-center image-text">
@@ -40,7 +40,7 @@
 
                 @foreach($services->concat($services) as $item)
                 <div class="swiper-slide">
-                    <img src="{{asset('/storage/'. $item->image1)}}" />
+                    <img src="{{asset( $item->image1)}}" />
                     <div class="facility-title">{{$item->name}}</div>
                 </div>
                 @endforeach
@@ -124,7 +124,7 @@
             @foreach($articles as $item)
             <div class="col-lg-4 col-md-6 col-sm-12 d-flex">
                 <a class="news-card">
-                    <img src="{{asset('/storage/'. $item->image)}}" alt="{{$item->title}}" />
+                    <img src="{{asset( $item->image)}}" alt="{{$item->title}}" />
                     <div class="meta-info">
                         <span><i class="bi bi-person"></i> {{$item->author}}</span>
                         <span><i class="bi bi-calendar"></i>{{ \Carbon\Carbon::parse($item->date)->format('F j, Y')

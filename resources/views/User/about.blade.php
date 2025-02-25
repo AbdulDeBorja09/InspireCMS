@@ -1,9 +1,9 @@
-@extends('User.layouts.app')
+@extends('user.layouts.app')
 @section('content')
 
 <!-- HEADER -->
 <section id="image" class="position-relative text-white">
-    <div class="bg-image" style=" background-image: url('/storage/{{ $contents['about-background']->value ?? ''}}');">
+    <div class="bg-image" style=" background-image: url('{{ $contents['about-background']->value ?? ''}}');">
         <div class="image-overlay">
             <div class="container">
                 <div class="row justify-content-start image-text">
@@ -94,7 +94,7 @@
                 @foreach($partners as $item)
                 <div class="@if($partners->count() >= 2) col-lg-3 @else col-lg-6 @endif col-md-4 col-sm-6 col-12">
                     <div class="image-frame">
-                        <img src="{{asset('/storage/' . $item->image)}}" alt="{{$item->name}}" />
+                        <img src="{{asset($item->image)}}" alt="{{$item->name}}" />
                     </div>
                 </div>
                 @endforeach
@@ -116,7 +116,7 @@
                 <!-- Combine the collection with itself -->
                 <div class="swiper-slide">
 
-                    <img src="{{asset('/storage/' . $items->image)}}" alt="{{$items->name}}" />
+                    <img src="{{asset($items->image)}}" alt="{{$items->name}}" />
                     <div class="caption">
                         <h1>{{$items->name}}</h1>
                         <h1>{{$items->name}}</h1>

@@ -4,7 +4,7 @@
 <!-- HEADER -->
 <section id="image" class="position-relative text-white">
     <div class="bg-image"
-        style=" background-image: url('/storage/{{ $contents['quotation-background']->value ?? ''}}');">
+        style=" background-image: url({{ $contents['quotation-background']->value ?? ''}});">
         <div class="image-overlay">
             <div class="container">
                 <div class="row justify-content-start image-text">
@@ -63,7 +63,7 @@
                     @foreach ($facilities as $item)
                     <div class="col-lg-3 col-md-6 col-sm-12">
                         <div class="card">
-                            <img src="{{asset('/storage/'.$item->image1)}}" class="card-img-top" alt="Facility 1" />
+                            <img src="{{asset($item->image1)}}" class="card-img-top" alt="Facility 1" />
                             <div class="card-body">
                                 <h5 class="card-title">{{$item->name}}</h5>
                                 <p class="card-text">
@@ -91,7 +91,7 @@
                     @foreach ($academies as $item)
                     <div class="col-lg-3 col-md-6 col-sm-12">
                         <div class="card">
-                            <img src="{{asset('/storage/'. $item->image1)}}" class="card-img-top" alt="Facility 1">
+                            <img src="{{asset( $item->image1)}}" class="card-img-top" alt="Facility 1">
                             <div class="card-body">
                                 <h5 class="card-title">{{$item->name}}</h5>
                                 <p class="card-text">
@@ -118,7 +118,7 @@
                     @foreach ($membership as $item)
                     <div class="col-lg-3 col-md-6 col-sm-12">
                         <div class="card">
-                            <img src="{{asset('/storage/'. $item->image1)}}" class="card-img-top" alt="Facility 1">
+                            <img src="{{asset( $item->image1)}}" class="card-img-top" alt="Facility 1">
                             <div class="card-body">
                                 <h5 class="card-title">{{$item->name}}</h5>
                                 <p class="card-text">

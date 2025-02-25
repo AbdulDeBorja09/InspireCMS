@@ -110,7 +110,7 @@
                     <tr>
                         <td class="text-center">{{$index + 1}}</td>
                         <td>
-                            <img class="mx-auto" src="{{asset('/storage/'. $items->image)}}" alt="{{$items->title}}" />
+                            <img class="mx-auto" src="{{asset( $items->image)}}" alt="{{$items->title}}" />
                         </td>
                         <td>{{$items->name}}</td>
                         <td>{{$items->position}}</td>
@@ -169,7 +169,7 @@
                     <tr>
                         <td class="text-center">{{$index + 1}}</td>
                         <td>
-                            <img class="mx-auto" src="{{asset('/storage/'. $items->image)}}" alt="{{$items->title}}" />
+                            <img class="mx-auto" src="{{asset( $items->image)}}" alt="{{$items->title}}" />
                         </td>
                         <td>{{$items->name}}</td>
                         <td style="width:20%">

@@ -2,7 +2,7 @@
 
 @section('content')
 <section id="image" class="position-relative text-white">
-    <div class="bg-image" style=" background-image: url('/storage/{{ $contents['Content-background']->value ?? ''}}');">
+    <div class="bg-image" style=" background-image: url({{ $contents['Content-background']->value ?? ''}});">
         <div class="image-overlay">
             <div class="container">
                 <div class="row justify-content-start image-text">
@@ -25,27 +25,27 @@
     <div class="container my-5 py-5">
         <div class="row">
             <div class="col-lg-8">
-                <img id="mainImage" src="{{asset('/storage/'. $service->image1)}}" alt="Expert Trainer"
+                <img id="mainImage" src="{{asset( $service->image1)}}" alt="Expert Trainer"
                     class="content-image" />
 
                 <div class="row mt-3">
                     <div class="col-3">
-                        <img src="{{asset('/storage/'. $service->image1)}}" class="thumb-image"
+                        <img src="{{asset( $service->image1)}}" class="thumb-image"
                             onclick="changeImage(this)" />
                     </div>
 
                     <div class="col-3">
-                        <img src="{{asset('/storage/'. $service->image2)}}" class="thumb-image"
+                        <img src="{{asset( $service->image2)}}" class="thumb-image"
                             onclick="changeImage(this)" />
                     </div>
 
                     <div class="col-3">
-                        <img src="{{asset('/storage/'. $service->image3)}}" class="thumb-image"
+                        <img src="{{asset( $service->image3)}}" class="thumb-image"
                             onclick="changeImage(this)" />
                     </div>
 
                     <div class="col-3">
-                        <img src="{{asset('/storage/'. $service->image4)}}" class="thumb-image"
+                        <img src="{{asset( $service->image4)}}" class="thumb-image"
                             onclick="changeImage(this)" />
                     </div>
                 </div>

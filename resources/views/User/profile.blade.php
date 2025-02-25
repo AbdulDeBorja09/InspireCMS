@@ -3,7 +3,7 @@
 <!-- HEADER -->
 
 <section id="image" class="position-relative text-white">
-    <div class="bg-image" style=" background-image: url('/storage/{{ $contents['profile-background']->value ?? ''}}');">
+    <div class="bg-image" style=" background-image: url({ $contents['profile-background']->value ?? ''}});">
         <div class="image-overlay">
             <div class="container">
                 <div class="row justify-content-start image-text">
@@ -581,7 +581,8 @@
                 const proof = response.payment.proof;
 
 
-                proofUrl = '/storage/' + proof;
+                // proofUrl = '/storage/' + proof;
+                proofUrl =  proof;
                 DownloadURL = '/Reservation/Confirmed/' + Item.id
                 document.getElementById('view_payment_reference').value = Item.Quotation_ref;
                 document.getElementById('view_payment_time').value = moment(response.user.created_at).format("MMM D y, hh:mm A");
