@@ -98,6 +98,7 @@
                     </div>
                     <input class="imageUpload w-100" type="file" id="imageUpload" name="value" accept="image/*"
                         data-preview="preview2" />
+                        
                     <button class="text-center btn mt-3" type="submit">
                         Update Footer
                     </button>
@@ -128,7 +129,13 @@
                                         style="background-color: transparent; border:0; width: 90%">
                                 </form>
                             </td>
-                            <td><button class="delete-btn">Delete</button></td>
+                            <td>
+                                <form action="{{route('admin.DeleteLayout')}}" method="POST">
+                                    @csrf
+                                    <input type="hidden" name="id" value="{{ $item->id}}">
+                                    <button class="delete-btn" type="submit">Delete</button>
+                                </form>
+                            </td>
                         </tr>
                         @endforeach
                     </tbody>
@@ -202,6 +209,7 @@
         </form>
     </div>
 </div>
+
 <div class="modal fade" id="NewLocation" tabindex="-1" aria-labelledby="deleteServicelabel" aria-hidden="true">
     <div class="modal-dialog">
         <form method="POST" action="{{ route('admin.NewLayout') }}">
@@ -225,6 +233,7 @@
         </form>
     </div>
 </div>
+
 <script>
     function NewContact(SeriveId) {
         // document.getElementById('deleteservice').value = SeriveId;
