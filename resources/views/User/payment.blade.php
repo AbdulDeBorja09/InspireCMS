@@ -217,29 +217,30 @@
                 @else
 
                 @endif --}}
-                <input type="hidden" id="firstname" name="title" />
-                <!-- First Name -->
-                <div class="mb-3 form-group">
-                    <label for="firstname">First Name</label>
-                    <input type="text" id="firstname" name="fname" placeholder="Anthony" required />
-                </div>
-                <!-- Last Name -->
-                <div class="mb-3 form-group">
-                    <label for="lastname">Last Name</label>
-                    <input type="text" id="lastname" name="lname" placeholder="Jennings" required />
-                </div>
 
+                <input type="hidden" id="firstname" name="title" />
+                <!-- Full Name -->
+                <div class="mb-3 form-group">
+                    <label for="fullname">Full Name</label>
+                    <input type="text" id="firstname" name="fname" placeholder="AUTOFILL" required />
+                </div>
                 <!-- Address -->
                 <div class="mb-3 form-group">
                     <label for="address">Address</label>
-                    <input type="text" id="address" name="address" placeholder="anthonyjennings@gmail.com" required />
+                    <input type="text" id="lastname" name="lname" placeholder="Calamba" required />
                 </div>
-
 
                 <!-- Email -->
                 <div class="mb-3 form-group">
                     <label for="email">Email</label>
                     <input type="text" id="email" name="email" placeholder="anthonyjennings@gmail.com" required />
+                </div>
+
+
+                <!-- Phone Number -->
+                <div class="mb-3 form-group">
+                    <label for="phone">Phone Number</label>
+                    <input type="text" id="phone" name="phone" placeholder="09123456789" required />
                 </div>
 
                 <!-- Phone Number -->
@@ -248,13 +249,19 @@
                     <input type="text" id="phone" name="phone" placeholder="09123456789" required />
                 </div>
 
-                <!-- Payment Plan -->
+                <!-- Payment Terms -->
                 <div class="mb-3 form-group">
                     <label for="payment_term">Payment Terms</label>
                     <select name="payment_term" id="payment_term" required>
                         <option value="fullpayment" selected>Full Payment</option>
                         <option value="downpayment">Down Payment</option>
                     </select>
+                </div>
+
+                <!-- Amount -->
+                <div class="mb-3 form-group">
+                    <label for="amount">Amount</label>
+                    <input type="number" id="amount" name="phone" placeholder="DP or FP" required />
                 </div>
 
                 <!-- Proof of Payment -->
