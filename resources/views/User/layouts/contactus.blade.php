@@ -1,6 +1,6 @@
 <!-- CONTACT US -->
 <section id="contact"
-    style="background-image: url('{{ asset('/images/contact-bg.png') }}'); background-size: cover; background-position: center; height: 100%;">
+    style="background-image: url('{{ asset('/images/contact-bg.png') }}'); background-size: cover; background-position: center; height: 60vh;">
     <div class="mb-5 container-fluid">
         <div class="row">
             <div class="col-lg-6 form-container">
