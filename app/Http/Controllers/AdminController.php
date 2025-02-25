@@ -39,7 +39,7 @@ class AdminController extends Controller
         $data = array_merge(['contents' => $contents], $additionalData);
 
         // Display view with data
-        return view("admin.$viewName", $data);
+        return view("Admin.$viewName", $data);
     }
 
     public function ShowDashboard()
@@ -138,7 +138,7 @@ class AdminController extends Controller
     public function ShowHeader()
     {
         $contents = Contents::pluck('value', 'key');
-        return view('admin.header', compact('contents'));
+        return view('Admin.header', compact('contents'));
     }
 
     public function ShowRequests()

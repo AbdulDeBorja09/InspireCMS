@@ -1,4 +1,4 @@
-@extends('admin.layouts.app')
+@extends('Admin.layouts.app')
 @section('content')
 @include('Admin.components.alert')
 <div class="content" id="settings">
