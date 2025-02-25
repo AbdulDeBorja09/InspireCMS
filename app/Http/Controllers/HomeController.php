@@ -440,11 +440,11 @@ class HomeController extends Controller
     {
         $Quotaions = Quotations::where('id', $request->id)->first();
 
-        if ($Quotaions->status === 1) {
-            $Quotaions->update([
-                'status' => 2,
-            ]);
-        }
+        // if ($Quotaions->status === 1) {
+        //     $Quotaions->update([
+        //         'status' => 2,
+        //     ]);
+        // }
         $users = User::where('id', $Quotaions->user_id)->first();
 
         $items = json_decode($Quotaions->items, true);

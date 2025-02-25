@@ -29,7 +29,7 @@ Route::get('/service/{id}', [HomeController::class, 'ShowRate']);
 Route::post('/Contactus', [HomeController::class, 'contactus'])->name('contactus');
 Route::get('/User/Request/Dates/api', [HomeController::class, 'GetReservedDates'])->name('GetReservedDates');
 Route::post('/Quotation/Create', [HomeController::class, 'CreateQuotation'])->name('CreateQuotation');
-
+Route::get('/Reservation/Confirmed/{id}', [AdminController::class, 'ShowPDFAdmin'])->name('ShowPDF');
 
 Route::middleware(['auth', 'user.type:user'])->group(function () {
     Route::get('/Profile', [HomeController::class, 'ShowProfile']);
@@ -37,7 +37,6 @@ Route::middleware(['auth', 'user.type:user'])->group(function () {
     Route::get('/Payment/{id}', [HomeController::class, 'ShowPayment'])->name('ShowPayment');
     Route::get('/User/Request/Details/api', [HomeController::class, 'GetQUoteDetails'])->name('GetQUoteDetails');
     Route::get('/User/Payments/Details/api', [HomeController::class, 'GetPaymentDetails'])->name('GetPaymentDetails');
-    Route::get('/Reservation/Confirmed/{id}', [HomeController::class, 'ShowPDF'])->name('ShowPDF');
     Route::get('/Confirmation/{id}', [HomeController::class, 'ShowConfirmation'])->name('ShowConfirmation');
     Route::get('/Quote/Confirmation/{id}', [HomeController::class, 'ShowQuoteConfirmation'])->name('ShowQuoteConfirmation');
     Route::post('/Quotations/Submit', [HomeController::class, 'SubmitQuotationRequest'])->name('SubmitQuotationRequest');
@@ -67,7 +66,7 @@ Route::middleware(['auth', 'user.type:admin'])->group(function () {
     Route::get('/Admin/header', [AdminController::class, 'ShowHeader'])->name('admin.header');
     Route::get('/Admin/Contactus', [AdminController::class, 'ShowContactus'])->name('admin.ShowContactus');
     Route::get('/Admin/dates', [AdminController::class, 'GetBlockedDates'])->name('admin.GetBlockedDates');
-    Route::get('/Reservation/Confirmed/{id}', [AdminController::class, 'ShowPDFAdmin'])->name('ShowPDF');
+
 
     Route::get('/Admin/Request/Details/api', [AdminController::class, 'GetRequestDetails'])->name('admin.GetRequestDetails');
     Route::get('/Admin/Payments/Details/api', [AdminController::class, 'GetPaymentsDetails'])->name('admin.GetPaymentsDetails');

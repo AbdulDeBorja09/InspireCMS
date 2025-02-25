@@ -31,7 +31,7 @@
 
         </p>
         <!-- VIEW MORE BTN -->
-        <a href="facilities.html" class="btn shadow-none view-btn">View More</a>
+        <a href="{{url('/Facilities')}}" class="btn shadow-none view-btn">View More</a>
     </div>
 
     <div class="facility-container">
