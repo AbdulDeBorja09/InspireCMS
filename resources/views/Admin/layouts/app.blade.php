@@ -31,7 +31,7 @@
     <!-- STYLES -->
 
     <link rel="stylesheet" href="{{asset('/css/admin.css')}}" />
-    
+
 
     {{-- Include pushed css from pages --}}
 
