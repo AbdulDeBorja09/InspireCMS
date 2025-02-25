@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('quotations', function (Blueprint $table) {
             $table->id();
             $table->integer('user_id');
+            $table->string('event_title');
             $table->string('Quotation_ref');
             $table->string('billing_name')->nullable();
             $table->string('billing_address')->nullable();
